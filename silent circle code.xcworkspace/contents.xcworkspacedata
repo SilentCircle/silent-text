@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "Apps">
+      <FileRef
+         location = "group:SilentChat/SilentChat/SilentText.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "operational tests">
+      <FileRef
+         location = "group:optest/STConversationView/STConversationView.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:optest/crypto-optest.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:optest/scimp-optest.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:optest/scloud-optest.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "libs">
+      <FileRef
+         location = "group:libs/libscloud/scloud.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:libs/libscimp/scimp.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:libs/libtomcrypt/tomcrypt.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:libs/libtommath/tommath.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:libs/libidn/idn.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:libs/libyaji/yajl.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:libs/shared">
+   </FileRef>
+   <Group
+      location = "container:"
+      name = "Libraries">
+   </Group>
+   <FileRef
+      location = "group:Documentation">
+   </FileRef>
+</Workspace>

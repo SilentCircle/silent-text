@@ -1,0 +1,146 @@
+Silent Circle Source Code Layout
+
+6/22/2012	vin		Initial Checkin
+
+
+Overview
+
+This document describes the conventions used in the producing modules for use
+at Silent Circle. Just as an application should present a consistent interface
+to the end user, our libraries should present a consistent interface to its clients. 
+
+
+All APIs, data structures, constants, variables, etc must follow the standards 
+set forth in this document. It is assumed that the reader understands the 
+considerable value of this approach.
+
+The standards set forth in this document are intended to satisfy the 
+following goals (not necessarily in order):
+
+	1.	platform neutrality 
+	2.	ease of use / ease of learning 
+	3.	consistency across all modules 
+	4.	minimizing confusion and possible bugs; maximing compiler error checking 
+	5.	information hiding 
+	
+These guidelines are hard requirements for all publicly available routines,
+data structures, etc. They are not required for Silent Circle
+internal functionality. However given that Silent Circle plans to publishes
+the source code for cryptographic functionality, engineers are strongly encouraged 
+to follow them for internal code as well.
+
+Diectory Layout
+
+The silent_circle_code directory contains the libraries and operation tests for Silent Circle 
+Messaging Application.  As more code gets added in the future it should be integrated here also.
+
+This document describes all the relevant information for adding and working with 
+the code base.
+
+"silent circle code.xcworkspace"	--  Master Xcode workspace for the projects
+The following pojects are available:
+
+scimp				-  libscimp.a  		(OSX)
+scimp-IOS			-  libscimp-ios.a  	(iOS)
+scloud				-  libscloud.a  		(OSX)
+scloud-IOS			-  libscloud-ios.a  	(iOS)
+tomcrypt			-  libtomcrypt.a  	(OSX)
+tomcrypt-IOS		-  libtomcrypt-ios.a  	(iOS)
+tommath				-  libtommath.a  		(OSX)
+tommath-IOS			-  libtommath-ios.a  	(iOS)
+yajl				-  libyajl.a  		(OSX)
+yajl-IOS			-  libyajl-ios.a  	(iOS)
+scimp-optest		-  operational test for libscimp.a (OSX)
+scimp-optest-IOS	-  operational test for libscimp-ios.a (iOS)
+scloud-optest		-  operational test for libscloud.a (OSX)
+scloud-optest-IOS	-  operational test for libscloud-ios.a (iOS)
+crypto-optest-OSX	-  operational test for libtomcrypt.a, libtommath.a (OSX)
+crypt-optest-IOS	-  operational test for libtomcrypt-ios.a, libtommath-ios.a (OSX)
+ 
+
+Documentation		- Papers, slides and API documentation 
+libscimp			- Silent Circle Instant Message Protocol
+libscloud			- Silent Circle Cloud encryption 
+libtomcrypt			- Crypto library from Tom St Denis
+libtommath			- Math Lib from Tom St Denis
+optest				- Operational Tests for the libraries (good sample code)
+shared				- Source code shared by libraries
+yaji				- Yet Another JSON lib from Lloyd Hilaiel
+
+In addition, the following is auto generated:
+
+build
+	build/Headers	- shared headers produced by libraries
+	build/ios/		- iOS versions of the builds
+	build/osx/		- OSX versions of the builds.
+	
+	
+if we add UNIX builds they should also drop their object libraries 
+in a build/unix directory.
+ 
+In order to make this all work under XCODE, I suggest you use the following:
+
+1) create a project directory under the silent_circle_code directory 
+  - structure it with a <yourproject.xcodeproj> file and if possible 
+  a 'src' directory  for your code.
+
+2 add your Xcode project to the "silent circle code.xcworkspace"
+
+3) add the following user def :
+
+	SC_BASE = ../
+	
+	and  update your build products path to drop them into:
+	
+SYMROOT = $(SC_BASE)/build/osx
+SYMROOT = $(SC_BASE)/build/ios
+  
+4) name your target as <yourtarget> and <yourtarget>-ios if possible.
+
+5) pick up any shared headers from
+	USER_HEADER_SEARCH_PATHS = ../build/Headers $(SC_BASE)/shared
+	ALWAYS_SEARCH_USER_PATHS  = YES
+	
+6) if you create public headers export them as such
+	PUBLIC_HEADERS_FOLDER_PATH = ../../Headers
+
+7) add dependencies in the build phases as needed so they build the proper libraries 
+that you might need.
+
+
+Silent Chat:
+
+Silent Chat depends upon a few frameworks hosted on GitHub. We place them in a 
+separate, tracked directory: Vendors. That is when you check out  Silent Text 
+you get the private copy of the directories.
+ 
+Include the following code comments for anything Silent Circle creates.
+
+/*
+Copyright © 2012, Silent Circle
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Any redistribution, use, or modification is done solely for personal 
+      benefit and not for any commercial purpose or for monetary gain
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name Silent Circle nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */

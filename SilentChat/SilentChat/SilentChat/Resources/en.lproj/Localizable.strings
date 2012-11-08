@@ -1,0 +1,175 @@
+/*
+Copyright © 2012, Silent Circle
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Any redistribution, use, or modification is done solely for personal 
+      benefit and not for any commercial purpose or for monetary gain
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name Silent Circle nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+/* Burn Help */
+"After the specified delay, Burn Notice will destroy your recipient's copy of each message." = "After the specified delay, Burn Notice will destroy your recipient's copy of each message.";
+
+"Back" = "Back";
+
+/* Burn Delay */
+"Burn Delay" = "Burn Delay";
+
+/* Burn Notice */
+"Burn Notice" = "Burn Notice";
+
+"Cancel" = "Cancel";
+
+/* Conversation Options */
+"Conversation Options" = "Conversation Options";
+
+/* Delay */
+"Delay" = "Delay";
+
+/* Enter Contact */
+"Enter Contact" = "Enter Contact";
+
+/* For Your Eyes Only */
+"For Your Eyes Only" = "For Your Eyes Only";
+
+/* Send Location */
+"Include Location" = "Include Location";
+
+/* Location not available. */
+"Location not available." = "Location not available.";
+
+/* Location tracking must be turned on before it can be utilized in a message. */
+"Location tracking must be turned on before it can be utilized in a message." = "Location tracking must be turned on before it can be utilized in a message.";
+
+/* Reset Keys */
+"Reset Keys" = "Reset Keys";
+
+/* Location Help */
+"Reset the encryption keys." = "Reset the encryption keys.";
+
+/* Text Options Note */
+"These options apply only to this conversation." = "These options apply only to this conversation.";
+
+/* Text Options Note */
+"These options apply to this conversation only" = "These options apply to this conversation only";
+
+/* Location Help */
+"Turn on to include your location with outgoing messages." = "Turn on to include your location with outgoing messages.";
+
+/* Burn Help */
+"Turning on Burn Notice will, after a delay, destroy your recipient's copy of each message.  [Fix the shadow on this text!]" = "Turning on Burn Notice will, after a delay, destroy your recipient's copy of each message.  [Fix the shadow on this text!]";
+
+/* %@ does not have a silent text account */
+"%@ does not have a silent text account" = "%@ does not have a silent text account";
+
+/* Accept Re-Key */
+"%@ wishes to rekey\nSAS: %@" = "%1$@ wishes to rekey\nSAS: %2$@";
+
+/* Accept Re-Key */
+"Accept Re-Key" = "Accept Re-Key";
+
+/* ACTIVATE */
+"ACTIVATE" = "ACTIVATE";
+
+/*  Add Contact Button */
+"Add Contact" = "Add Contact";
+
+/* After %d hours */
+"After %d hours" = "After %d hours";
+
+/* After %d minutes */
+"After %d minutes" = "After %d minutes";
+
+/* After %d seconds */
+"After %d seconds" = "After %d seconds";
+
+/* After 1 hour */
+"After 1 hour" = "After 1 hour";
+
+/* After 1 minute */
+"After 1 minute" = "After 1 minute";
+
+/* Authentication Failed */
+"Authentication Failed" = "Authentication Failed";
+
+/* Burn Notice */
+"Burn Notice" = "Burn Notice";
+
+/* Cancel an alert window */
+"Cancel" = "Cancel";
+
+/* Contact Button */
+"Contact" = "Contact";
+
+/* Immediately */
+"Immediately" = "Immediately";
+
+/* Invalid User Name */
+"Invalid User Name" = "Invalid User Name";
+
+/* Logging In… */
+"Logging In…" = "Logging In…";
+
+/* Never */
+"Never" = "Never";
+
+/* New Contact */
+"New Contact" = "New Contact";
+
+/* Accept the dialog */
+"OK" = "OK";
+
+/* Please contact Silent Circle customer support with error code: \"%@\". */
+"Please contact Silent Circle customer support with error code: \"%@\"." = "Please contact Silent Circle customer support with error code: \"%@\".";
+
+/* For sending a message */
+"Send" = "Send";
+
+/* Settings view Title */
+"Settings" = "Settings";
+
+/* Create a new account */
+"SIGN UP" = "SIGN UP";
+
+/* Silent Phone Button */
+"Silent Phone" = "Silent Phone";
+
+/* Conversation view Title */
+"SILENT TEXT" = "SILENT TEXT";
+
+/* Unable to activate Silent Text */
+"Unable to activate Silent Text" = "Unable to activate Silent Text";
+
+/* Unable to connect to server. */
+"Unable to connect to server." = "Unable to connect to server.";
+
+/* verifying a particular user */
+"Verifying %@…" = "Verifying %@…";
+
+/* Verifying... */
+"Verifying…" = "Verifying…";
+
+/* when displaying version numbers such as 1.0.0 */
+"Version" = "Version";
+

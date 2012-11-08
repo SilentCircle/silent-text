@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1800" systemVersion="11E53" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="XMPPSilentCircleStateCoreDataStorageObject" representedClassName="XMPPSilentCircleStateCoreDataStorageObject" syncable="YES">
+        <attribute name="localJidStr" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="remoteJidStr" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="XMPPSilentCircleStateKeyCoreDataStorageObject" representedClassName="XMPPSilentCircleStateKeyCoreDataStorageObject" syncable="YES">
+        <attribute name="localJidStr" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="remoteJidStr" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="stateKey" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="XMPPSilentCircleStateKeyCoreDataStorageObject" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="XMPPSilentCircleStateCoreDataStorageObject" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>
