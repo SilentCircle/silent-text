@@ -14,13 +14,13 @@
         http://code.google.com/p/oauthconsumer/
     
     Can Burk Güder, HMAC-SHA1, 
-        http://bit.ly/a6Z8wM
+        http://stackoverflow.com/questions/756492/objective-c-sample-code-for-hmac-sha1
     
     Daniel Dickison, Decoding XML Entities, 
-        http://bit.ly/9sBJex
+        http://stackoverflow.com/questions/1105169/html-character-decoding-in-objective-c-cocoa-touch
     
     Krizz, ARC Macro, 
-        http://bit.ly/sT3ErN
+        http://stackoverflow.com/questions/8379287/how-to-require-arc-in-a-class/
     
     Iconfactory IFUnicodeURL Library by: Sean Heber, 
         https://github.com/BigZaphod/IFUnicodeURL
