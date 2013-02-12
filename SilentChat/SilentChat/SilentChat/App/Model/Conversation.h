@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,25 +17,24 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  Conversation.h
+//  SilentText
+//
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import <SCimp.h>
 
 
-enum {
-    kConversationFLag_Attention = 0,
-    kConversationFLag_Burn,
-};
 
 
 enum ConversationState_
@@ -54,6 +52,8 @@ enum ConversationState_
     
     kConversationState_Run         = 6,
     kConversationState_Init        = 7,
+    kConversationState_Error       = 8,
+    kConversationState_Keyed       = 9,
     
     ENUM_FORCE(  ConversationState_ )
 };
@@ -71,12 +71,15 @@ extern NSString *const kRemoteJID;
 extern NSString *const kMissives;
 extern NSString *const kSCPPID;
 extern NSString *const kSCimpLogEntries;
+extern NSString *const kInfoEntries;
+extern NSString *const kNotRead;
 
 typedef NSData *(^Cryptor)(NSData *data);
 
 @protocol ConversationDelegate;
 
 @class Missive;
+@class Siren;
 
 @interface Conversation : NSManagedObject
 
@@ -87,12 +90,13 @@ typedef NSData *(^Cryptor)(NSData *data);
 @property (strong, nonatomic) NSString *  localJID; // The Full JID.
 @property (strong, nonatomic) NSString * remoteJID; // The Full JID.
 @property (strong, nonatomic) NSData   * scimpKey;  // The shared key for a conversation.
-@property (strong, nonatomic) NSData   * scimpState;// The shared state for a conversation.
+@property (strong, nonatomic) NSData   * scimpState; // Deprecated  (we dont use this any more) 
 @property (strong, nonatomic) NSString * scppID;
 @property (nonatomic)         uint32_t shredAfter;
 @property (strong, nonatomic) NSDate   * viewedDate;// The last time this conversation was viewed. Used for the message exipry timer.
 @property (strong, nonatomic) NSSet    * missives;
 @property (strong, nonatomic) NSSet    * scimpLogEntries;
+@property (strong, nonatomic) NSSet    * infoEntries;
 @property (nonatomic)         uint16_t  notRead;
 
 @property (weak,   nonatomic) id<ConversationDelegate> delegate;
@@ -102,8 +106,19 @@ typedef NSData *(^Cryptor)(NSData *data);
 @property (nonatomic, readonly) BOOL isTracking; // Add the traditional getter to the CD BOOL property.
 
 @property (nonatomic) ConversationState conversationState;
+ 
+@property (nonatomic) BOOL attentionFlag;
+@property (nonatomic) BOOL burnFlag;
+@property (nonatomic) BOOL unseenBurnFlag;
+@property (nonatomic) BOOL keyedFlag;
+@property (nonatomic) BOOL keyVerifiedFlag;
 
- - (NSData *) encryptData: (NSData *) data;
+
+- (Siren*) findSirenFromUploads: (NSString*) locator;
+- (void)   removeSirenFromUpload: (NSString*) locator;
+- (void)   addSirenToUpload: (Siren*) siren;
+
+- (NSData *) encryptData: (NSData *) data;
 - (NSData *) decryptData: (NSData *) data;
 
 - (NSData *)   encryptedDataFromString: (NSString *) string;
@@ -111,6 +126,7 @@ typedef NSData *(^Cryptor)(NSData *data);
 
 - (Cryptor) encryptor;
 - (Cryptor) decryptor;
+
 
 @end
 
@@ -123,6 +139,8 @@ typedef NSData *(^Cryptor)(NSData *data);
 
 - (NSData *)   conversation: (Conversation *) conversation encryptedDataFromString: (NSString *) string;
 - (NSString *) conversation: (Conversation *) conversation stringFromEncryptedData: (NSData *)   data;
+
+- (void) conversation: (Conversation *) conversation deleteAllData:(NSString *) localJID remoteJID:(NSString *)remoteJID;
 
 @end
 
@@ -137,5 +155,10 @@ typedef NSData *(^Cryptor)(NSData *data);
 - (void) removeScimpLogEntriesObject: (Missive *) value;
 - (void)    addScimpLogEntries: (NSSet *) value;
 - (void) removeScimpLogEntries: (NSSet *) value;
+
+- (void)    addInfoEntriesObject: (Missive *) value;
+- (void) removeInfoEntriesObject: (Missive *) value;
+- (void)    addInfoEntries: (NSSet *) value;
+- (void) removeInfoEntries: (NSSet *) value;
 
 @end

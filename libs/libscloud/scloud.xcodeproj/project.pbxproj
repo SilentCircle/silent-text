@@ -1,0 +1,615 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2EA838FB15810B0A0066141B /* SCutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA838FA15810B0A0066141B /* SCutilities.c */; };
+		2EA838FC15810B0A0066141B /* SCutilities.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA838FA15810B0A0066141B /* SCutilities.c */; };
+		2EA8390015810EFA0066141B /* SCutilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA838FF15810EFA0066141B /* SCutilities.h */; };
+		2EA8390115810EFA0066141B /* SCutilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA838FF15810EFA0066141B /* SCutilities.h */; };
+		2EC6ABF7166D3C1B004E375F /* SCloudJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC6ABF6166D3C1B004E375F /* SCloudJSON.c */; };
+		2EC6ABF8166D3C1B004E375F /* SCloudJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC6ABF6166D3C1B004E375F /* SCloudJSON.c */; };
+		2EC7B6E6157E8DA800A05E6B /* cryptowrappers.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B6E3157E8DA800A05E6B /* cryptowrappers.h */; };
+		2EC7B6E7157E8DA800A05E6B /* SCpubTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B6E4157E8DA800A05E6B /* SCpubTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EC7B6E8157E8DA800A05E6B /* tomcryptwrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B6E5157E8DA800A05E6B /* tomcryptwrappers.c */; };
+		2EC7B6FF157E8DEA00A05E6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC7B6FE157E8DEA00A05E6B /* Foundation.framework */; };
+		2EC7B71E157E8E5E00A05E6B /* SCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B71D157E8E5E00A05E6B /* SCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EC7B71F157E8E5E00A05E6B /* SCloud.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B71D157E8E5E00A05E6B /* SCloud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EC7B721157E8F0000A05E6B /* SCloud.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B720157E8F0000A05E6B /* SCloud.c */; };
+		2EC7B722157E8F0000A05E6B /* SCloud.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B720157E8F0000A05E6B /* SCloud.c */; };
+		2EC7B724157E8F7600A05E6B /* SCloudPriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B723157E8F7600A05E6B /* SCloudPriv.h */; };
+		2EC7B725157E8F7600A05E6B /* SCloudPriv.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B723157E8F7600A05E6B /* SCloudPriv.h */; };
+		2EC7B73C157E92C700A05E6B /* tomcryptwrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EC7B6E5157E8DA800A05E6B /* tomcryptwrappers.c */; };
+		2EC7B788157E941E00A05E6B /* SCpubTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EC7B6E4157E8DA800A05E6B /* SCpubTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2EC6ABDB166D3B8F004E375F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E449F04157687AD0060B54D;
+			remoteInfo = yajl;
+		};
+		2EC6ABE1166D3B94004E375F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E057A261576BEFE005CBD7E;
+			remoteInfo = "yajl-IOS";
+		};
+		2EC7B72F157E92A500A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E7C041815389F7A00C285FC;
+			remoteInfo = tomcrypt;
+		};
+		2EC7B731157E92A500A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E2215F615519B61004E6CE8;
+			remoteInfo = "tomcrypt-IOS";
+		};
+		2EC7B738157E92B400A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B733157E92B400A05E6B /* tommath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E7C030C15389D5200C285FC;
+			remoteInfo = tommath;
+		};
+		2EC7B73A157E92B400A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B733157E92B400A05E6B /* tommath.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E2215421551986F004E6CE8;
+			remoteInfo = "tommath-IOS";
+		};
+		2EC7B74F157E934900A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E7C041715389F7A00C285FC;
+			remoteInfo = tomcrypt;
+		};
+		2EC7B751157E934D00A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B733157E92B400A05E6B /* tommath.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E7C030B15389D5200C285FC;
+			remoteInfo = tommath;
+		};
+		2EC7B753157E937D00A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E2215F515519B61004E6CE8;
+			remoteInfo = "tomcrypt-IOS";
+		};
+		2EC7B755157E938300A05E6B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B733157E92B400A05E6B /* tommath.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E2215411551986F004E6CE8;
+			remoteInfo = "tommath-IOS";
+		};
+		2ECD393B159A65AE00691A9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E449F05157687AD0060B54D;
+			remoteInfo = yajl;
+		};
+		2ECD393D159A65AE00691A9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E057A271576BEFE005CBD7E;
+			remoteInfo = "yajl-IOS";
+		};
+		2ECD393F159A65AE00691A9D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2E449F4A15768AC50060B54D;
+			remoteInfo = "yajl-test";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2EA838FA15810B0A0066141B /* SCutilities.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SCutilities.c; path = ../shared/SCutilities.c; sourceTree = "<group>"; };
+		2EA838FF15810EFA0066141B /* SCutilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCutilities.h; path = ../shared/SCutilities.h; sourceTree = "<group>"; };
+		2EC6ABF6166D3C1B004E375F /* SCloudJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SCloudJSON.c; path = src/SCloudJSON.c; sourceTree = "<group>"; };
+		2EC7B699157E8C1000A05E6B /* libscloud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libscloud.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC7B6E3157E8DA800A05E6B /* cryptowrappers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cryptowrappers.h; path = ../shared/cryptowrappers.h; sourceTree = "<group>"; };
+		2EC7B6E4157E8DA800A05E6B /* SCpubTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCpubTypes.h; path = ../shared/SCpubTypes.h; sourceTree = "<group>"; };
+		2EC7B6E5157E8DA800A05E6B /* tomcryptwrappers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tomcryptwrappers.c; path = ../shared/tomcryptwrappers.c; sourceTree = "<group>"; };
+		2EC7B6FC157E8DEA00A05E6B /* libscloud-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libscloud-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EC7B6FE157E8DEA00A05E6B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2EC7B71D157E8E5E00A05E6B /* SCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCloud.h; path = src/SCloud.h; sourceTree = "<group>"; };
+		2EC7B720157E8F0000A05E6B /* SCloud.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SCloud.c; path = src/SCloud.c; sourceTree = "<group>"; };
+		2EC7B723157E8F7600A05E6B /* SCloudPriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCloudPriv.h; path = src/SCloudPriv.h; sourceTree = "<group>"; };
+		2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tomcrypt.xcodeproj; path = ../libtomcrypt/tomcrypt.xcodeproj; sourceTree = "<group>"; };
+		2EC7B733157E92B400A05E6B /* tommath.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tommath.xcodeproj; path = ../libtommath/tommath.xcodeproj; sourceTree = "<group>"; };
+		2EC7B774157E93C900A05E6B /* yajl.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = yajl.xcodeproj; path = ../libyaji/yajl.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2EC7B696157E8C1000A05E6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EC7B6F9157E8DEA00A05E6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EC7B6FF157E8DEA00A05E6B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2EC7B68E157E8C1000A05E6B = {
+			isa = PBXGroup;
+			children = (
+				2EC7B71C157E8E4400A05E6B /* src */,
+				2EC7B6E1157E8D9B00A05E6B /* shared */,
+				2EC7B73D157E930700A05E6B /* libs */,
+				2EC7B6FD157E8DEA00A05E6B /* Frameworks */,
+				2EC7B69A157E8C1000A05E6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2EC7B69A157E8C1000A05E6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B699157E8C1000A05E6B /* libscloud.a */,
+				2EC7B6FC157E8DEA00A05E6B /* libscloud-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2EC7B6E1157E8D9B00A05E6B /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B6E3157E8DA800A05E6B /* cryptowrappers.h */,
+				2EA838FA15810B0A0066141B /* SCutilities.c */,
+				2EA838FF15810EFA0066141B /* SCutilities.h */,
+				2EC7B6E4157E8DA800A05E6B /* SCpubTypes.h */,
+				2EC7B6E5157E8DA800A05E6B /* tomcryptwrappers.c */,
+			);
+			name = shared;
+			sourceTree = "<group>";
+		};
+		2EC7B6FD157E8DEA00A05E6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B6FE157E8DEA00A05E6B /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2EC7B71C157E8E4400A05E6B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B71D157E8E5E00A05E6B /* SCloud.h */,
+				2EC7B723157E8F7600A05E6B /* SCloudPriv.h */,
+				2EC7B720157E8F0000A05E6B /* SCloud.c */,
+				2EC6ABF6166D3C1B004E375F /* SCloudJSON.c */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		2EC7B72B157E92A500A05E6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B730157E92A500A05E6B /* libtomcrypt.a */,
+				2EC7B732157E92A500A05E6B /* libtomcrypt-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2EC7B734157E92B400A05E6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B739157E92B400A05E6B /* libtommath.a */,
+				2EC7B73B157E92B400A05E6B /* libtommath-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2EC7B73D157E930700A05E6B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				2EC7B774157E93C900A05E6B /* yajl.xcodeproj */,
+				2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */,
+				2EC7B733157E92B400A05E6B /* tommath.xcodeproj */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+		2ECD3936159A65AE00691A9D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2ECD393C159A65AE00691A9D /* libyajl.a */,
+				2ECD393E159A65AE00691A9D /* libyajl-IOS.a */,
+				2ECD3940159A65AE00691A9D /* yajl-test */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2EC7B697157E8C1000A05E6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EC7B71E157E8E5E00A05E6B /* SCloud.h in Headers */,
+				2EC7B6E7157E8DA800A05E6B /* SCpubTypes.h in Headers */,
+				2EC7B6E6157E8DA800A05E6B /* cryptowrappers.h in Headers */,
+				2EC7B724157E8F7600A05E6B /* SCloudPriv.h in Headers */,
+				2EA8390015810EFA0066141B /* SCutilities.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EC7B6FA157E8DEA00A05E6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EC7B71F157E8E5E00A05E6B /* SCloud.h in Headers */,
+				2EC7B788157E941E00A05E6B /* SCpubTypes.h in Headers */,
+				2EC7B725157E8F7600A05E6B /* SCloudPriv.h in Headers */,
+				2EA8390115810EFA0066141B /* SCutilities.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2EC7B698157E8C1000A05E6B /* scloud */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EC7B69D157E8C1000A05E6B /* Build configuration list for PBXNativeTarget "scloud" */;
+			buildPhases = (
+				2EC7B695157E8C1000A05E6B /* Sources */,
+				2EC7B696157E8C1000A05E6B /* Frameworks */,
+				2EC7B697157E8C1000A05E6B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2EC6ABDC166D3B8F004E375F /* PBXTargetDependency */,
+				2EC7B752157E934D00A05E6B /* PBXTargetDependency */,
+				2EC7B750157E934900A05E6B /* PBXTargetDependency */,
+			);
+			name = scloud;
+			productName = scloud;
+			productReference = 2EC7B699157E8C1000A05E6B /* libscloud.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		2EC7B6FB157E8DEA00A05E6B /* scloud-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2EC7B706157E8DEA00A05E6B /* Build configuration list for PBXNativeTarget "scloud-ios" */;
+			buildPhases = (
+				2EC7B6F8157E8DEA00A05E6B /* Sources */,
+				2EC7B6F9157E8DEA00A05E6B /* Frameworks */,
+				2EC7B6FA157E8DEA00A05E6B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2EC6ABE2166D3B94004E375F /* PBXTargetDependency */,
+				2EC7B756157E938300A05E6B /* PBXTargetDependency */,
+				2EC7B754157E937D00A05E6B /* PBXTargetDependency */,
+			);
+			name = "scloud-ios";
+			productName = "scloud-ios";
+			productReference = 2EC7B6FC157E8DEA00A05E6B /* libscloud-ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2EC7B690157E8C1000A05E6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 2EC7B693157E8C1000A05E6B /* Build configuration list for PBXProject "scloud" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2EC7B68E157E8C1000A05E6B;
+			productRefGroup = 2EC7B69A157E8C1000A05E6B /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2EC7B72B157E92A500A05E6B /* Products */;
+					ProjectRef = 2EC7B72A157E92A500A05E6B /* tomcrypt.xcodeproj */;
+				},
+				{
+					ProductGroup = 2EC7B734157E92B400A05E6B /* Products */;
+					ProjectRef = 2EC7B733157E92B400A05E6B /* tommath.xcodeproj */;
+				},
+				{
+					ProductGroup = 2ECD3936159A65AE00691A9D /* Products */;
+					ProjectRef = 2EC7B774157E93C900A05E6B /* yajl.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				2EC7B698157E8C1000A05E6B /* scloud */,
+				2EC7B6FB157E8DEA00A05E6B /* scloud-ios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2EC7B730157E92A500A05E6B /* libtomcrypt.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtomcrypt.a;
+			remoteRef = 2EC7B72F157E92A500A05E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2EC7B732157E92A500A05E6B /* libtomcrypt-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libtomcrypt-ios.a";
+			remoteRef = 2EC7B731157E92A500A05E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2EC7B739157E92B400A05E6B /* libtommath.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtommath.a;
+			remoteRef = 2EC7B738157E92B400A05E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2EC7B73B157E92B400A05E6B /* libtommath-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libtommath-ios.a";
+			remoteRef = 2EC7B73A157E92B400A05E6B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2ECD393C159A65AE00691A9D /* libyajl.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libyajl.a;
+			remoteRef = 2ECD393B159A65AE00691A9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2ECD393E159A65AE00691A9D /* libyajl-IOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libyajl-IOS.a";
+			remoteRef = 2ECD393D159A65AE00691A9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2ECD3940159A65AE00691A9D /* yajl-test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "yajl-test";
+			remoteRef = 2ECD393F159A65AE00691A9D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2EC7B695157E8C1000A05E6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EC7B6E8157E8DA800A05E6B /* tomcryptwrappers.c in Sources */,
+				2EC7B721157E8F0000A05E6B /* SCloud.c in Sources */,
+				2EA838FB15810B0A0066141B /* SCutilities.c in Sources */,
+				2EC6ABF7166D3C1B004E375F /* SCloudJSON.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2EC7B6F8157E8DEA00A05E6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EC7B722157E8F0000A05E6B /* SCloud.c in Sources */,
+				2EC7B73C157E92C700A05E6B /* tomcryptwrappers.c in Sources */,
+				2EA838FC15810B0A0066141B /* SCutilities.c in Sources */,
+				2EC6ABF8166D3C1B004E375F /* SCloudJSON.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2EC6ABDC166D3B8F004E375F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = yajl;
+			targetProxy = 2EC6ABDB166D3B8F004E375F /* PBXContainerItemProxy */;
+		};
+		2EC6ABE2166D3B94004E375F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "yajl-IOS";
+			targetProxy = 2EC6ABE1166D3B94004E375F /* PBXContainerItemProxy */;
+		};
+		2EC7B750157E934900A05E6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = tomcrypt;
+			targetProxy = 2EC7B74F157E934900A05E6B /* PBXContainerItemProxy */;
+		};
+		2EC7B752157E934D00A05E6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = tommath;
+			targetProxy = 2EC7B751157E934D00A05E6B /* PBXContainerItemProxy */;
+		};
+		2EC7B754157E937D00A05E6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "tomcrypt-IOS";
+			targetProxy = 2EC7B753157E937D00A05E6B /* PBXContainerItemProxy */;
+		};
+		2EC7B756157E938300A05E6B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "tommath-IOS";
+			targetProxy = 2EC7B755157E938300A05E6B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2EC7B69B157E8C1000A05E6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SC_BASE = ../../;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SC_BASE)/build/Headers $(SC_BASE)/shared";
+			};
+			name = Debug;
+		};
+		2EC7B69C157E8C1000A05E6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SC_BASE = ../../;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SC_BASE)/build/Headers $(SC_BASE)/shared";
+			};
+			name = Release;
+		};
+		2EC7B69E157E8C1000A05E6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers;
+				SYMROOT = "$(SC_BASE)/build/osx";
+			};
+			name = Debug;
+		};
+		2EC7B69F157E8C1000A05E6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers;
+				SYMROOT = "$(SC_BASE)/build/osx";
+			};
+			name = Release;
+		};
+		2EC7B707157E8DEA00A05E6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/scloud_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SYMROOT = "$(SC_BASE)/build/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SC_BASE)/build/Headers $(SC_BASE)/libs/shared";
+			};
+			name = Debug;
+		};
+		2EC7B708157E8DEA00A05E6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/scloud_ios.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = ../../Headers;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SYMROOT = "$(SC_BASE)/build/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SC_BASE)/build/Headers $(SC_BASE)/libs/shared";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2EC7B693157E8C1000A05E6B /* Build configuration list for PBXProject "scloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EC7B69B157E8C1000A05E6B /* Debug */,
+				2EC7B69C157E8C1000A05E6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2EC7B69D157E8C1000A05E6B /* Build configuration list for PBXNativeTarget "scloud" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EC7B69E157E8C1000A05E6B /* Debug */,
+				2EC7B69F157E8C1000A05E6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2EC7B706157E8DEA00A05E6B /* Build configuration list for PBXNativeTarget "scloud-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2EC7B707157E8DEA00A05E6B /* Debug */,
+				2EC7B708157E8DEA00A05E6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2EC7B690157E8C1000A05E6B /* Project object */;
+}

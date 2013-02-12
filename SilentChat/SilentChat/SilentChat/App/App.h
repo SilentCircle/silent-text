@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  App.h
+//  SilentChat
+//
 
 #import <UIKit/UIKit.h>
 #import "DDGApp+Block.h"
@@ -43,8 +45,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class GeoTracking;
 @class SCAddressBook;
 @class SCPasscodeManager;
-@class Reachability;
 @class XMPPJID;
+@class STSoundManager;
+@class SCloudManager;
+@class XMPPSilentCircle;
 
 // Error Domain
 extern NSString *const kSCErrorDomain;
@@ -59,6 +63,8 @@ extern NSString *const kSCErrorDomain;
 @property (strong, nonatomic) NSManagedObjectID *currentAccountID;
 @property (strong, nonatomic) Preferences *preferences;
 @property (strong, nonatomic) XMPPServer *xmppServer;
+@property (strong, nonatomic, readonly) XMPPSilentCircle *xmppSilentCircle;
+
 @property (strong, nonatomic) ConversationManager *conversationManager;
 @property (strong, nonatomic) DDGQueue *heartbeatQueue;
  
@@ -67,9 +73,17 @@ extern NSString *const kSCErrorDomain;
 @property (strong, nonatomic) NSString *pushToken;
 
 @property (strong, nonatomic) GeoTracking *geoTracking;
+@property (strong, nonatomic) STSoundManager *soundManager;
+@property (strong, nonatomic) SCloudManager *scloudManager;
+
 @property (strong, nonatomic) SCAddressBook *addressBook;
 @property (strong, nonatomic) SCPasscodeManager *passcodeManager;
-@property (strong, nonatomic) Reachability* reachability;
+
+@property (nonatomic, retain) UIImage *bannerImage;
+@property (nonatomic, readwrite) NSTimeInterval serverTimeOffset;
+
+@property (strong, nonatomic, readonly, retain) NSDictionary* docTypes;
+@property (strong, nonatomic) UIImageView *backgroundIV;
 
 - (SCAccount *) useNewAccount: (SCAccount *) account;
 - (void) deleteCurrentAccount;
@@ -83,5 +97,4 @@ extern NSString *const kSCErrorDomain;
 + (App *) sharedApp;
 
 - (void) resetAccounts;
-
 @end

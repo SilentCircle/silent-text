@@ -338,6 +338,8 @@
 		2E47C9B81538D98F0098F0AC /* ltc_ecc_points.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B59D21538A3D700870C9E /* ltc_ecc_points.c */; };
 		2E822C0B15A76681000E1498 /* pkcs_5_2.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B59361538A3D700870C9E /* pkcs_5_2.c */; };
 		2E822C0D15A76681000E1498 /* pkcs_5_2.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B59361538A3D700870C9E /* pkcs_5_2.c */; };
+		2E89956C1685063800F08589 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B58C01538A3D600870C9E /* md5.c */; };
+		2E89956E1685063900F08589 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B58C01538A3D600870C9E /* md5.c */; };
 		2ECB295B1538DD4600387816 /* tomcrypt_math.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E0B58D81538A3D700870C9E /* tomcrypt_math.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2ECB295D1538DDFB00387816 /* crypt_ltc_mp_descriptor.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B59291538A3D700870C9E /* crypt_ltc_mp_descriptor.c */; };
 		2ECB295E1538E01100387816 /* rsa_decrypt_key.c in Sources */ = {isa = PBXBuildFile; fileRef = 2E0B59E81538A3D700870C9E /* rsa_decrypt_key.c */; };
@@ -2042,6 +2044,7 @@
 				2E38CBBF1561B3000003BF81 /* gcm_test.c in Sources */,
 				2E425C6E1590DFF100B0BCC2 /* ccm_memory.c in Sources */,
 				2E822C0B15A76681000E1498 /* pkcs_5_2.c in Sources */,
+				2E89956C1685063800F08589 /* md5.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2236,6 +2239,7 @@
 				2E38CBB41561B3000003BF81 /* gcm_test.c in Sources */,
 				2E425C6C1590DFF000B0BCC2 /* ccm_memory.c in Sources */,
 				2E822C0D15A76681000E1498 /* pkcs_5_2.c in Sources */,
+				2E89956E1685063900F08589 /* md5.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

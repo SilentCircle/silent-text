@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,16 +17,17 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-
+*/
+//
+//  Siren.m
+//  SilentText
 //
 //  Sirens try to capture JSON and the Argonauts.
 //
@@ -38,6 +38,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "AppConstants.h"
 #import "Siren.h"
+#import "NSString+SCUtilities.h"
+#import "NSData+SCUtilities.h"
 
 #import "StorageCipher.h"
 
@@ -45,7 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DDGMacros.h"
 
 NSString *const kCloudKeyKey = @"cloud_key";
-NSString *const kCloudURLKey = @"cloud_url";
+NSString *const kCloudLocatorKey = @"cloud_url";
 NSString *const kConversationIDKey = @"conversation_id";
 NSString *const kFYEOKey = @"fyeo";
 NSString *const kMessageKey = @"message";
@@ -54,14 +56,20 @@ NSString *const kReceivedIDKey = @"received_id";
 NSString *const kReceivedTimeKey = @"received_time";
 NSString *const kRequestReceiptKey = @"request_receipt";
 NSString *const kRequestResendKey = @"request_resend";
+NSString *const kRequestBurnKey = @"request_burn";
 NSString *const kShredAfterKey = @"shred_after";
 NSString *const kLocationKey = @"location";
 NSString *const kPingKey = @"ping";
 
+NSString *const kVcardKey = @"vcard";
+
+NSString *const kThumbNailKey = @"thumbnail";
+NSString *const kMediaTypeKey = @"media_type";
+
 NSString *const kPingRequest = @"PING";
 NSString *const kPingResponse = @"PONG";
 
-
+static const NSUInteger kNumSirenKeys = 20;
 
 @interface Siren ()
 
@@ -69,6 +77,8 @@ NSString *const kPingResponse = @"PONG";
 @property (strong, nonatomic, readwrite) NSData   *jsonData;
 @property (strong, nonatomic, readwrite) XMPPMessage *chatMessage;
 @property (strong, nonatomic) NSMutableDictionary *info;
+@property ( nonatomic) BOOL  badData;
+
 
 @end
 
@@ -86,7 +96,7 @@ NSString *const kPingResponse = @"PONG";
 @dynamic chatMessageID;
 
 @dynamic cloudKey;
-@dynamic cloudURL;
+@dynamic cloudLocator;
 @dynamic conversationID;
 @dynamic fyeo;
 @dynamic plainText;
@@ -94,9 +104,13 @@ NSString *const kPingResponse = @"PONG";
 @dynamic receivedID;
 @dynamic receivedTime;
 @dynamic requestResend;
+@dynamic requestBurn;
 @dynamic shredAfter;
 @dynamic ping;
 @dynamic location;
+@dynamic thumbnail;
+@dynamic mediaType;
+@dynamic vcard;
 
 
 @synthesize info = _info;
@@ -129,6 +143,15 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
 
 #pragma mark - Accessor methods.
 
+- (id)copyWithZone:(NSZone *)zone
+{
+      NSData *jsonData = [self jsonData];
+     Siren *siren = [Siren sirenWithJSONData: jsonData];
+    
+ 	return siren;
+}
+
+
 
 - (NSString *) json {
     
@@ -160,6 +183,7 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
                     nil);
     if (error) {
         
+        self.badData = YES;
         DDGDesc(error.userInfo);
     }
     self.jsonData = data;
@@ -258,22 +282,64 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
 } // -setCloudKey:
 
 
-- (NSString *) cloudURL {
+- (NSString *) cloudLocator {
     
-    NSString *cloudURL = [self.info valueForKey: kCloudURLKey];
+    NSString *cloudLocator = [self.info valueForKey: kCloudLocatorKey];
     
-    return [cloudURL isKindOfClass: NSString.class] ? cloudURL : nil;
+    return [cloudLocator isKindOfClass: NSString.class] ? cloudLocator : nil;
     
-} // -cloudURL
+} // -cloudLocator
 
 
-- (void) setCloudURL: (NSString *) cloudURL {
+- (void) setCloudLocator: (NSString *) cloudLocator {
     
     [self nilJSON];
     
-    [self.info setValue: cloudURL forKey: kCloudURLKey];
+    [self.info setValue: cloudLocator forKey: kCloudLocatorKey];
     
-} // -setCloudURL:
+} // -setcloudLocator:
+
+
+- (NSString *) mediaType {
+    
+    NSString *mediaType = [self.info valueForKey: kMediaTypeKey];
+    
+    return [mediaType isKindOfClass: NSString.class] ? mediaType : nil;
+    
+} // -mediaType
+
+
+- (void) setMediaType:(NSString *)mediaType{
+    
+    [self nilJSON];
+    
+    [self.info setValue: mediaType forKey: kMediaTypeKey];
+    
+} // -setMediaType:
+
+
+
+- (NSString *) vcard {
+    
+    NSString *vcard = [self.info valueForKey: kVcardKey];
+    
+    return [vcard isKindOfClass: NSString.class] ? vcard : nil;
+
+       
+} // -thumbnail
+
+ 
+
+- (void) setVcard:(NSString *)thumbnail  {
+    
+    [self nilJSON];
+    
+    [self.info setValue: thumbnail forKey: kVcardKey];
+
+  } // -setThumbnail:
+
+
+
 
 
 - (NSString *) conversationID {
@@ -329,6 +395,35 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
     [self.info setValue: location forKey: kLocationKey];
     
 } // -setLocation:
+
+
+
+
+- (NSData *) thumbnail {
+    
+    NSData* data = NULL;
+    
+     if([[self.info valueForKey: kThumbNailKey] isKindOfClass: NSString.class])
+    {
+        NSString *thumbnailString = [self.info valueForKey: kThumbNailKey];
+         data = [thumbnailString base64Decoded];
+    }
+   
+   return  data;
+    
+} // -thumbnail
+
+
+
+
+- (void) setThumbnail:(NSData *)thumbnail  {
+    
+    [self nilJSON];
+        
+    [self.info setValue: [thumbnail base64Encoded] forKey: kThumbNailKey];
+    
+} // -setThumbnail:
+
 
 
 
@@ -514,6 +609,24 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
 } // -setRequestResend:
 
 
+- (NSString *) requestBurn {
+    
+    NSString *requestBurn = [self.info valueForKey: kRequestBurnKey];
+    
+    return [requestBurn isKindOfClass: NSString.class] ? requestBurn : nil;
+    
+} // -requestBurn
+
+
+- (void) setRequestBurn: (NSString *) requestBurn {
+    
+    [self nilJSON];
+    
+    [self.info setValue: requestBurn forKey: kRequestBurnKey];
+    
+} // -setRequestResend:
+
+
 - (uint32_t) shredAfter {
     
     NSNumber *timeInterval = [self.info valueForKey: kShredAfterKey];
@@ -566,11 +679,13 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
 
 - (Siren *) initWithJSONData: (NSData *) jsonData {
     
-    DDGTrace();
+//    DDGTrace();
     
     self = [super init];
     
     if (self) {
+        
+        self.badData = NO;
         
         if (jsonData) {
             
@@ -586,14 +701,15 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
                 
                 DDGDesc(error.userInfo);
                 
+                self.badData = YES;
                 info = nil;
                 [self nilJSON];
             }
-            self.info = info ? info : [NSMutableDictionary dictionaryWithCapacity: 6];
+            self.info = info ? info : [NSMutableDictionary dictionaryWithCapacity: kNumSirenKeys];
         }
         else {
             
-            self.info = [NSMutableDictionary dictionaryWithCapacity: 6]; // The number of different JSON keys.
+            self.info = [NSMutableDictionary dictionaryWithCapacity: kNumSirenKeys]; // The number of different JSON keys.
         }
     }
     return self;
@@ -695,11 +811,9 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
     
     [message addAttributeWithName: kXMPPID stringValue: [XMPPStream generateUUID]];
 
-#ifdef SIREN_DEBUG
-    NSXMLElement * bodyElement = [NSXMLElement.alloc initWithName: kXMPPBody stringValue: self.json];
-#else
+
     NSXMLElement * bodyElement = [NSXMLElement.alloc initWithName: kXMPPBody];
-#endif
+
     [message addChild: bodyElement];
     
     NSXMLElement *sirenElement = [NSXMLElement.alloc initWithName: kSCPPSiren URI: kSCPPNameSpace];
@@ -712,4 +826,11 @@ static NSDateFormatter *    _siren_dateFormatter = nil;
     
 } // -chatMessageToJID
 
+
+- (BOOL) isValid
+{
+    return !self.badData;
+}
+
+ 
 @end

@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  SCimpTest.c
+//  optest
+//
 
 #include <limits.h>
 #include <stdio.h>
@@ -118,7 +120,17 @@ SCLError sEventHandler(SCloudContextRef ctx, SCloudEvent* event, void* uservalue
     
     switch(event->type)
     {
-         case kSCloudEvent_DecryptedData:
+    
+        case kSCloudEvent_Progress:
+        {
+            SCloudEventProgressData  *d =    &event->data.progress;
+ 
+            printf("HASHING ( %zd, %zd, %d%%)\n", d->bytesProcessed , d->bytesTotal,
+                   (int)(((float)d->bytesProcessed / (float)d->bytesTotal)*100));
+        }
+            break;
+
+        case kSCloudEvent_DecryptedData:
         {
             SCloudEventDecryptData  *d =    &event->data.decryptData;
             
@@ -137,7 +149,16 @@ SCLError sEventHandler(SCloudContextRef ctx, SCloudEvent* event, void* uservalue
             
         }
         break;
+             
+        case kSCloudEvent_DecryptedMetaDataComplete:
+        {
+            SCloudEventDecryptMetaData  *d =    &event->data.metaData;
             
+            printf("DECRYPT META COMPLETE(%d)\n", (int)d->length);
+            printf("\t|%.*s|\n\n", (int)d->length, d->data);
+            
+        }
+        break;
             
         case kSCloudEvent_Error:
         {    
@@ -182,36 +203,62 @@ static SCLError TestSCloud()
     SCLError err = kSCLError_NoErr;
     SCloudContextRef   scloud = NULL;
     SCloudContextRef   scloud1 = NULL;
-    int         i;
+    uint8_t             *keyBLOB = NULL;
+    
+   int         i;
     
     for(i = 0; banter[i] != NULL; i++)
     {
+        
+        size_t  keyBLOBlen  = 0;
+        
         uint8_t key[SCLOUD_KEY_LEN] = {0};
         size_t  keylen  = 0;
   
         uint8_t keyURL[SCLOUD_KEY_LEN * 2] = {0};
         size_t  keyURLlen  = 0;
         
-        uint8_t locator[SCLOUD_HASH_LEN] = {0};;
+        uint8_t locator[SCLOUD_LOCATOR_LEN] = {0};;
         size_t  locatorlen  = 0;
         
-        uint8_t locatorURL[SCLOUD_HASH_LEN * 2] = {0};;
+        uint8_t locatorURL[SCLOUD_LOCATOR_LEN * 2] = {0};;
         size_t  locatorURLlen  = 0;
         
          uint8_t metaData[128];
         size_t metaDataLen = 0;
+        
+        char* contextStr[128];
         
         uint8_t outBuffer[4096] = {0};
         uint8_t *p;
         size_t  outTotal  = 0;
         size_t  dataSize  = 0;
         
+        if(IsntNull(keyBLOB))
+        {
+            free(keyBLOB);
+            keyBLOB = NULL;
+         }
+        
+        sprintf((char*)contextStr, "Context %d", i);
+
         metaDataLen = sprintf((char*)metaData, "Item %d, Length %d and some other meta data", i,  (int)strlen(banter[i]));
                 
         printf("Encrypting Message %d, %d bytes\n\n",i, (int)strlen(banter[i]));
-         
-        err = SCloudEncryptNew( banter[i] ,  strlen(banter[i]) , metaData, metaDataLen, &scloud); CKERR;
-         
+        
+        
+        err = SCloudEncryptNew( contextStr, strlen((const char*)contextStr),
+                               banter[i] ,  strlen(banter[i]) ,
+                               metaData, metaDataLen,
+                               sEventHandler, (void*)0x1234567,
+                               &scloud); CKERR;
+        
+         printf("Calculating Keys\n");
+        err = SCloudCalculateKey(scloud, 10); CKERR;
+        
+        err = SCloudEncryptGetKeyBLOB(scloud, &keyBLOB, &keyBLOBlen); CKERR;
+        printf("KeyBLOB: %s", keyBLOB);
+        
         printf("Key: ");
         keyURLlen = sizeof(keyURL);
         err = SCloudEncryptGetKeyREST(scloud, keyURL, &keyURLlen); CKERR;
@@ -250,16 +297,24 @@ static SCLError TestSCloud()
         
         dumpHex(outBuffer, (int) outTotal, 0);
         
-        if (i&1)
+        if ((i & 0x3) == 1)
         {
-            err = SCloudDecryptNew(keyURL, strlen((char*)keyURL), true, sEventHandler, (void*)0x1234567, &scloud1); CKERR;
+            err = SCloudDecryptNew(keyURL, strlen((char*)keyURL),  sEventHandler, (void*)0x1234567, &scloud1); CKERR;
+            
+        }
+        else if ((i & 0x3) == 2)
+            
+        {
+            err = SCloudDecryptNew(key, keylen, sEventHandler, (void*)0x1234567, &scloud1); CKERR;
             
         }
         else
         {
-            err = SCloudDecryptNew(key, keylen, false, sEventHandler, (void*)0x1234567, &scloud1); CKERR;
+            err = SCloudDecryptNew(keyBLOB, keyBLOBlen, sEventHandler, (void*)0x1234567, &scloud1); CKERR;
             
         }
+        
+        
         
         size_t bytes2copy ;
          
@@ -277,11 +332,15 @@ static SCLError TestSCloud()
             
         }
         
+        
     }
     
      
 done:    
-    
+    if(IsntNull(keyBLOB))
+        free(keyBLOB);
+     keyBLOB = NULL;
+
     if(IsntNull(scloud1))
         SCloudFree(scloud1);
     

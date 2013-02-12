@@ -12,5 +12,7 @@
 	<array>
 		<string>$(AppIdentifierPrefix)$(CFBundleIdentifier)</string>
 	</array>
+    <key>DataProtectionClass</key>
+    <string>NSFileProtectionComplete</string>
 </dict>
 </plist>

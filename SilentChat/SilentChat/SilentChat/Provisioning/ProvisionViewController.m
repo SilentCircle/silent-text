@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  ProvisionViewController.m
+//  SilentText
+//
 
 #import <Foundation/Foundation.h>
 
@@ -40,7 +42,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "App+Model.h"
 #import "SCPPServer.h"
 #import "NSManagedObjectContext+DDGManagedObjectContext.h"
-#import "MGLoadingView.h"
+#import "MBProgressHUD.h"
+
 #import "NetworkActivityIndicator.h"
  
 #import "ProvisionViewController.h"
@@ -53,9 +56,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #  error Please compile this class with ARC (-fobjc-arc).
 #endif
  
-@interface ProvisionViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface ProvisionViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, MBProgressHUDDelegate>
 
-@property (nonatomic, strong) MGLoadingView *loadingView;
+@property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) SCProvisoning *provisioning;
 
 - (void)limitTextField:(NSNotification *)note ;
@@ -69,26 +72,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize activateButton = _activateButton;
 @synthesize signupButton = _signupButton;
 @synthesize resetButton = _resetButton;
+@synthesize versionLabel = _versionLabel;
 
-@synthesize loadingView = _loadingView;
+@synthesize HUD = _HUD;
 @synthesize provisioning = _provisioning;
 
 #pragma mark - Accessor methods.
-
-
-- (MGLoadingView *) loadingView {
-    
-    if (_loadingView) { return _loadingView; }
-    
-    MGLoadingView *lv = [MGLoadingView.alloc initWithView: self.view
-                                                    label: @"Activating..."];
-    self.loadingView = lv;
-    
-    return lv;
-    
-} // -loadingView
-
-
+ 
 #pragma mark - Textfield customization methods.
 
 - (void)limitTextField:(NSNotification *)note {
@@ -156,7 +146,14 @@ replacementString:(NSString *)string {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+   
+    NSBundle *main = NSBundle.mainBundle;
+    NSString *version = [main objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString *build   = [main objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    NSString *appVersion = [NSString stringWithFormat: @"%@: %@ (%@)", NSLS_COMMON_VERSION, version, build];
+
+    self.versionLabel.text =  appVersion;
+
     self.provisioning = [[SCProvisoning alloc] initWithDelegate: self];
     
     [self.signupButton      setTitle: NSLS_COMMON_SIGN_UP forState:UIControlStateNormal];
@@ -174,9 +171,8 @@ replacementString:(NSString *)string {
         [self.resetButton setImage:buttonImage forState:UIControlStateNormal];
         self.resetButton.enabled = YES;
         self.resetButton.hidden = NO;
-      
-    }
-}
+     }
+ }
 
 - (void)viewDidUnload
 {
@@ -188,18 +184,19 @@ replacementString:(NSString *)string {
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+- (NSUInteger)supportedInterfaceOrientations
+{
+	return UIInterfaceOrientationMaskPortrait;
+}
+
 
 
 - (void) stopActivityIndicator
 {
     [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];
     
-   if(self.loadingView)
-   {
-       [self.loadingView.activityIndicatorView stopAnimating];
-       [self.loadingView fadeOut];
-   }
-    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+     
     self.activationCode.enabled     = YES;
     self.activateButton.enabled  = YES;
     self.signupButton.enabled = YES;
@@ -210,19 +207,17 @@ replacementString:(NSString *)string {
     
     [NetworkActivityIndicator.sharedNetworkActivityIndicator startNetworkActivityIndicator];
     
-    MGLoadingView *lv = self.loadingView;
     
-    [self.view addSubview: lv];
-    
-    [lv.activityIndicatorView startAnimating];
-    [lv fadeIn];
-    
+    self.HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.HUD.delegate = self;
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
+    self.HUD.labelText = NSLS_COMMON_ACTIVATING;
+      
     self.activationCode.enabled     = NO;
     self.activateButton.enabled  = NO;
     self.signupButton.enabled = NO;
     
     [self.activationCode resignFirstResponder];
-    
 }
 
 
@@ -230,7 +225,7 @@ replacementString:(NSString *)string {
 
 - (ProvisionViewController *) loginWithAccount: (SCAccount *) account {
     
-    XMPPStream *xmppStream = [App.sharedApp.xmppServer changeServiceServer: account.serviceServer];
+    XMPPStream *xmppStream = [App.sharedApp.xmppServer changeAccount: account];
     
     [xmppStream addDelegate: self delegateQueue: dispatch_get_main_queue()];
     
@@ -294,7 +289,7 @@ replacementString:(NSString *)string {
 
 - (void) provisionCompletedWithInfo: (NSDictionary*) info
 {
-    self.loadingView.label.text = NSLS_COMMON_LOGGING_IN;
+    self.HUD.labelText = NSLS_COMMON_LOGGING_IN;
     
     App *app = App.sharedApp;
     SCAccount *account = [self makeAccountwithInfo: info];
@@ -359,8 +354,7 @@ replacementString:(NSString *)string {
     
     [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];
     
-    [self.loadingView.activityIndicatorView stopAnimating];
-    [self.loadingView fadeOut];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     self.activationCode.enabled = YES;
     self.activateButton.enabled = YES;
@@ -378,9 +372,8 @@ replacementString:(NSString *)string {
     
     [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];
     
-   [self.loadingView.activityIndicatorView stopAnimating];
-   [self.loadingView fadeOut];
-    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+   
 //    [self deleteOldAccount];
     
     [self dismissViewControllerAnimated: YES completion: NULL];
@@ -413,8 +406,7 @@ replacementString:(NSString *)string {
     
      [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];
     
-     [self.loadingView.activityIndicatorView stopAnimating];
-    [self.loadingView fadeOut];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
  
     self.activationCode.enabled = YES;
     self.activateButton.enabled = YES;
@@ -428,5 +420,16 @@ replacementString:(NSString *)string {
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UITextFieldTextDidChangeNotification" object:self.activationCode];
 }
+
+
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[self.HUD removeFromSuperview];
+	self.HUD = nil;
+}
+
 
 @end

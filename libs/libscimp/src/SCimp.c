@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,14 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
 
 #include "SCpubTypes.h"
 #include "cryptowrappers.h"
@@ -87,7 +85,7 @@ SCLError SCimpNew(
     ctx->transQueue.last = TRANS_QUEUESIZE-1;
     ctx->transQueue.count = 0;
  
-    scResetSCimpContext(ctx);
+    scResetSCimpContext(ctx, true);
     
     pthread_mutex_init(&ctx->mp , NULL);
     
@@ -99,6 +97,7 @@ SCLError SCimpNew(
         
     *outscimp = ctx; 
     
+    scEventAdviseSaveState(ctx);
 done:
     return err;
 }
@@ -137,19 +136,27 @@ SCLError SCimpSaveState(SCimpContextRef ctx,  uint8_t *key, size_t  keyLen, void
     uint8_t *lenP = NULL;
     int     i;
     
+    unsigned long           PKlen = PK_ALLOC_SIZE;
+    uint8_t                *PK = NULL;
+    
+    uint8_t                 *hashState = NULL;
+    size_t                  hashStateLen = kHASH_ContextAllocSize;
+
     validateSCimpContext(ctx);
     ValidateParam(key);
     ValidateParam(outBlob);
     ValidateParam(blobSize);
     
-    //must be in ready state  
+    //must be in ready state
        
     p = buffer;
     
     sStore32( ctx->magic, &p);
     lenP = p;
     p+= sizeof(uint16_t);
+    sStore8( kSCimpBlobVersion, &p);
     sStore8( ctx->version, &p);
+      
     sStore8( ctx->state, &p);
     sStore8( ctx->cipherSuite, &p);
     sStore8( ctx->sasMethod, &p);
@@ -163,20 +170,52 @@ SCLError SCimpSaveState(SCimpContextRef ctx,  uint8_t *key, size_t  keyLen, void
         sStoreArray(ctx->Rcv[i].key, SCIMP_KEY_LEN, &p );
         sStore64(ctx->Rcv[i].index, &p );
     }
-     sStoreArray(ctx->Ksnd, sizeof(ctx->Ksnd), &p );
+    sStoreArray(ctx->Ksnd, sizeof(ctx->Ksnd), &p );
     sStore64(ctx->Isnd, &p );
     sStoreArray(ctx->Cs, sizeof(ctx->Cs), &p );
     sStoreArray(ctx->Cs1, sizeof(ctx->Cs1), &p );
     
+    sStoreArray(ctx->Hcs, sizeof(ctx->Hcs), &p );
+    sStoreArray(ctx->Hpki, sizeof(ctx->Hpki), &p );
+    sStoreArray(ctx->MACi, sizeof(ctx->MACi), &p );
+    sStoreArray(ctx->MACr, sizeof(ctx->MACr), &p );
+    
     sStore8( ctx->isInitiator, &p);
     sStore8( ctx->hasCs, &p);
     sStore8( ctx->csMatches, &p);
-    
+    sStore32( ctx->SAS, &p);
+     
     sStore8( strlen(ctx->meStr)+1, &p);
     sStoreArray(ctx->meStr, strlen(ctx->meStr) +1, &p);
     sStore8( strlen(ctx->youStr)+1, &p);
     sStoreArray(ctx->youStr, strlen(ctx->youStr)+1, &p);
-     
+    
+    if(ctx->privKey)
+    {
+        PK = XMALLOC(PK_ALLOC_SIZE); CKNULL(PK);
+        err = ECC_Export(ctx->privKey, true, PK, PKlen, &PKlen); CKERR;
+        sStore8(PKlen, &p);
+        sStoreArray(PK, PKlen,&p);
+   }
+    else
+    {
+        sStore8(0, &p);
+    }
+  
+    if(ctx->HtotalState)
+    {
+        hashState = XMALLOC(kHASH_ContextAllocSize); CKNULL(hashState);
+        err = HASH_Export(ctx->HtotalState, hashState, hashStateLen, &hashStateLen);CKERR;
+        
+        sStore16(hashStateLen, &p);
+        sStoreArray(hashState, hashStateLen,&p);
+    }
+    else
+    {
+        sStore16(0, &p);
+    }
+
+    
     bufLen = p - buffer;
     sStore16( bufLen, &lenP);
 
@@ -186,6 +225,18 @@ SCLError SCimpSaveState(SCimpContextRef ctx,  uint8_t *key, size_t  keyLen, void
         
 done:
     
+    if(IsntNull(PK))
+    {
+        ZERO(PK, PK_ALLOC_SIZE);
+        XFREE(PK);
+    }
+
+    if(IsntNull(hashState))
+    {
+        ZERO(hashState, kHASH_ContextAllocSize);
+        XFREE(hashState);
+    }
+
     if(IsntNull(encoded)) XFREE(encoded);
     ZERO(buffer, sizeof(buffer));
     return err;
@@ -203,12 +254,19 @@ SCLError SCimpRestoreState( uint8_t *key, size_t  keyLen, void *blob, size_t blo
     uint8_t             *encoded    = NULL;
 
     uint8_t             *buffer = NULL;        // currently this is 898 bytes 
+    uint8_t             *bufferEnd = NULL;
     size_t              bufLen;
    
     uint8_t             *p = NULL;
     size_t              len;
     size_t              blobLen = 0;
-   
+    
+    uint8_t             *PK = NULL;
+    size_t              PKLen = 0;
+ 
+    uint8_t             *hashState = NULL;
+    size_t              hashStateLen = 0;
+
     int             i;
    
     ValidateParam(blob);
@@ -219,6 +277,7 @@ SCLError SCimpRestoreState( uint8_t *key, size_t  keyLen, void *blob, size_t blo
     err = CCM_Decrypt(key,  keyLen, NULL, 0,  encoded, encodedLen,  tag, tagLen, &buffer, &bufLen  ); CKERR;
     
     p = buffer;
+    bufferEnd = buffer + bufLen;
     
     // check blobsize here
     if((sLoad32(&p) != kSCimpContextMagic)) RETERR(kSCLError_CorruptData);
@@ -226,6 +285,7 @@ SCLError SCimpRestoreState( uint8_t *key, size_t  keyLen, void *blob, size_t blo
     blobLen = sLoad16(&p);
     if(blobLen != bufLen)  RETERR(kSCLError_CorruptData);
 
+    if((sLoad8(&p) != kSCimpBlobVersion)) RETERR(kSCLError_CorruptData);
     if((sLoad8(&p) != kSCimpVersion)) RETERR(kSCLError_CorruptData);
       
     ctx = XMALLOC(sizeof (SCimpContext)); CKNULL(ctx);
@@ -239,7 +299,7 @@ SCLError SCimpRestoreState( uint8_t *key, size_t  keyLen, void *blob, size_t blo
     
     pthread_mutex_init(&ctx->mp , NULL);
     
-    scResetSCimpContext(ctx);
+    scResetSCimpContext(ctx, true);
     
     ctx->version = kSCimpVersion;
     ctx->state         = sLoad8(&p);
@@ -264,34 +324,70 @@ SCLError SCimpRestoreState( uint8_t *key, size_t  keyLen, void *blob, size_t blo
         RETERR(kSCLError_FeatureNotAvailable);
     };
 
-    sLoadArray(&ctx->SessionID, sizeof(ctx->SessionID), &p );
+    err = sLoadArray(&ctx->SessionID, sizeof(ctx->SessionID), &p, bufferEnd ); CKERR;
     
     ctx->rcvIndex   =  sLoad8(&p);
     for(i = 0; i< SCIMP_RCV_QUEUE_SIZE; i++)
     {
-        sLoadArray(&ctx->Rcv[i].key, SCIMP_KEY_LEN, &p );
+        err = sLoadArray(&ctx->Rcv[i].key, SCIMP_KEY_LEN, &p, bufferEnd ); CKERR;
         ctx->Rcv[i].index   = sLoad64(&p);
     }
-    sLoadArray(&ctx->Ksnd, sizeof(ctx->Ksnd), &p );
+    err = sLoadArray(&ctx->Ksnd, sizeof(ctx->Ksnd), &p , bufferEnd ); CKERR;
     ctx->Isnd          = sLoad64(&p);
-    sLoadArray(&ctx->Cs, sizeof(ctx->Cs), &p );
-    sLoadArray(&ctx->Cs1, sizeof(ctx->Cs1), &p );
-
+    err = sLoadArray(&ctx->Cs, sizeof(ctx->Cs), &p, bufferEnd ); CKERR;
+    err = sLoadArray(&ctx->Cs1, sizeof(ctx->Cs1), &p, bufferEnd ); CKERR;
+    
+    err = sLoadArray(&ctx->Hcs, sizeof(ctx->Hcs), &p, bufferEnd ); CKERR;
+    err = sLoadArray(&ctx->Hpki, sizeof(ctx->Hpki), &p, bufferEnd ); CKERR;
+    err = sLoadArray(&ctx->MACi, sizeof(ctx->MACi), &p, bufferEnd ); CKERR;
+    err = sLoadArray(&ctx->MACr, sizeof(ctx->MACr), &p, bufferEnd ); CKERR;
+  
     ctx->isInitiator    = sLoad8(&p);
     ctx->hasCs          = sLoad8(&p);
     ctx->csMatches      = sLoad8(&p);
+    ctx->SAS            = sLoad32(&p);
 
     len = sLoad8(&p);
     ctx->meStr = XMALLOC(len+1 );
-    sLoadArray(ctx->meStr, len, &p);
+    err = sLoadArray(ctx->meStr, len, &p, bufferEnd ); CKERR;
     
     len = sLoad8(&p);
     ctx->youStr = XMALLOC(len+1 );
-    sLoadArray(ctx->youStr, len, &p);
-     
-     *outscimp = ctx; 
+    err = sLoadArray(ctx->youStr, len, &p, bufferEnd ); CKERR;
+    
+    PKLen = sLoad8(&p);
+    if(PKLen)
+    {
+        PK = XMALLOC(PKLen); CKNULL(PK);
+        err = sLoadArray(PK, PKLen, &p, bufferEnd ); CKERR;
+        err = ECC_Init(&ctx->privKey); CKERR;
+        err = ECC_Import(ctx->privKey,PK, PKLen); CKERR;
+    }
+ 
+    hashStateLen = sLoad16(&p);
+    if(hashStateLen)
+    {
+        hashState = XMALLOC(hashStateLen); CKNULL(hashState);
+        err =  sLoadArray(hashState, hashStateLen, &p, bufferEnd ); CKERR;
+        err = HASH_Import(hashState, hashStateLen,&ctx->HtotalState); CKERR;
+    }
+
+     *outscimp = ctx;
   
 done:
+    
+    if(IsntNull(PK))
+    {
+        ZERO(PK, PKLen);
+        XFREE(PK);
+    }
+    
+    if(IsntNull(hashState))
+    {
+        ZERO(hashState, hashStateLen);
+        XFREE(hashState);
+    }
+      
     if(IsntNull(encoded)) XFREE(encoded);
     
     if(IsntNull(buffer))
@@ -299,8 +395,7 @@ done:
         ZERO(buffer, bufLen);
         XFREE(buffer);
     }
-
-   
+  
      return err;
 }
 
@@ -350,7 +445,9 @@ SCLError SCimpAcceptSecret(SCimpContextRef ctx)
                                CS, scSCimpCipherBits(ctx->cipherSuite) /4,  //  twice the cipher bits in bytes.  AES-128 = 16, AES-256 = 32,
                                &dataLen); CKERR;
     err = SCimpSetDataProperty(ctx, kSCimpProperty_SharedSecret,  CS, dataLen); CKERR;
-     
+    
+    scEventAdviseSaveState(ctx);
+
 done:
     
     ZERO(CS,sizeof(CS));
@@ -697,6 +794,10 @@ SCLError SCimpGetNumericProperty( SCimpContextRef scimp,
             *prop = scimp->msgFormat;
             break;
             
+        case kSCimpProperty_SCIMPstate:
+            *prop = scimp->state;
+            break;
+            
         default:
             RETERR(CRYPT_INVALID_ARG);
     }
@@ -770,7 +871,7 @@ SCLError SCimpEnableTransitionEvents(SCimpContextRef  ctx, bool enable)
     
     ctx->wantsTransEvents = enable;
     
-    scEventTransition(ctx, ctx->state);
+//    scEventTransition(ctx, ctx->state);
     
 done:
     return err;

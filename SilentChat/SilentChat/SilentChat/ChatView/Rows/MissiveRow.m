@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,19 +17,27 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  MissiveRow.m
+//  SilentText
+//
 
 #if !__has_feature(objc_arc)
 #  error Please compile this class with ARC (-fobjc-arc).
 #endif
+
+#import <MobileCoreServices/MobileCoreServices.h>
+#include "SCpubTypes.h"
+
+
 
 #import "Missive.h"
 
@@ -42,12 +49,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "STBubbleTableViewCell.h"
 #import "NSDate+SCDate.h"
 #import "CLLocation+NSDictionary.h"
+#import "XMPPJID+AddressBook.h"
+#import <QuartzCore/QuartzCore.h>
 
 //#define CLASS_DEBUG 1
 #import "DDGMacros.h"
 
 NSString *const kBubbleCellIdentifier = @"BubbleCellIdentifier";
 NSString *const kMissive = @"missive";
+static NSString *const kAvatarIcon = @"silhouette";
 
 @interface MissiveRow ()
 
@@ -56,6 +66,7 @@ NSString *const kMissive = @"missive";
 
 @end
 
+#define kBubbleCellFont [UIFont systemFontOfSize:16.0f]
 @implementation MissiveRow
 
 @dynamic date;
@@ -63,13 +74,8 @@ NSString *const kMissive = @"missive";
 @dynamic reuseIdentifier;
 @dynamic tableViewCell;
 
-@synthesize missive = _missive;
-@synthesize bubble = _bubble;
-@synthesize otherBubble = _otherBubble;
-@synthesize clockImage = _clockImage;
-
-@synthesize selectedBubble = _selectedBubble;
-@synthesize plainTextBubble = _plainTextBubble;
+@synthesize delegate = _delegate;
+@synthesize indexRow = _indexRow;
 
 @dynamic scratchCell;
 @dynamic authorType;
@@ -78,37 +84,48 @@ NSString *const kMissive = @"missive";
 
 
 - (NSDate *) date {
-    
-    return self.missive.date;
-    
+	
+	return self.missive.date;
+	
 } // -date
 
 
 - (CGFloat) height {
-    
-    STBubbleTableViewCell *btvc = self.scratchCell;
-    
-    [btvc prepareForReuse];
-
-    [self configureCell: btvc];
-    
-    return btvc.height;
-    
+	DDGTrace();
+	Siren *siren = self.missive.siren;
+	NSData *thumb = siren.thumbnail;
+	if (thumb)
+		return [STBubbleTableViewCell quickHeightForContentViewWithImage:[UIImage imageWithData: thumb]
+															  withAvatar:[self authorImage] ? YES : NO];
+	else
+		return [STBubbleTableViewCell quickHeightForContentViewWithText:(siren.message ? siren.message : @"")//[NSString stringWithFormat:@"%ld: %@", self.indexRow, (siren.message ? siren.message : @"")]
+															   withFont:kBubbleCellFont
+															 withAvatar:[self authorImage] ? YES : NO
+														   withMaxWidth:self.parentView.bounds.size.width];
+	
+	//    STBubbleTableViewCell *btvc = self.scratchCell;
+	//
+	//    [btvc prepareForReuse];
+	//
+	//	[self configureCell: btvc];
+	//
+	//    return btvc.height;
+	
 } // -height
 
 
 - (NSString *) reuseIdentifier {
-    
-    return kBubbleCellIdentifier;
-    
+	
+	return kBubbleCellIdentifier;
+	
 } // -reuseIdentifier
 
 
 - (UITableViewCell *) tableViewCell {
-    
-    return [STBubbleTableViewCell.alloc initWithStyle: UITableViewCellStyleDefault 
-                                      reuseIdentifier: self.reuseIdentifier];
-    
+	
+	return [STBubbleTableViewCell.alloc initWithStyle: UITableViewCellStyleDefault
+									  reuseIdentifier: self.reuseIdentifier];
+	
 } // -tableViewCell
 
 
@@ -116,96 +133,110 @@ NSString *const kMissive = @"missive";
 
 
 - (STBubbleTableViewCell *) configureBubbleCell: (STBubbleTableViewCell *) cell withSiren: (Siren *) siren {
-    
-//    DDGDesc(siren);
- 
-    NSString* shredString = self.missive.shredDate?self.missive.shredDate.whenString:NULL;
-    
-     cell.textLabel.text  =  shredString
-                ?[NSString stringWithFormat:@"%@\n<Burn: %@ >", siren.message, shredString]
-                :siren.message;
-    
-    if(self.missive.flags != 0 )
-    {
-        if(self.missive.flags & kMissiveFLag_RequestResend)
-        {
-            cell.textLabel.text = [NSString stringWithFormat:
-                                   @"%@\n<Not Decrypted>",cell.textLabel.text ];
-        }
-        else
-        {
-            cell.textLabel.text = [NSString stringWithFormat:
-                                   @"%@\n<flags:%02X >",cell.textLabel.text, self.missive.flags ];
-          
-        }
-    }
-    
-    
-    if(siren.location)
-    {
-        NSError *jsonError;
-        
-        NSDictionary *locInfo = [NSJSONSerialization
-                                 JSONObjectWithData:[siren.location dataUsingEncoding:NSUTF8StringEncoding]
-                                 options:0 error:&jsonError];
-        
-        if (jsonError==nil){
-            
-            double latitude  =  [[locInfo valueForKey:@"latitude"]doubleValue];
-            double longitude  = [[locInfo valueForKey:@"longitude"]doubleValue];
-            double altitude  =  [[locInfo valueForKey:@"altitude"]doubleValue];
-  
-            cell.textLabel.text = [NSString stringWithFormat:
-                                   @"%@\n<location:(%.2lf, %.2lf, %.2lf) >",
-                                   cell.textLabel.text,latitude, longitude, altitude  ];
-        }
-        
-    }
-    
-    cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
-    
-    cell.canCopyContents = !siren.fyeo;
-    
-     return cell;
-    
+	
+	DDGDesc(siren);
+	cell.authorType  = self.authorType;
+	
+	cell.textView.text =  (siren.message ? siren.message : @"");
+	//	cell.textView.text =  [NSString stringWithFormat:@"%ld: %@", self.indexRow, (siren.message ? siren.message : @"")];
+	//	cell.textLabel.text =  siren.message ? [siren.message stringByAppendingString:@"            "] : @"";
+	if(!siren.isValid)
+	{
+		cell.textView.text = [ cell.textView.text stringByAppendingFormat:
+							  @"\n<Decryption Error>"];
+		
+	}
+	
+	//	NSString* shredString = self.missive.shredDate?self.missive.shredDate.whenString:NULL;
+	//	if(shredString)
+	//	{
+	//		cell.textLabel.text = [ cell.textLabel.text stringByAppendingFormat:
+	//							   @"\n<Burn: %@ >",shredString];
+	//		[cell setBurn: YES];
+	//    }
+	//
+	
+	if(self.missive.shredDate)
+	{
+		[cell setBurn: YES];
+	}
+	//	[cell setBurn: self.missive.shredDate ? YES : NO];
+	
+	if(BitTst(self.missive.flags,kMissiveFLag_RequestResend))
+	{
+		[cell setFailure: YES];
+	}
+	//	[cell setFailure:BitTst(self.missive.flags,kMissiveFLag_RequestResend) ? YES : NO ];
+	
+	if(siren.location)
+	{
+		[cell setHasGeo: YES];
+	}
+	//	[cell setHasGeo: siren.location ? YES : NO];
+	
+	
+	NSData *thumbnail = siren.thumbnail;
+	
+	if(thumbnail)
+	{
+		UIImage*  image = [UIImage imageWithData: thumbnail];
+		
+		if(siren.mediaType)
+		{
+			cell.bubbleView.mediaImage = image;
+		}
+	}
+	
+	if(siren.vcard)
+	{
+		UIImage*  image = siren.thumbnail? [UIImage imageWithData: thumbnail] : [UIImage imageNamed:@"vcard.png"];
+		cell.bubbleView.mediaImage = image;
+	}
+	
+	cell.canCopyContents = !siren.fyeo;
+	
+	cell.textView.font = kBubbleCellFont;
+	
+	return cell;
+	
 } // -configureBubbleCell:withSiren:
 
 
 - (UITableViewCell *) configureCell: (UITableViewCell *) cell {
-    
-    if ([cell isKindOfClass: STBubbleTableViewCell.class]) {
-        
-        STBubbleTableViewCell *bubbleCell = (STBubbleTableViewCell *)cell;
-        
-        Siren *siren = self.missive.siren;
-        
-        bubbleCell = [self configureBubbleCell: bubbleCell withSiren: siren];
-        
-        bubbleCell.badgeImage = NULL;
-        
-        bubbleCell.delegate    = self;
-        bubbleCell.authorType  = self.authorType;
-        
-        bubbleCell.bubbleImage = (bubbleCell.authorType == STBubbleTableViewCellAuthorTypeUser ?
-                                  self.bubble : self.otherBubble);
-        
- //       bubbleCell.badgeImage = (siren.shredAfter)?self.clockImage: NULL;
-   
-        bubbleCell.bubbleImage = siren.isPlainText ? self.plainTextBubble : bubbleCell.bubbleImage;
-        
-        bubbleCell.selectedBubbleImage = self.selectedBubble;
-         
-        cell = bubbleCell;
-       }
-    return cell;
-    
+	if ([cell isKindOfClass: STBubbleTableViewCell.class]) {
+		DDGTrace();
+		STBubbleTableViewCell *bubbleCell = (STBubbleTableViewCell *)cell;
+		//        [cell prepareForReuse];
+		Siren *siren = self.missive.siren;
+		
+		bubbleCell = [self configureBubbleCell: bubbleCell withSiren: siren];
+		
+		//        bubbleCell.badgeImage = NULL;
+		
+		bubbleCell.delegate    = self;
+		bubbleCell.authorType  = self.authorType;
+		
+		bubbleCell.imageView.image =  [self authorImage];
+		
+		bubbleCell.bubbleImage = (bubbleCell.authorType == STBubbleTableViewCellAuthorTypeUser) ? self.bubble : self.otherBubble;
+		
+		//       bubbleCell.badgeImage = (siren.shredAfter)?self.clockImage: NULL;
+		
+		bubbleCell.bubbleImage = siren.isPlainText ? self.plainTextBubble : bubbleCell.bubbleImage;
+		
+		bubbleCell.selectedBubbleImage = (bubbleCell.authorType == STBubbleTableViewCellAuthorTypeUser) ? self.selectedBubble : self.otherSelectedBubble;
+		
+		cell = bubbleCell;
+	}
+	return cell;
+	
 } // -configureCell:
 
 
 - (id) valueForUndefinedKey: (NSString *) key {
-    
-    return nil;
-    
+	
+	return nil;
+	
 } // -valueForUndefinedKey:
 
 
@@ -213,33 +244,154 @@ static STBubbleTableViewCell *_scratchCell = nil;
 static dispatch_once_t        _scratchCellGuard = 0;
 
 - (STBubbleTableViewCell *) scratchCell {
-    
-    dispatch_once(&_scratchCellGuard, ^{ 
-        
-        _scratchCell = (STBubbleTableViewCell *)self.tableViewCell;
-    });
-    return _scratchCell;
-
+	
+	dispatch_once(&_scratchCellGuard, ^{
+		
+		_scratchCell = (STBubbleTableViewCell *)self.tableViewCell;
+	});
+	return _scratchCell;
+	
 } // -scratchCell
 
 
+- (UIImage*) authorImage {
+	DDGTrace();
+	NSString *localJIDStr   = self.missive.conversation.localJID;
+	NSString* toJIDStr = [[XMPPJID jidWithString:self.missive.toJID]bare];
+	NSString* remoteJIDStr = [[XMPPJID jidWithString:self.missive.conversation.remoteJID]bare];
+	
+	UIImage* image = [ XMPPJID userAvatarWithJIDString:
+					  [toJIDStr isEqualToString: localJIDStr]
+					  ? remoteJIDStr
+													  : localJIDStr ];
+	if(!image) image = [UIImage imageNamed: kAvatarIcon];
+	DDGTrace();
+	return image;
+	
+}
+
 - (AuthorType) authorType {
-    
-    XMPPJID *localJID = [XMPPJID jidWithString: self.missive.conversation.localJID];
-    
-    return ([localJID.bare isEqualToString: [[XMPPJID jidWithString: self.missive.toJID] bare]] ?
-            STBubbleTableViewCellAuthorTypeOther : STBubbleTableViewCellAuthorTypeUser);
-    
+	
+	XMPPJID *localJID = [XMPPJID jidWithString: self.missive.conversation.localJID];
+	
+	return ([localJID.bare isEqualToString: [[XMPPJID jidWithString: self.missive.toJID] bare]] ?
+			STBubbleTableViewCellAuthorTypeOther : STBubbleTableViewCellAuthorTypeUser);
+	
 } // -authorType
 
 
 #pragma mark - STBubbleTableViewCellDelegate methods.
+- (void) unhideNavBar
+{
+	[_delegate unhideNavBar];
+	
+}
+- (void) tappedBurn: (STBubbleTableViewCell *) cell
+{
+	UILabel *burnTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 24)];
+	NSString* shredString = self.missive.shredDate?self.missive.shredDate.whenString:NULL;
+	burnTimeLabel.text = [NSString stringWithFormat:@" %@: %@ ", NSLocalizedString(@"Burn",@"Burn"), shredString];
+	burnTimeLabel.textColor = [UIColor whiteColor];
+	burnTimeLabel.textAlignment = UITextAlignmentCenter;
+	burnTimeLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+	burnTimeLabel.adjustsFontSizeToFitWidth = YES;
+	burnTimeLabel.layer.cornerRadius = 5.0;
+	burnTimeLabel.backgroundColor = [UIColor colorWithRed:0.25 green:0.25 blue:0.25 alpha:0.65];
+	burnTimeLabel.center = cell.bubbleView.center;
+	CGRect frame = burnTimeLabel.frame;
+	burnTimeLabel.frame = CGRectMake(frame.origin.x, cell.burnButton.frame.origin.y - frame.size.height, frame.size.width, frame.size.height);
+	[cell.contentView addSubview:burnTimeLabel];
+	
+	[UIView animateWithDuration:0.25f
+					 animations:^{
+						 [burnTimeLabel setAlpha:1.0];
+					 }
+					 completion:^(BOOL finished) {
+						 [UIView animateWithDuration:0.5f
+											   delay:1.5
+											 options:0
+										  animations:^{
+											  [burnTimeLabel setAlpha:0.0];
+											  
+										  }
+										  completion:^(BOOL finished) {
+											  [burnTimeLabel removeFromSuperview];
+										  }];
+					 }];
+	
+	
+}
+- (void) tappedGeo: (STBubbleTableViewCell *) cell
+{
+	if([_delegate respondsToSelector: @selector(tappedGeo:)]) {
+		
+		[_delegate tappedGeo: (ChatViewRow*) self];
+	}
+	
+	
+}
+- (void) tappedFailure: (STBubbleTableViewCell *) cell
+{
+	if([_delegate respondsToSelector: @selector(tappedFailure:)]) {
+		
+		[_delegate tappedFailure: (ChatViewRow*) self];
+	}
+}
+
+- (void) tappedImageOfCell: (STBubbleTableViewCell *) cell
+{
+	
+	if([_delegate respondsToSelector: kTappedCell]) {
+		
+		[_delegate tappedCell: (ChatViewRow*) self];
+	}
+	
+}
+- (void) tappedImageOfAvatar: (STBubbleTableViewCell *) cell
+{
+	
+	if([_delegate respondsToSelector: kTappedAvatar]) {
+		
+		[_delegate tappedAvatar: (ChatViewRow*) self];
+	}
+	
+}
+
+- (void) tappedResendMenu: (STBubbleTableViewCell *) cell
+{
+	
+	if([_delegate respondsToSelector: kTappedResend]) {
+		
+		[_delegate tappedResend: (ChatViewRow*) self];
+	}
+}
+
+- (void) tappedDeleteMenu:(STBubbleTableViewCell *)cell
+{
+	
+	if([_delegate respondsToSelector: kTappedDeleteRow]) {
+		
+		[_delegate tappedDeleteRow: (ChatViewRow*) self];
+	}
+}
 
 
-- (void) tappedImageOfCell: (STBubbleTableViewCell *) cell atIndexPath: (NSIndexPath *) indexPath {
-    
-    DDGTrace();
-    
-} // -tappedImageOfCell:atIndexPath:
+- (void) tappedForwardMenu: (STBubbleTableViewCell *) cell
+{
+	
+	if([_delegate respondsToSelector: kTappedForwardRow]) {
+		
+		[_delegate tappedForwardRow: (ChatViewRow*) self];
+	}
+}
+
+- (void) resignActiveTextEntryField
+{
+	if([_delegate respondsToSelector: @selector(resignActiveTextEntryField)]) {
+		
+		[_delegate resignActiveTextEntryField];
+	}
+}
+
 
 @end

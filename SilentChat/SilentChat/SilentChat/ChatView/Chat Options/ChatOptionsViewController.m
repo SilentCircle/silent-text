@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,17 +17,23 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  ChatOptionsViewController.m
+//  GearsReplacement
+//
 
 //#import "AppConstants.h"
+#import "App.h"
+#import "ConversationManager.h"
+
 #import "ChatOptionsViewController.h"
 #import "BurnTimePickerController.h"
 #import <QuartzCore/QuartzCore.h>
@@ -56,11 +61,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	self.navigationItem.title = NSLocalizedString(@"Conversation Options", @"Conversation Options");
 	showBurnTime = NO;
 #if custom_color_background
-	self.section0HeaderLabel = [self getHeaderLabelForBlackBackgroundWithText: NSLocalizedString(@"These options apply only to this conversation.", @"Text Options Note")];
-	self.section0FooterLabel = [self getFooterLabelForBlackBackgroundWithText: NSLocalizedString(@"After the specified delay, Burn Notice will destroy your recipient's copy of each message.", @"Burn Help")];
-#warning VINNIE I need a better descrption for Reset Keys
-	self.section1FooterLabel = [self getFooterLabelForBlackBackgroundWithText: NSLocalizedString(@"Turn on to include your location with outgoing messages.", @"Location Help")];
-	self.section2FooterLabel = [self getFooterLabelForBlackBackgroundWithText: NSLocalizedString(@"Reset the encryption keys.", @"Location Help")];
+//	self.section0HeaderLabel = [self getHeaderLabelForBlackBackgroundWithText: NSLocalizedString(@"Options for this conversation.", @"Text Options Note")];
+	self.section0FooterLabel = [self getFooterLabelForBlackBackgroundWithText:
+                                NSLocalizedString(@"After the specified delay, Burn Notice will destroy the selected message.", @"Burn Help")];
+
+	self.section1FooterLabel = [self getFooterLabelForBlackBackgroundWithText:
+                                NSLocalizedString(@"For added security, verify this message with the recipient.", @"verify help text    ")];
+	
+    self.section2FooterLabel = [self getFooterLabelForBlackBackgroundWithText: NSLocalizedString(@"Reset the encryption keys.", @"Location Help")];
 #warning VINNIE I need a better descrption for Reset Keys 
 #endif
 	//
@@ -73,20 +81,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)viewDidUnload
 {
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+
+  	[App.sharedApp.conversationManager  removeDelegate: self];
 }
+
+- (void) viewDidAppear: (BOOL) animated {
+
+    [App.sharedApp.conversationManager  removeDelegate: self];
+    [App.sharedApp.conversationManager  addDelegate: self delegateQueue: dispatch_get_main_queue()];
+
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 	showBurnTime = [delegate getBurnNoticeState];
 }
+
+- (void) viewWillDisappear: (BOOL) animated {
+	
+	[super viewWillDisappear: animated];
+ 
+    [App.sharedApp.conversationManager  removeDelegate: self];
+}
+
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (YES);
 }
+
 
 #pragma mark - Table view data source
 
@@ -105,11 +134,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			return 1;
 	}
     if (section == 1)
-#if HAS_FYEO
-		return 2;
-#else
-        return 1;
-#endif
+        return 2;
+
     if (section == 2)
 		return 1;
 	return 0;
@@ -137,7 +163,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     UITableViewCell *cell;// = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
-	if ((indexPath.section == 0 && indexPath.row == 0) || (indexPath.section == 1)) {
+	if ((indexPath.section == 0 && indexPath.row == 0)
+        || ((indexPath.section == 1) && indexPath.row == 0)) {
 		static NSString *CellIdentifier = @"COVSwitchCell";
 		cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 		if( cell == nil ) {
@@ -152,8 +179,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				burnNoticeSwitch.on	= [delegate getBurnNoticeState];
 			}
 			else if (indexPath.section == 1 && indexPath.row == 0) {
-				includeLocationSwitch = switchView;
-				includeLocationSwitch.on = [delegate getIncludeLocationState];
+				authenticateSwitch = switchView;
+				authenticateSwitch.on = [delegate getAuthenticateState];
 			}
 			else if (indexPath.section == 1 && indexPath.row == 1) {
 				fyeoSwitch = switchView;
@@ -219,9 +246,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (indexPath.section == 1) {
 		if (indexPath.row == 0) {
-			cell.textLabel.text = NSLocalizedString(@"Include Location", @"Send Location");
-//			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+			cell.textLabel.text = NSLocalizedString(@"Verified", @"Verified");
+            //			cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            authenticateSwitch.on = [delegate getAuthenticateState];
 		}
+        
+        if (indexPath.row == 1) {
+            
+            NSDictionary* info =  [delegate getSecureContextInfo];
+            
+            NSString *SAS  = info?[info valueForKey:kSCIMPInfoSAS]:NULL;
+            BOOL has_secret = [[info valueForKey:kSCIMPInfoHasCS] boolValue];
+            BOOL secrets_match = [[info valueForKey:kSCIMPInfoCSMatch] boolValue];
+             
+            if(SAS)
+            {
+                cell.textLabel.text = SAS;
+                cell.textLabel.textColor = [UIColor blackColor];
+ /*
+            cell.textLabel.textColor =  has_secret && secrets_match
+                ?[UIColor greenColor]
+                :[UIColor colorWithRed:1.0 green:.8 blue:0 alpha:.8];
+  */              
+            }
+            else
+            {
+                 cell.textLabel.text = @"Not Verified";
+                cell.textLabel.textColor = [UIColor darkGrayColor];
+                
+            }
+              
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.font = [UIFont italicSystemFontOfSize: 16.0];
+         }
+         
 //		else if (indexPath.row == 1) {
 //			cell.textLabel.text = NSLocalizedString(@"For Your Eyes Only", @"For Your Eyes Only");
 ////			cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -245,9 +304,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void) switchChanged:(id)sender
 {
 	UISwitch *aSwitch = (UISwitch *) sender;
-	UITableViewCell *parentCell = (UITableViewCell *) ((UISwitch *)sender).superview;
+//	UITableViewCell *parentCell = (UITableViewCell *) ((UISwitch *)sender).superview;
 	//	UITableView *tableView = (UITableView *)cell.superview;
-	NSIndexPath *indexPath = [self.tableView indexPathForCell:parentCell];
+//	NSIndexPath *indexPath = [self.tableView indexPathForCell:parentCell];
 //	NSLog(@"%d, %d", indexPath.section, indexPath.row);
 //	if ((indexPath.section == 0 && indexPath.row == 0)) {
 	if (aSwitch == burnNoticeSwitch) {
@@ -262,8 +321,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self setBurnTimeToCell:[self getBurnTimeTextFromTimeValue: [delegate getBurnNoticeDelay]]];
 
 	}
-	else if (aSwitch == includeLocationSwitch) {
-		[delegate setIncludeLocationState:aSwitch.on];
+	else if (aSwitch == authenticateSwitch) {
+        [delegate setAuthenticateState:aSwitch.on];
 	}
 	else if (aSwitch == fyeoSwitch) {
 		[delegate setFYEOState:aSwitch.on];
@@ -329,7 +388,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma mark selection of cells
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSIndexPath *rowToSelect = indexPath;
+//	NSIndexPath *rowToSelect = indexPath;
 	
 //	UIDatePicker *picker = [[UIDatePicker alloc] initWithFrame:CGRectZero];
 //	picker.datePickerMode = UIDatePickerModeCountDownTimer;
@@ -351,8 +410,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	//		rowToSelect = nil;
 	//	}
 	if ((indexPath.section == 2) && (indexPath.row == 0)) {
-		NSLog(@"pressed");
-		[delegate resetKeysNow];
+		[delegate resetKeysNow: self.view];
 	}
 	return nil;
 }
@@ -374,12 +432,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 - (UILabel *) getFooterLabelForBlackBackgroundWithText: (NSString *) text
 {
-	UIFont *font = [UIFont systemFontOfSize:16];
+	UIFont *font = [UIFont systemFontOfSize:14];
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
 	label.backgroundColor = [UIColor clearColor];
 	label.font = font;
-	label.textColor = [UIColor lightGrayColor];
-	label.shadowColor = [UIColor darkGrayColor];
+	label.textColor = [UIColor whiteColor];
+//	label.shadowColor = [UIColor darkGrayColor];
 	label.shadowOffset = CGSizeMake(0, 1);
 	label.textAlignment = UITextAlignmentCenter;
 	
@@ -546,15 +604,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// TODO: Localize the following
 	NSString *hoursString, *minutesString;
 	if (hours == 1)
-		hoursString = @"hour";
+		hoursString = NSLocalizedString(@"hour", @"hour");
 	else
-		hoursString = @"hours";
+		hoursString = NSLocalizedString(@"hours",@"hours");
 	if (minutes == 1)
-		minutesString = @"minute";
+		minutesString = NSLocalizedString(@"minute", @"minute");
 	else
-		minutesString = @"minutes";
+		minutesString = NSLocalizedString(@"minutes", @"minutes");
 	if (hours && minutes) {
-		text = [NSString stringWithFormat:@"%d %@ and %d %@", hours, hoursString, minutes, minutesString];
+		text = [NSString stringWithFormat:@"%d %@ %@ %d %@", hours, hoursString, NSLocalizedString(@"and", @"and"), minutes, minutesString];
 	}
 	else if (hours)
 		text = [NSString stringWithFormat:@"%d %@", hours, hoursString];
@@ -568,5 +626,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 	cell.detailTextLabel.text = text;
 }
+
+#pragma mark - ConversationManagerDelegate methods.
+
+ 
+- (void)conversationmanager:(ConversationManager *)sender
+			 didChangeState:(XMPPJID *)theirJid
+				   newState:(ConversationState) state
+{
+    [self.tableView reloadData];
+}
+
+
+ 
 
 @end

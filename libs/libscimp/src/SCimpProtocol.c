@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,16 +17,14 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-
+*/
 
 /**
  @file SCimpProtocol.c 
@@ -51,7 +48,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define HIuint8_t(n) ((n >> 8) & 0xff)
 #define LOuint8_t(n) (n & 0xff)
-#define PK_ALLOC_SIZE 128
 
 static const uint8_t *kSCimpstr_Initiator = "Initiator";
 static const uint8_t *kSCimpstr_Responder = "Responder";
@@ -149,7 +145,36 @@ static int DPRINTF(const char *color, const char *fmt, ...)
 
 #endif
 
+#if  DEBUG_STATES
 
+static  char*  stateText( SCimpState state )
+{
+    static struct
+    {
+        SCimpState      state;
+        char*           txt;
+    }state_txt[] =
+    {
+        { kSCimpState_Init,		"Init"},
+        { kSCimpState_Ready,	"Ready"},
+        { kSCimpState_Commit,	"Commit"},
+        { kSCimpState_DH2,		"DH2"},
+        { kSCimpState_DH1,		"DH1"},
+        { kSCimpState_Confirm,	"Confirm"},
+        {NO_NEW_STATE,         "NO_NEW_STATE"},
+        {0,NULL}
+    };
+    
+    int i;
+    
+    for(i = 0; state_txt[i].txt; i++)
+        if(state_txt[i].state == state) return(state_txt[i].txt);
+    
+    return "Invalid";
+    
+}
+
+#endif
 
 #pragma mark
 #pragma mark  Setup and Teardown 
@@ -159,20 +184,13 @@ static int DPRINTF(const char *color, const char *fmt, ...)
  ____________________________________________________________________________*/
  
 
-void scResetSCimpContext(SCimpContext *ctx)
+void scResetSCimpContext(SCimpContext *ctx, bool resetAll)
 { 
     ctx->state          = kSCimpState_Init;
     ctx->isInitiator    = false;
     ctx->version        = kSCimpProtocolVersion;
-    
-    ctx->cipherSuite        = kSCimpCipherSuite_SHA256_HMAC_AES128_ECC384;
-    ctx->sasMethod          = kSCimpSAS_ZJC11;
-
-    ctx->msgFormat          = kSCimpMsgFormat_JSON;
-    ctx->serializeHandler   = scimpSerializeMessageJSON;
-    ctx->deserializeHandler = scimpDeserializeMessageJSON;
+  
     ctx->hasKeys            = false;
-    ctx->hasCs              = false;
     ctx->csMatches          = false;
     
     scEventTransition(ctx, kSCimpState_Init);
@@ -195,7 +213,6 @@ void scResetSCimpContext(SCimpContext *ctx)
         ctx->HtotalState = kInvalidHASH_ContextRef;
     }
     
-    ZERO(ctx->Cs,   SCIMP_KEY_LEN);
     ZERO(ctx->Cs1,  SCIMP_KEY_LEN);
     
     ZERO(ctx->Rcv,  sizeof(ctx->Rcv));
@@ -206,7 +223,19 @@ void scResetSCimpContext(SCimpContext *ctx)
     ZERO(ctx->Hpki, SCIMP_HASH_LEN);
     ZERO(ctx->MACi, SCIMP_MAC_LEN);
     ZERO(ctx->MACr, SCIMP_MAC_LEN);
+   
     
+    if(resetAll)
+    {
+        ctx->hasCs              = false;
+        ZERO(ctx->Cs,   SCIMP_KEY_LEN);
+        ctx->msgFormat          = kSCimpMsgFormat_JSON;
+        ctx->cipherSuite        = kSCimpCipherSuite_SHA256_HMAC_AES128_ECC384;
+        ctx->sasMethod          = kSCimpSAS_ZJC11;
+        ctx->serializeHandler   = scimpSerializeMessageJSON;
+        ctx->deserializeHandler = scimpDeserializeMessageJSON;
+    }
+
 }
 
 
@@ -1141,6 +1170,31 @@ SCLError scEventTransition(
 }
 
 
+ 
+SCLError scEventAdviseSaveState(
+                           SCimpContextRef   ctx)
+{
+    SCLError             err         = kSCLError_NoErr;
+ 	SCimpEvent          event;
+  
+#if  DEBUG_STATES
+    DPRINTF(XCODE_COLORS_GREEN_TXT, "scEventAdviseSaveState: %s\n",  stateText(ctx->state) );
+#endif
+
+    
+	if( IsNull( ctx->handler ) )
+		return kSCLError_NoErr;
+    
+    ZERO(&event, sizeof( event ));
+    event.type			= kSCimpEvent_AdviseSaveState;
+     
+	err = (ctx->handler)( ctx, &event, ctx->userValue );
+    
+	return err;
+}
+
+
+
 #pragma mark
 #pragma mark format packets
 
@@ -1163,6 +1217,13 @@ SCLError sMakeSCimpmsg_Commit(SCimpContext *ctx, uint8_t **out, size_t *outlen)
     
     ctx->isInitiator = true;
     
+    /* delete old ECC pub key */
+   if(ctx->pubKey)
+    {
+        ECC_Free(ctx->pubKey);
+        ctx->pubKey = kInvalidECC_ContextRef;
+    }
+
       /* Make a new ECC key */
     err = ECC_Init(&ctx->privKey); CKERR;
     err = ECC_Generate(ctx->privKey, sECCDH_Bits( ctx->cipherSuite) ); CKERR;
@@ -1189,7 +1250,7 @@ SCLError sMakeSCimpmsg_Commit(SCimpContext *ctx, uint8_t **out, size_t *outlen)
     err = HASH_Init( sSCimptoWrapperHASH(ctx->cipherSuite, SCIMP_HTOTAL_BITS), &ctx->HtotalState);  CKERR;
     
     HASH_Update( ctx->HtotalState,  &msg.commit,  sizeof(SCimpMsg_Commit));
-     
+    
 done:
     return err;
 }
@@ -1224,6 +1285,7 @@ static SCLError sMakeSCimpmsg_DH1(SCimpContext* ctx, uint8_t **out, size_t *outl
     /* update Htotal */
      HASH_Update( ctx->HtotalState,  PK, PKlen);
      HASH_Update( ctx->HtotalState,  msg.dh1.Hcs,  sizeof(msg.dh1.Hcs));
+ 
     
 done:
     if(IsntNull(PK)) XFREE(PK);
@@ -1288,7 +1350,7 @@ static SCLError sMakeSCimpmsg_Confirm(SCimpContext* ctx, uint8_t **out, size_t *
     COPY(ctx->MACr, msg.confirm.Macr,SCIMP_MAC_LEN);
     
     err = SERIALIZE_SCIMP(ctx, &msg, out, outlen); CKERR;
-     
+   
 done:
     return err;
 }
@@ -1341,6 +1403,7 @@ static SCLError sProcessSCimpmsg_Commit(SCimpContext* ctx, SCimpMsg* msg, uint8_
     /* create reply DH1 */
     sMakeSCimpmsg_DH1(ctx, rsp, rspLen);
     
+    
 done:
     
     scimpFreeMessageContent(msg);
@@ -1356,7 +1419,9 @@ static SCLError sProcessSCimpmsg_DH1(SCimpContext* ctx, SCimpMsg* msg, uint8_t *
        
     uint8_t            HCS1[SCIMP_MAC_LEN];
     size_t          keySize;
-      
+ 
+    ValidateParam(m->pk);
+
     /* update Htotal */
     HASH_Update( ctx->HtotalState,  m->pk, m->pkLen);
     HASH_Update( ctx->HtotalState,  m->Hcs,  sizeof(m->Hcs));
@@ -1399,7 +1464,8 @@ static SCLError sProcessSCimpmsg_DH2(SCimpContextRef ctx, SCimpMsg* msg, uint8_t
     uint8_t             HCS1[SCIMP_MAC_LEN];
     size_t              keySize;  
     
-      
+    ValidateParam(m->pk);
+       
     /* save public key */
     err = ECC_Init(&ctx->pubKey); CKERR;
     err = ECC_Import(ctx->pubKey, m->pk, m->pkLen); CKERR;
@@ -1439,7 +1505,7 @@ static SCLError sProcessSCimpmsg_DH2(SCimpContextRef ctx, SCimpMsg* msg, uint8_t
     /* create reply Confirm */
     sMakeSCimpmsg_Confirm(ctx, rsp, rspLen);
 
-done:
+  done:
     scimpFreeMessageContent(msg);
     XFREE(msg);
    return err;
@@ -1464,7 +1530,7 @@ static SCLError sProcessSCimpmsg_Confirm(SCimpContextRef ctx, SCimpMsg* msg, uin
     ctx->state = kSCimpState_Ready;
     scEventTransition(ctx, kSCimpState_Ready);
     scEventKeyed(ctx);
-    
+ 
 done:
     scimpFreeMessageContent(msg);
     XFREE(msg);
@@ -1487,6 +1553,8 @@ static SCLError sProcessSCimpmsg_Data(SCimpContextRef ctx, SCimpMsg* msg, uint8_
     uint8_t           key[SCIMP_KEY_LEN];
     uint8_t           msgIndex[8];
     
+    ValidateParam(m->msg);
+
     err = sGetKeyforMessage(ctx, m->seqNum, key, msgIndex); CKERR;
         
     err = CCM_Decrypt( key,      scSCimpCipherBits(ctx->cipherSuite)/4, 
@@ -1497,7 +1565,9 @@ static SCLError sProcessSCimpmsg_Data(SCimpContextRef ctx, SCimpMsg* msg, uint8_
   
   
      err = scEventDecrypt(ctx, PT, PTLen, msg->userRef) ; CKERR;
-      
+    
+    scEventAdviseSaveState(ctx);
+
 done:
     
     if(IsSCLError(err))
@@ -1572,7 +1642,7 @@ static SCLError sDoShutdown(SCimpContext* ctx, SCimpMsg* msg )
     SCLError     err = kSCLError_NoErr;
       
     scEventShutdown(ctx);
-    scResetSCimpContext(ctx);
+    scResetSCimpContext(ctx,true);
        
 done:   
      
@@ -1619,7 +1689,7 @@ static SCLError sImproperRekey(SCimpContext* ctx, SCimpMsg* msg)
      
     err =  scEventWarning(ctx, kSCLError_ProtocolError, NULL); CKERR;
      
-    err = sDoStartDH(ctx, msg);
+ //   err = sDoStartDH(ctx, msg);
  
 done:
     
@@ -1647,6 +1717,8 @@ static SCLError sDoCommitContention(SCimpContext* ctx, SCimpMsg* msg)
         
         
         err =  scEventWarning(ctx, kSCLError_ProtocolContention, NULL); CKERR;
+        
+        scResetSCimpContext(ctx,false);
         
         err = sDoRcv_Commit(ctx, msg);
         
@@ -1700,8 +1772,10 @@ static SCLError sDoRcv_Confirm(SCimpContext* ctx, SCimpMsg* msg)
     SCLError     err = kSCLError_NoErr;
   
     err = sProcessSCimpmsg_Confirm(ctx, msg, NULL, NULL); CKERR;
-      
-done:   
+    
+    scEventAdviseSaveState(ctx);
+
+done:
     return err;   
 }
  
@@ -1714,6 +1788,8 @@ static SCLError sDoSent_Confirm(SCimpContext* ctx,   SCimpMsg* msg)
     // set the state ready before notifying the user of keyed
     ctx->state = kSCimpState_Ready;
     scEventTransition(ctx, kSCimpState_Ready);
+    scEventAdviseSaveState(ctx);
+
     scEventKeyed(ctx);
       
 done:   
@@ -1777,9 +1853,9 @@ static const state_table_type SCIMP_state_table[]=
     { ANY_STATE,            kSCimpTrans_RCV_Commit,     kSCimpState_DH1,         sDoCommitContention },
     { ANY_STATE,            kSCimpTrans_RCV_Data,       NO_NEW_STATE,            sNotKeyed            },
     
- //   { ANY_STATE,            kSCimpTrans_RCV_DH1,        kSCimpState_Commit,      sImproperRekey      },
- //   { ANY_STATE,            kSCimpTrans_RCV_DH2,        kSCimpState_Commit,      sImproperRekey,     },
- //   { ANY_STATE,            kSCimpTrans_RCV_Confirm,    kSCimpState_Commit,      sImproperRekey,     },
+    { ANY_STATE,            kSCimpTrans_RCV_DH1,        kSCimpState_Error,      sImproperRekey      },
+   { ANY_STATE,             kSCimpTrans_RCV_DH2,        kSCimpState_Error,      sImproperRekey,     },
+    { ANY_STATE,            kSCimpTrans_RCV_Confirm,    kSCimpState_Error,      sImproperRekey,     },
 
     
 };
@@ -1834,33 +1910,7 @@ static SCLError sDeQueueTransition(TransQueue * q, TransItem *item)
 
 #if  DEBUG_STATES
 
-static  char*  stateText( SCimpState state )
-{
-    static struct
-    {
-        SCimpState      state;
-        char*           txt;
-    }state_txt[] =      
-    {
-    { kSCimpState_Init,		"Init"},
-    { kSCimpState_Ready,	"Ready"},
-     { kSCimpState_Commit,	"Commit"},
-    { kSCimpState_DH2,		"DH2"},
-    { kSCimpState_DH1,		"DH1"},
-    { kSCimpState_Confirm,	"Confirm"},
-     {NO_NEW_STATE,         "NO_NEW_STATE"},
-     {0,NULL}
-    };
-    
-    int i;
-    
-    for(i = 0; state_txt[i].txt; i++)
-        if(state_txt[i].state == state) return(state_txt[i].txt);
-   
-    return "Invalid";
-    
-}
-
+ 
 static  char*  transitionText( SCimpTransition trans )
 {
     static struct
@@ -1893,6 +1943,7 @@ static  char*  transitionText( SCimpTransition trans )
     
 }
 
+
 #endif
 
 
@@ -1921,9 +1972,16 @@ SCLError sProcessTransition(SCimpContextRef ctx,
             
             if(table->next != NO_NEW_STATE)
             {
-         
+                SCimpState last_state = ctx->state;
+                
                 ctx->state = table->next;
-                scEventTransition(ctx, ctx->state);
+                
+                if(last_state != ctx->state)
+                {
+                    scEventAdviseSaveState(ctx);
+                    
+                    scEventTransition(ctx, ctx->state);
+                 }
              }
             return(err);
         }
@@ -2010,9 +2068,12 @@ SCLError scSendScimpDataInternal(SCimpContext* ctx,
     
     err = sAdvanceSendKey(ctx); CKERR;
     
+    scEventAdviseSaveState(ctx);
+    
     err = scEventSendPacket(ctx, buffer, bufLen, userRef);
-       
-done:   
+    
+ 
+done:
     if(buffer) XFREE(buffer),buffer = NULL;
     
       

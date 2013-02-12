@@ -20,17 +20,40 @@
 		2EB05799157EA90800313F4C /* scloudTest.c in Sources */ = {isa = PBXBuildFile; fileRef = 2EA047AF157EA0B30032C577 /* scloudTest.c */; };
 		2EB6930C1582A13D00E8215F /* sc_test_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EB6930A1582A13D00E8215F /* sc_test_57.png */; };
 		2EB6930D1582A13D00E8215F /* sc_test_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 2EB6930B1582A13D00E8215F /* sc_test_114.png */; };
+		2EC6AC5A166D449F004E375F /* libyajl-IOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A61159A6A3600691A9D /* libyajl-IOS.a */; };
+		2EC6AC5B166D44A6004E375F /* libyajl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A5F159A6A3600691A9D /* libyajl.a */; };
+		2EC8B6E81667E468000263BF /* libscloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD39F7159A68C700691A9D /* libscloud.a */; };
 		2ECD3A15159A69AA00691A9D /* tomcryptwrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD3A0E159A69AA00691A9D /* tomcryptwrappers.c */; };
 		2ECD3A16159A69AA00691A9D /* tomcryptwrappers.c in Sources */ = {isa = PBXBuildFile; fileRef = 2ECD3A0E159A69AA00691A9D /* tomcryptwrappers.c */; };
 		2ECD3A68159A6ADB00691A9D /* libtommath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A56159A6A3600691A9D /* libtommath.a */; };
 		2ECD3A69159A6AE100691A9D /* libtomcrypt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A4D159A6A3600691A9D /* libtomcrypt.a */; };
-		2ECD3A6A159A6AF600691A9D /* libscloud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD39F7159A68C700691A9D /* libscloud.a */; };
 		2ECD3A6F159A6B2F00691A9D /* libscloud-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD39F9159A68C700691A9D /* libscloud-ios.a */; };
 		2ECD3A70159A6B3300691A9D /* libtommath-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A58159A6A3600691A9D /* libtommath-ios.a */; };
 		2ECD3A71159A6B3800691A9D /* libtomcrypt-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ECD3A4F159A6A3600691A9D /* libtomcrypt-ios.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2EC6AC52166D4494004E375F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EB057A3157EA93500313F4C /* yajl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E449F04157687AD0060B54D;
+			remoteInfo = yajl;
+		};
+		2EC6AC58166D4499004E375F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EB057A3157EA93500313F4C /* yajl.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E057A261576BEFE005CBD7E;
+			remoteInfo = "yajl-IOS";
+		};
+		2EC8B6E91667E474000263BF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EB05723157EA25400313F4C /* scloud.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2EC7B698157E8C1000A05E6B;
+			remoteInfo = scloud;
+		};
 		2ECD39F6159A68C700691A9D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2EB05723157EA25400313F4C /* scloud.xcodeproj */;
@@ -44,13 +67,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2EC7B6FC157E8DEA00A05E6B;
 			remoteInfo = "scloud-ios";
-		};
-		2ECD39FB159A690A00691A9D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2EB05723157EA25400313F4C /* scloud.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2EC7B698157E8C1000A05E6B;
-			remoteInfo = scloud;
 		};
 		2ECD39FD159A691B00691A9D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -186,7 +202,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2ECD3A6A159A6AF600691A9D /* libscloud.a in Frameworks */,
+				2EC6AC5B166D44A6004E375F /* libyajl.a in Frameworks */,
+				2EC8B6E81667E468000263BF /* libscloud.a in Frameworks */,
 				2ECD3A69159A6AE100691A9D /* libtomcrypt.a in Frameworks */,
 				2ECD3A68159A6ADB00691A9D /* libtommath.a in Frameworks */,
 			);
@@ -196,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EC6AC5A166D449F004E375F /* libyajl-IOS.a in Frameworks */,
 				2ECD3A71159A6B3800691A9D /* libtomcrypt-ios.a in Frameworks */,
 				2ECD3A70159A6B3300691A9D /* libtommath-ios.a in Frameworks */,
 				2ECD3A6F159A6B2F00691A9D /* libscloud-ios.a in Frameworks */,
@@ -344,9 +362,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				2EC6AC53166D4494004E375F /* PBXTargetDependency */,
+				2EC8B6EA1667E474000263BF /* PBXTargetDependency */,
 				2ECD3A67159A6AD300691A9D /* PBXTargetDependency */,
 				2ECD3A65159A6A5A00691A9D /* PBXTargetDependency */,
-				2ECD39FC159A690A00691A9D /* PBXTargetDependency */,
 			);
 			name = "scloud-optest";
 			productName = "scloud-optest";
@@ -364,6 +383,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				2EC6AC59166D4499004E375F /* PBXTargetDependency */,
 				2ECD3A6E159A6B2700691A9D /* PBXTargetDependency */,
 				2ECD3A6C159A6B2300691A9D /* PBXTargetDependency */,
 				2ECD39FE159A691B00691A9D /* PBXTargetDependency */,
@@ -523,10 +543,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2ECD39FC159A690A00691A9D /* PBXTargetDependency */ = {
+		2EC6AC53166D4494004E375F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = yajl;
+			targetProxy = 2EC6AC52166D4494004E375F /* PBXContainerItemProxy */;
+		};
+		2EC6AC59166D4499004E375F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "yajl-IOS";
+			targetProxy = 2EC6AC58166D4499004E375F /* PBXContainerItemProxy */;
+		};
+		2EC8B6EA1667E474000263BF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = scloud;
-			targetProxy = 2ECD39FB159A690A00691A9D /* PBXContainerItemProxy */;
+			targetProxy = 2EC8B6E91667E474000263BF /* PBXContainerItemProxy */;
 		};
 		2ECD39FE159A691B00691A9D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

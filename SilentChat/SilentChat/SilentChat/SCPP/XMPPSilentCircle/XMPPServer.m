@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,16 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
-
+*/
+//
+//  XMPPServer.m
+//  SilentChat
+//
 //  Portions based upon iPhoneXMPP sample app from the XMPPFramework.
 //  Covered by the XMPPFramework BSD style license.
 //
@@ -41,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "XMPPServer+Class.h"
 
 #import "ServiceCredential.h"
-#import "ServiceServer.h"
+#import "SCAccount.h"
 #import "NetworkActivityIndicator.h"
 
 #import "NSString+URLEncoding.h"
@@ -72,7 +73,6 @@ NSUInteger kXMPPDefaultPort = 5222;
 
 @implementation XMPPServer
 
-@synthesize server = _server;
 @dynamic myJID;
 @synthesize xmppStream = _xmppStream;
 @synthesize xmppReconnect = _xmppReconnect;
@@ -94,18 +94,7 @@ NSUInteger kXMPPDefaultPort = 5222;
 
 #pragma mark - Accessor methods.
 
-
-- (void) setServer: (ServiceServer *) server {
-    
-    if (!server.port) {
-        
-//        server.port = kXMPPDefaultPort;
-    }
-    _server = server;
-    
-} // -setServer:
-
-
+ 
 - (XMPPJID *) myJID {
     
     return self.xmppStream.myJID;
@@ -130,25 +119,24 @@ NSUInteger kXMPPDefaultPort = 5222;
 
 - (NSString *) password {
     
-    return self.server.credential.password;
+    return self.account.password;
     
 } // -password
 
 
 - (NSString *) username {
     
-    return self.server.credential.username;
+    return self.account.username;
     
 } // -username
 
 
-- (XMPPServer *) initWithServiceServer: (ServiceServer *) server {
-    
+- (XMPPServer *) initWithAccount: (SCAccount *) account {
     self = [super init];
     
     if (self) {
         
-        self.server = server;
+        self.account = account;
     }
     return self;
     
@@ -162,9 +150,9 @@ NSUInteger kXMPPDefaultPort = 5222;
 } // -activate
 
 
-- (XMPPStream *) updateStreamWithServiceServer: (ServiceServer *) server {
+- (XMPPStream *) updateStreamWithAccount: (SCAccount *) account {
     
-    self.server = server;
+    self.account = account;
     
     return [self setupStream];
     
@@ -256,13 +244,13 @@ NSUInteger kXMPPDefaultPort = 5222;
 	// 
 	// If you don't specify a hostPort, then the default (5222) will be used.
  
-   if (self.server.domain) {
+   if (self.account.serverDomain) {
         
-        [self.xmppStream setHostName: self.server.domain];
+        [self.xmppStream setHostName: self.account.serverDomain];
     }
-    if (self.server.port) {
+    if (self.account.serverPort) {
         
-        [self.xmppStream setHostPort: self.server.port];	
+        [self.xmppStream setHostPort: self.account.serverPort];	
  
     }
  
@@ -384,21 +372,21 @@ NSUInteger kXMPPDefaultPort = 5222;
 } // -disconnectAfterSending
 
 
-- (XMPPStream *) changeServiceServer: (ServiceServer *) server {
+- (XMPPStream *) changeAccount: (SCAccount *) account {
     
     if (!self.xmppStream.isConnected && self.xmppStream.isDisconnected) { // We're really disconnected.
         
-        self.server = server;
+        self.account = account;
         
         [self.xmppStream setMyJID: [XMPPJID jidWithString: self.username]];
         
-        if (self.server.domain) {
+        if (self.account.serverDomain) {
             
-            [self.xmppStream setHostName: self.server.domain];
+            [self.xmppStream setHostName: self.account.serverDomain];
         }
-        if (self.server.port) {
+        if (self.account.serverPort) {
             
-            [self.xmppStream setHostPort: self.server.port];	
+            [self.xmppStream setHostPort: self.account.serverPort];	
         }
     }
     return self.xmppStream;
@@ -428,7 +416,7 @@ NSUInteger kXMPPDefaultPort = 5222;
 	
 	NSError *error = nil;
 	
-	if (![self.xmppStream authenticateWithPassword: self.server.credential.password error:&error]) {
+	if (![self.xmppStream authenticateWithPassword: self.account.password error:&error]) {
         
 		DDLogError(@"Error authenticating: %@", error);
 	}
@@ -478,6 +466,21 @@ NSUInteger kXMPPDefaultPort = 5222;
 		DDLogError(@"Unable to connect to server. Check xmppStream.hostName");
 	}
     _isXmppConnected = NO;
+}
+
+
+#pragma mark - XMPPReconnectDelegate methods.
+
+
+
+- (void)xmppReconnect:(XMPPReconnect *)sender didDetectAccidentalDisconnect:(SCNetworkReachabilityFlags)connectionFlags
+{
+    
+}
+
+- (BOOL)xmppReconnect:(XMPPReconnect *)sender shouldAttemptAutoReconnect:(SCNetworkReachabilityFlags)reachabilityFlags
+{
+    return YES;
 }
 
 

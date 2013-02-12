@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  ComposeViewController.m
+//  SilentText
+//
 
 #if !__has_feature(objc_arc)
 #  error Please compile this class with ARC (-fobjc-arc).
@@ -56,7 +58,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "XMPPJID+AddressBook.h"
 
 #import <AddressBook/AddressBook.h>
-#import "MGLoadingView.h"
+#import "MBProgressHUD.h"
+
 #import "NetworkActivityIndicator.h"
 
 @interface composeTableItem : NSObject  
@@ -86,13 +89,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface ComposeViewController ()
 {
-    BOOL        letUserSelectRow;
+    BOOL            letUserSelectRow;
     BOOL            searching;
+    MBProgressHUD    *HUD;
     
 }
-
- 
-@property (nonatomic, strong) MGLoadingView *loadingView;
+  
 @property (nonatomic, strong) NSString        *queryQid;
 @property (nonatomic, strong) XMPPJID         *selectedJid;
 @property (nonatomic, strong) NSArray         *jidArray;
@@ -108,40 +110,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize searchBar;
 @synthesize allItems;
 @synthesize searchResults;
-@synthesize loadingView     = _loadingView;
 @synthesize queryQid        =  _queryQid;
 @synthesize selectedJid     = _selectedJid;
 @synthesize jidArray        = _jidArray;
 
 #pragma mark - loadingView
-
-- (MGLoadingView *) loadingView {
-    
-    if (_loadingView) { return _loadingView; }
-    
-    MGLoadingView *lv = [MGLoadingView.alloc initWithView: self.view
-                                                    label: NSLS_COMMON_VERIFYING];
-    self.loadingView = lv;
-    
-    return lv;
-    
-} // -loadingView
-
+ 
 - (void) startActivityIndicatorForJid: (XMPPJID*) jid
 {
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    HUD.delegate = self;
     
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    HUD.labelText = [NSString stringWithFormat:NSLS_COMMON_VERIFYING_USER, [jid user]];
+   
     [NetworkActivityIndicator.sharedNetworkActivityIndicator startNetworkActivityIndicator];
-    
-    MGLoadingView *lv = self.loadingView;
-    lv.label.text = [NSString stringWithFormat:NSLS_COMMON_VERIFYING_USER, [jid user]];
-    
-    [self.view addSubview: lv];
-    
-    [lv.activityIndicatorView startAnimating];
-    [lv fadeIn];
-    
+      
     self.searchBar.hidden = YES;
-     
     [self.searchBar resignFirstResponder];
     
 }
@@ -150,13 +135,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
     self.searchBar.hidden = NO;
 
-    [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];
-    
-    if(self.loadingView)
-    {
-        [self.loadingView.activityIndicatorView stopAnimating];
-        [self.loadingView fadeOut];
-    }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [NetworkActivityIndicator.sharedNetworkActivityIndicator stopNetworkActivityIndicator];    
 }
 
 #pragma mark - Compose view
@@ -202,6 +182,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     for(XMPPJID* jid in self.jidArray)
     {
+        if( [app.currentJID.bare isEqualToString:jid.bare]) continue;
+        
         if(! [app.conversationManager conversationForLocalJidExists: app.currentJID remoteJid: jid] )
         {
             composeTableItem * item = [composeTableItem itemWithJid: jid username: [jid addressBookName]];
@@ -209,8 +191,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          }
            
      }
-     
-    self.allItems = items;
+    
+    NSArray *sortedItems = [items sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        composeTableItem *itemA = (composeTableItem*)a;
+        composeTableItem * itemB = (composeTableItem*)b;
+        
+        NSString *first =  itemA.nameString? itemA.nameString: itemA.jid.user ;
+        NSString *second =  itemB.nameString? itemB.nameString: itemB.jid.user ;
+        return [first localizedCompare:second];
+    }];
+    
+
+    self.allItems = sortedItems;
     [self.tableView reloadData];
 
     self.selectedJid = NULL;
@@ -398,6 +390,7 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
      
     return YES;
 }
+
 #pragma mark Search Bar
  
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -477,7 +470,7 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
      ConversationViewController *cvc =  app.conversationViewController;
      cvc.openJidOnView = jid;
      
-    [app.conversationManager sendPingSirenMessageToRemoteJID: jid];
+    [app.conversationManager sendReKeyToRemoteJID: jid];
     
     [self.navigationController popToRootViewControllerAnimated:NO];
 
@@ -530,7 +523,7 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     
     if((iqID && self.queryQid) && [iqID isEqualToString: self.queryQid])
     {
-        [self stopActivityIndicator];
+       [self stopActivityIndicator];
         
         NSString* status =  [iq attributeStringValueForName:@"type"] ;
         
@@ -557,6 +550,14 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     
 } // -xmppStream:willReceiveIQ:
 
+#pragma mark -
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+	[HUD removeFromSuperview];
+	HUD = nil;
+}
 
 
 @end

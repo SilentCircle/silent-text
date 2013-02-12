@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  PasscodeViewController.m
+//  SilentText
+//
 
 #import "App.h"
 #import "SCPasscodeManager.h"
@@ -71,7 +73,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         if(mode != PasscodeViewControllerModeVerify)
         {
             _nextButton = [[UIBarButtonItem alloc]
-                           initWithTitle:@"Next"
+                           initWithTitle:NSLocalizedString(@"Next",@"Next")
                            style:UIBarButtonItemStyleBordered
                            target:self
                            action:kDoneEnteringText];
@@ -118,17 +120,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     {
         case PasscodeViewControllerModeCreate:
             
-            self.navigationItem.title = @"Set Passcode";
+            self.navigationItem.title = NSLocalizedString(@"Set Passcode",@"Set Passcode");
             self.navigationItem.rightBarButtonItem = _nextButton;
             
             switch(_verify_state)
             {
                 case 1:
-                    _prompt.text = @"Enter a passcode";
+                    _prompt.text = NSLocalizedString(@"Enter a passcode",@"Enter a passcode");
                     _passwordCandidate = @"";
                     break;
                 case 2:
-                    _prompt.text = @"Re-enter your new passcode";
+                    _prompt.text = NSLocalizedString(@"Re-enter your new passcode",@"Re-enter your new passcode");
                     break;
                 default:;
             }
@@ -137,34 +139,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                  
         case PasscodeViewControllerModeChange:
             
-            self.navigationItem.title = @"Change Passcode";
+            self.navigationItem.title = NSLocalizedString(@"Change Passcode",@"Change Passcode");
             self.navigationItem.rightBarButtonItem = _nextButton;
          
             switch(_verify_state)
             {
                 case 0:
-                    _prompt.text = @"Enter your old passcode";
+                    _prompt.text = NSLocalizedString(@"Enter your old passcode",@"Enter your old passcode");
                     _passwordCandidate = @"";
                     break;
                 case 1:
-                    _prompt.text = @"Enter your new passcode";
+                    _prompt.text = NSLocalizedString(@"Enter your new passcode",@"Enter your new passcode");
                     _passwordCandidate = @"";
                     break;
                 case 2:
-                    _prompt.text = @"Re-enter your new passcode";
+                    _prompt.text = NSLocalizedString(@"Re-enter your new passcode",@"Re-enter your new passcode");
                     break;
                 default:;
             }
             break;
             
         case PasscodeViewControllerModeRemove:
-            _prompt.text = @"Enter your passcode";
-            self.navigationItem.title = @"Turn Off Passcode";
+            _prompt.text = NSLocalizedString(@"Enter your passcode",@"Enter your passcode");
+            self.navigationItem.title = NSLocalizedString(@"Turn Off Passcode",@"Turn Off Passcode");
             self.navigationItem.rightBarButtonItem = NULL;
             break;
             
         case PasscodeViewControllerModeVerify:
-            _prompt.text = @"Enter your passcode";
+            _prompt.text = NSLocalizedString(@"Enter your passcode",@"Enter your passcode");
             self.navigationItem.title = NSLS_COMMON_SILENT_TEXT;
             self.navigationItem.rightBarButtonItem = NULL;
             break;
@@ -246,8 +248,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 else
                 {
                     _failPrompt.titleLabel.text =
-                    [NSString stringWithFormat:@"%d failed passscode attempt%s",
-                     failedTries, failedTries > 1?"s":""];
+                    [NSString stringWithFormat:@"%d %@ %@", failedTries,
+					 NSLocalizedString(@"failed passscode", @"failed passcode"),
+					 failedTries > 1 ?
+					 NSLocalizedString(@"attempts",@"attempts") : NSLocalizedString(@"attempt",@"attempt")];
                     [_failPrompt setHidden:NO];
                     _textView.text = @"";
                 }
@@ -275,7 +279,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                    if(_verify_state == 2)
                    {
                        [_failPrompt setHidden:NO];
-                       _failPrompt.titleLabel.text = @"Passcodes did not match, Try again.";
+                       _failPrompt.titleLabel.text = NSLocalizedString(@"Passcodes did not match. Try again.",@"Passcodes did not match. Try again.");
                        _verify_state = 3;
                        
                    }
@@ -325,7 +329,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES; // (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 

@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  SCimpTest.c
+//  optest
+//
 
 #include <limits.h>
 #include <stdio.h>
@@ -45,6 +47,55 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
 #define OPTEST_OSX_SPECIFIC 1
 #endif
+
+
+
+#define XCODE_COLORS_ESCAPE_MAC "\033["
+#define XCODE_COLORS_ESCAPE_IOS "\xC2\xA0["
+
+#if TARGET_OS_IPHONE
+#define XCODE_COLORS_ESCAPE  XCODE_COLORS_ESCAPE_IOS
+#else
+#define XCODE_COLORS_ESCAPE  XCODE_COLORS_ESCAPE_MAC
+#endif
+
+#define XCODE_COLORS_RESET_FG   "fg;" // Clear any foreground color
+#define XCODE_COLORS_RESET_BG  "bg;" // Clear any background color
+#define XCODE_COLORS_RESET     ";"   // Clear any foreground or background color
+
+#define XCODE_COLORS_BLUE_TXT  "fg0,0,255;"
+#define XCODE_COLORS_RED_TXT  "fg255,0,0;"
+#define XCODE_COLORS_GREEN_TXT  "fg0,128,0;"
+
+
+/* this is used to test packet contention issues */
+
+static const char *debug_reply  = NULL;
+
+
+static int DPRINTF(const char *color, const char *fmt, ...)
+{
+	va_list marker;
+	char s[8096];
+	int len;
+	
+	va_start( marker, fmt );
+	len = vsnprintf( s, sizeof(s), fmt, marker );
+	va_end( marker );
+    
+    if(color)  printf("%s%s",  XCODE_COLORS_ESCAPE, color);
+    
+    printf( "%s",s);
+    
+    if(color)  printf("%s%s",  XCODE_COLORS_ESCAPE, XCODE_COLORS_RESET);
+    
+    fflush(stdout);
+    
+	
+	return 0;
+}
+
+ 
 
 
 /*____________________________________________________________________________
@@ -139,6 +190,7 @@ static  char*  stateText( SCimpState state )
     {
         { kSCimpState_Init,		"Init"},
         { kSCimpState_Ready,	"Ready"},
+        { kSCimpState_Error,    "Error" },
         { kSCimpState_Commit,	"Commit"},
         { kSCimpState_DH2,		"DH2"},
         { kSCimpState_DH1,		"DH1"},
@@ -171,6 +223,13 @@ SCLError sEventHandler(SCimpContextRef ctx, SCimpEvent* event, void* uservalue)
             SCimpEventTransitionData  *d =    &event->data.transData;
             
             printf("STATE: %s\n", stateText(d->state ) );
+            
+            if(d->state == kSCimpState_Error)
+            {
+                debug_reply = NULL;
+            }
+            
+            
         }
             break;
             
@@ -184,10 +243,21 @@ SCLError sEventHandler(SCimpContextRef ctx, SCimpEvent* event, void* uservalue)
                                      event->userRef?(char*)event->userRef:"none");
             printf("|%.*s|\n\n", (int)d->length, d->data);
             
-            
-            msgIDLen = sprintf(msgID, "Reply %d", idNum++);
+            if(!ctx->isInitiator && debug_reply)
+            {
+           
                 
-            err = SCimpProcessPacket(destCtx,event->data.sendData.data, event->data.sendData.length,  msgID );
+                err = SCimpProcessPacket(destCtx, (uint8_t*) debug_reply, strlen(debug_reply),  NULL );
+                debug_reply = NULL;
+            }
+            else
+            {
+            
+                msgIDLen = sprintf(msgID, "Reply %d", idNum++);
+                
+                err = SCimpProcessPacket(destCtx,event->data.sendData.data, event->data.sendData.length,  msgID );
+                
+            }
         }
             
             break;
@@ -291,6 +361,12 @@ SCLError sEventHandler(SCimpContextRef ctx, SCimpEvent* event, void* uservalue)
         }
              break;
 
+        case kSCimpEvent_AdviseSaveState:
+        {
+            printf("SAVE STATE\n" );
+            break;
+        }
+         
         default:
             printf("OTHER EVENT %d\n", event->type);
             break;
@@ -332,7 +408,7 @@ static char *banter[] = {
 
 
 
-static SCLError TestSCimp1()
+static SCLError TestSCimpContention()
 {
     SCLError err = kSCLError_NoErr;
     
@@ -342,6 +418,14 @@ static SCLError TestSCimp1()
     char        *bobStr     = "bob@silentcircle.com/iBob's Phone";
     char        *aliceStr   = "alice@silentcircle.com/Alice's Desktop";
     int i;
+  
+    const char commit_msg[] = "?SCIMP:ewogICAgImNvbW1pdCI6IHsKICAgICAgICAidmVyc2lvbiI6IDEsCiAgICAgICAgImNpcGhlclN1aXRlIjogMSwKICAgICAgICAic2FzTWV0aG9kIjogMSwKICAgICAgICAiSHBraSI6ICJIRWdyV0ZFY3lEanBrNVZFZlo2cXpoTnlQcm9Ya1Fwa0ZiS1U0Y3YwbWo4PSIsCiAgICAgICAgIkhjcyI6ICJjNFV1L2JuZURyWT0iCiAgICB9Cn0K.";
+    
+    const char dh1_msg[] = "?SCIMP:ewogICAgImRoMSI6IHsKICAgICAgICAiUEtyIjogIk1Hd0RBZ2NBQWdFd0FqRUFrelJtYjdiRC9paERaN2UwenBIdk9uRGZKY0pLVTF2bEtqSkpsVGVnRnQ3S3hwczRrZGlCUWRhT2Q4QUxPSDNqQWpCcm0vcjZCSW5seWRHSkFTR3VBR0dnN1FQSlRXbFZ6MlN3S1dSQ2tOZ3UvRlRFdVRMeWNRTjQ0c2xIM2lWQWZZcz0iLAogICAgICAgICJIY3MiOiAiK1NsQVRCSnRPRzg9IgogICAgfQp9Cg==.";
+    
+    const char dh2_msg[] = "?SCIMP:ewogICAgImRoMiI6IHsKICAgICAgICAiUEtpIjogIk1Hd0RBZ2NBQWdFd0FqQjNTR3V3dDRlYk10SFVocklsRUJCbkswSG9tK3kya01aVGJIZ290c1Q3YW1uYlVheGJ0UWY2OHdsYTZISWZYZGNDTVFDRkhnbXpoVWMzdngrQ05Cd1REN0F4T2Y1ZWNXS2RqZXJnZ3ZnZnRnVGYza0UxcFdVSU55K2NOQlVqQlZaaG8yYz0iLAogICAgICAgICJtYWNpIjogIlJWMXcyeVllbEpRPSIKICAgIH0KfQo=.";
+    
+    const char confirm_msg[] = "?SCIMP:ewogICAgImNvbmZpcm0iOiB7CiAgICAgICAgIm1hY3IiOiAiY3FNYjBoSFpvQW89IgogICAgfQp9Cg==.";
     
     
     printf("\nSCimp test1 \n");
@@ -367,48 +451,28 @@ static SCLError TestSCimp1()
     err = SCimpEnableTransitionEvents(scimpR, true); CKERR;
 
     /* kick off key exchange */
+    
+    DPRINTF(XCODE_COLORS_RED_TXT, " *** \tTesting bad Message\n ");
     printf("*** \nStarting Key Exchange\n\n");
+ 
+    
+    debug_reply =  commit_msg;
+   
     err = SCimpStartDH(scimpI); CKERR;
-  
-    for(i = 0; banter[i] != NULL; i++)
+    
+    SCimpState  scimp_state;
+    
+    err = SCimpGetNumericProperty(scimpR, kSCimpProperty_SCIMPstate, &scimp_state);
+    
+    if(scimp_state == kSCimpState_Error)
     {
-        err = SCimpSendMsg( i&1?scimpR:scimpI, banter[i] ,strlen(banter[i]), NULL);
-        if(err == kSCLError_NotConnected) 
-        { 
-            printf("\n\n*** NO LONGER CONNECTED\n\n");
-            err = kSCLError_NoErr; break;
-        }
-        CKERR;
-        if(i == 2)
-        {
-            break;
-        }
-    }
-            
+        printf("*** \Receiver in error state\n\n");
+        err = SCimpStartDH(scimpR); CKERR;
+     }
+     
     
-    /* test out of band message */
-    { const char commit_msg[] = "?SCIMP:ewogICAgImNvbW1pdCI6IHsKICAgICAgICAidmVyc2lvbiI6IDEsCiAgICAgICAgImNpcGhlclN1aXRlIjogMSwKICAgICAgICAic2FzTWV0aG9kIjogMSwKICAgICAgICAiSHBraSI6ICJIRWdyV0ZFY3lEanBrNVZFZlo2cXpoTnlQcm9Ya1Fwa0ZiS1U0Y3YwbWo4PSIsCiAgICAgICAgIkhjcyI6ICJjNFV1L2JuZURyWT0iCiAgICB9Cn0K.";
-  
-        
-        const char dh1_msg[] = "?SCIMP:ewogICAgImRoMSI6IHsKICAgICAgICAiUEtyIjogIk1Hd0RBZ2NBQWdFd0FqRUFrelJtYjdiRC9paERaN2UwenBIdk9uRGZKY0pLVTF2bEtqSkpsVGVnRnQ3S3hwczRrZGlCUWRhT2Q4QUxPSDNqQWpCcm0vcjZCSW5seWRHSkFTR3VBR0dnN1FQSlRXbFZ6MlN3S1dSQ2tOZ3UvRlRFdVRMeWNRTjQ0c2xIM2lWQWZZcz0iLAogICAgICAgICJIY3MiOiAiK1NsQVRCSnRPRzg9IgogICAgfQp9Cg==.";
-  
-        const char dh2_msg[] = "?SCIMP:ewogICAgImRoMiI6IHsKICAgICAgICAiUEtpIjogIk1Hd0RBZ2NBQWdFd0FqQjNTR3V3dDRlYk10SFVocklsRUJCbkswSG9tK3kya01aVGJIZ290c1Q3YW1uYlVheGJ0UWY2OHdsYTZISWZYZGNDTVFDRkhnbXpoVWMzdngrQ05Cd1REN0F4T2Y1ZWNXS2RqZXJnZ3ZnZnRnVGYza0UxcFdVSU55K2NOQlVqQlZaaG8yYz0iLAogICAgICAgICJtYWNpIjogIlJWMXcyeVllbEpRPSIKICAgIH0KfQo=.";
-
-        const char confirm_msg[] = "?SCIMP:ewogICAgImNvbmZpcm0iOiB7CiAgICAgICAgIm1hY3IiOiAiY3FNYjBoSFpvQW89IgogICAgfQp9Cg==.";
-
-        const char msgID[] = "commit-packet-0";
-        
-        printf("\e[0;35m *** \tTesting bad Message\n\e[0m ");
-        err =  SCimpProcessPacket(scimpI, (void*)commit_msg, strlen(commit_msg), (void*)msgID);
-        if(IsSCLError(err))
-        {
-            printf("\tFails with Error %d\n\n", err);
-        //        CKERR;
-        }
-    }
-
     
-    for(i = 0; banter[i] != NULL; i++)
+    for(i = 11; banter[i] != NULL; i++)
     {
         err = SCimpSendMsg( i&1?scimpR:scimpI, banter[i] ,strlen(banter[i]), NULL);
         if(err == kSCLError_NotConnected) 
@@ -794,11 +858,11 @@ int scimptest_main(int argc, char **arg)
    
 //    err = TestSCimpSimple(); CKERR;
     
-//      err =  TestSCimp1() ;CKERR;
     
-    err =  TestSCimp() ;CKERR;
+     err =  TestSCimp() ;CKERR;
     
-      
+    err =  TestSCimpContention() ;CKERR;
+    
       
 done:
     

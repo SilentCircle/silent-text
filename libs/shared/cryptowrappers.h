@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,14 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
 
 #ifndef Included_sccryptowrappers_h 	/* [ */
 #define Included_sccryptowrappers_h
@@ -39,7 +37,10 @@ typedef struct HASH_Context *      HASH_ContextRef;
 #define	kInvalidHASH_ContextRef		((HASH_ContextRef) NULL)
  
 #define HASH_ContextRefIsValid( ref )		( (ref) != kInvalidHASH_ContextRef )
- 
+
+#define kHASH_ContextAllocSize 512
+
+
 /* HASH function wrappers */
 
 enum HASH_Algorithm
@@ -54,6 +55,7 @@ enum HASH_Algorithm
     kHASH_Algorithm_SKEIN512        = 7,
     kHASH_Algorithm_SKEIN1024       = 8,
     kHASH_Algorithm_SHA512_256      = 9,
+    kHASH_Algorithm_MD5             = 10,
 };
 
 typedef enum HASH_Algorithm HASH_Algorithm;
@@ -67,6 +69,9 @@ SCLError HASH_Final(HASH_ContextRef  ctx, void *hashOut);
 SCLError HASH_GetSize(HASH_ContextRef  ctx, size_t *hashSize);
 
 void HASH_Free(HASH_ContextRef  ctx);
+
+SCLError HASH_Export(HASH_ContextRef ctx, void *outData, size_t bufSize, size_t *datSize);
+SCLError HASH_Import(void *inData, size_t bufSize, HASH_ContextRef * ctx);
 
 /* Message  Authentication Code wrappers */
  

@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,14 +17,14 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 
 #ifndef Included_SCimpPriv_h	/* [ */
 #define Included_SCimpPriv_h
@@ -62,6 +61,7 @@ ValidateParam( scimpContextIsValid( s ) )
 #define SCIMP_STATE_TAG_LEN     16          /* used for saving state */
 #define DEFAULT_MESSAGE_FORMAT_USE_JSON 1
 
+#define PK_ALLOC_SIZE 256
 
 #define kSCimpProtocolVersion  0x01
 
@@ -196,8 +196,9 @@ typedef
 SCLError (*SCIMPDeserializeHandler)
         ( SCimpContext *ctx,  uint8_t *inData, size_t inSize, SCimpMsg **msg);
 
-#define kSCimpContextMagic		0x53436970  
+#define kSCimpContextMagic		0x53436950  
 #define kSCimpVersion            0x01
+#define kSCimpBlobVersion        0x03
 
 
 struct SCimpContext 
@@ -255,7 +256,7 @@ struct SCimpContext
     SCIMPDeserializeHandler     deserializeHandler;
 };
 
-void scResetSCimpContext(SCimpContext *ctx);
+void scResetSCimpContext(SCimpContext *ctx, bool resetAll);
 bool isValidSASMethod( SCimpSAS method );
 bool isValidCipherSuite( SCimpCipherSuite suite );
 int  scSCimpCipherBits(SCimpCipherSuite  suite);
@@ -298,6 +299,8 @@ SCLError scEventError(
 SCLError scEventNull(    SCimpContextRef   ctx );
 
 SCLError scEventTransition(SCimpContextRef   ctx, SCimpState state );
+
+SCLError scEventAdviseSaveState( SCimpContextRef   ctx);
 
 void scimpFreeMessageContent(SCimpMsg *msg);
 

@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  App.m
+//  SilentChat
+//
 
 #if !__has_feature(objc_arc)
 #  error Please compile this class with ARC (-fobjc-arc).
@@ -50,11 +52,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "ServiceServer.h"
 
 #import "DDGQueue.h"
-#import "Reachability.h"
 #import "GeoTracking.h"
 #import "SCPasscodeManager.h"
 #import "XMPPJID+AddressBook.h"
-
+#import "STSoundManager.h"
+#import "SCloudManager.h"
 
 #import "NSManagedObjectContext+DDGManagedObjectContext.h"
 
@@ -71,15 +73,19 @@ NSString *const kAppDBType     = @"sqlite";
 NSString *const kAppDBModel    = @"momd";
 NSString *const kAppUserAgent  = @"SilentText/1.0";
 
+static NSString *const kBannerIcon = @"Icon-72";
+
 // Error Domain
 
 @interface App ()
 
 @property (strong, nonatomic, readwrite) SCAccount *currentAccount;
 @property (strong, nonatomic, readwrite) XMPPJID *currentJID;
+@property (strong, nonatomic, readwrite) XMPPSilentCircle *xmppSilentCircle;
+@property (strong, nonatomic, readwrite, retain) NSDictionary* docTypes;
 
 + (void) setSharedApp: (App *) app;
-- (XMPPServer *) makeXMPPServerWithAccount: (SCAccount *) account;
+- (SCPPServer *) makeXMPPServerWithAccount: (SCAccount *) account;
 
 @end
 
@@ -101,9 +107,9 @@ NSString *const kAppUserAgent  = @"SilentText/1.0";
 @synthesize geoTracking = _geoTracking;
 @synthesize addressBook = _addressBook;
 @synthesize passcodeManager = _passcodeManager;
-@synthesize reachability = _reachability;
+@synthesize soundManager = _soundManager;
+@synthesize scloudManager = _scloudManager;
 
- 
 @dynamic queueEmpty;
 
 //this is needed to link up the tommath and tomcrypt libraries
@@ -254,7 +260,6 @@ ltc_math_descriptor ltc_mp;
 {
     BOOL firstRun  = NO;
     
-    NSError *error;
     NSURL *applicationDocumentsDirectory = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
     NSURL *storeURL = [applicationDocumentsDirectory URLByAppendingPathComponent:kAppDBName];
    
@@ -296,13 +301,26 @@ ltc_math_descriptor ltc_mp;
 
     self.model = [NSManagedObjectModel.alloc initWithContentsOfURL: modelURL];
     
- //   DDGDesc(self.model);
+    NSError* error = nil;
     
+    NSDictionary *attributes = [[NSFileManager defaultManager]attributesOfItemAtPath:
+                          [NSBundle.mainBundle pathForResource: kAppDBResource ofType: kAppDBModel] error:&error] ;
+    
+    NSString* fileProt = [attributes valueForKey: NSFileProtectionKey];
+    
+    if(!fileProt || ! [fileProt isEqualToString:NSFileProtectionComplete])
+    {
+        [[NSFileManager defaultManager]setAttributes:
+         [NSDictionary dictionaryWithObject:NSFileProtectionComplete
+                                     forKey:NSFileProtectionKey]
+                                       ofItemAtPath :[NSBundle.mainBundle pathForResource: kAppDBResource ofType: kAppDBModel]
+                                               error:&error] ;
+        NSAssert1(!error, @"Error: %@", error);
+    }
+  
+      
     self.storeCoordinator = [self storeCoordinatorWithFilename: kAppDBName];
-    
- //   DDGDesc(self.storeCoordinator);
-//    DDGDesc(self.moc);
-    
+      
     [self observeMOCNotifications];
     
     return self;
@@ -315,6 +333,7 @@ ltc_math_descriptor ltc_mp;
     ltc_mp = ltm_desc;
     
     register_prng (&sprng_desc);
+    register_hash (&md5_desc);
     register_hash (&sha1_desc);
     register_hash (&sha256_desc);
     register_hash (&sha384_desc);
@@ -348,15 +367,19 @@ ltc_math_descriptor ltc_mp;
     
     if (self) {
         
+        self.serverTimeOffset  = 0;
         self.conversationViewController = NULL;
         [self.class setSharedApp: self];
         
+        self.bannerImage =   [UIImage imageNamed: kBannerIcon];
+        
         [self configureXMPPLogger];
         [self configureCrypto];
-
+         
         self.preferences = Preferences.new;
         self.addressBook = SCAddressBook.new;
-        self.reachability =  [Reachability reachabilityWithHostName: kDefaultAccountDomain];
+        self.soundManager = STSoundManager.new;
+        self.scloudManager = SCloudManager.new;
         
         if([self firstRun])
         {
@@ -369,12 +392,22 @@ ltc_math_descriptor ltc_mp;
         self.conversationManager = [self configureConversationManager];
         
  //          [self resetAccounts];
-        self.xmppServer = [self makeXMPPServerWithAccount: self.currentAccount];
+        
+        SCPPServer* sccpServer = [self makeXMPPServerWithAccount: self.currentAccount];
+        self.xmppServer = sccpServer;
+        self.xmppSilentCircle = sccpServer.xmppSilentCircle;
 
+ 
         self.heartbeatQueue = DDGQueue.new;
         [self.heartbeatQueue startQueue];
         
         self.geoTracking = GeoTracking.new;
+        
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *pListpath = [bundle pathForResource:@"Info" ofType:@"plist"];
+        NSDictionary *dictionary = [[NSDictionary alloc] initWithContentsOfFile:pListpath];
+        self.docTypes   = [[dictionary valueForKey:@"CFBundleDocumentTypes"]copy];
+        
      }
     return self;
     
@@ -384,7 +417,7 @@ ltc_math_descriptor ltc_mp;
 #pragma mark - Instance methods.
 
 
-- (XMPPServer *) makeXMPPServerWithAccount: (SCAccount *) account {
+- (SCPPServer *) makeXMPPServerWithAccount: (SCAccount *) account {
     
     DDGDesc(account);
     
@@ -392,7 +425,7 @@ ltc_math_descriptor ltc_mp;
         
         SCPPServer *xmppServer = nil;
         
-        xmppServer = [SCPPServer.alloc initWithServiceServer: account.serviceServer];
+        xmppServer = [SCPPServer.alloc initWithAccount: account];
 
         xmppServer.xmppSilentCircleStorage = self.conversationManager;
         xmppServer.allowSelfSignedCertificates = YES;
@@ -414,9 +447,13 @@ ltc_math_descriptor ltc_mp;
 
     if (!self.xmppServer) {
         
-        self.xmppServer = [self makeXMPPServerWithAccount: account]; 
+        SCPPServer* sccpServer = [self makeXMPPServerWithAccount: account];
+        
+        self.xmppServer = sccpServer;
+        self.xmppSilentCircle = sccpServer.xmppSilentCircle;
     }
     self.currentAccountID = account.objectID;
+    self.currentJID = nil;
     
     return account;
 

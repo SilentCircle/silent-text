@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,14 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
 
 #include <tomcrypt.h>
 #include "SCpubTypes.h"
@@ -140,6 +138,10 @@ const struct ltc_hash_descriptor* sDescriptorForHash(HASH_Algorithm algorithm)
     
     switch(algorithm)
     {
+        case  kHASH_Algorithm_MD5:
+            desc = &md5_desc;
+            break;
+ 
         case  kHASH_Algorithm_SHA1:
             desc = &sha1_desc;
             break;
@@ -184,6 +186,67 @@ const struct ltc_hash_descriptor* sDescriptorForHash(HASH_Algorithm algorithm)
  
     return desc;
 }
+
+SCLError HASH_Import(void *inData, size_t bufSize, HASH_ContextRef * ctx)
+{
+    int             err = kSCLError_NoErr;
+    HASH_Context*   hashCTX = NULL;
+ 
+    ValidateParam(ctx);
+    *ctx = NULL;
+    
+    
+    if(sizeof(HASH_Context) != bufSize)
+        RETERR( kSCLError_BadParams);
+    
+    hashCTX = XMALLOC(sizeof (HASH_Context)); CKNULL(hashCTX);
+  
+    COPY( inData, hashCTX, sizeof(HASH_Context));
+    
+    validateHASHContext(hashCTX);
+    
+    *ctx = hashCTX;
+  
+done:
+      
+    if(IsSCLError(err))
+    {
+        if(IsntNull(hashCTX))
+        {
+            XFREE(hashCTX);
+        }
+    }
+    
+    return err;
+}
+
+SCLError HASH_Export(HASH_ContextRef ctx, void *outData, size_t bufSize, size_t *datSize)
+{
+    int             err = kSCLError_NoErr;
+    const struct    ltc_hash_descriptor* desc = NULL;
+    
+    validateHASHContext(ctx);
+    ValidateParam(outData);
+    ValidateParam(datSize);
+    
+    desc = sDescriptorForHash(ctx->algor);
+    
+    if(IsNull(desc))
+        RETERR( kSCLError_BadHashNumber);
+ 
+    if(sizeof(HASH_Context) > bufSize)
+        RETERR( kSCLError_BufferTooSmall);
+         
+    COPY( ctx, outData, sizeof(HASH_Context));
+    
+    *datSize = sizeof(HASH_Context);
+    
+done:
+    
+    return err;
+
+}
+
 
 
 SCLError HASH_Init(HASH_Algorithm algorithm, HASH_ContextRef * ctx)

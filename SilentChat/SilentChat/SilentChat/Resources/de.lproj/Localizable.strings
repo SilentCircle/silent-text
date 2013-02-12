@@ -1,0 +1,149 @@
+/* Burn Help */
+"After the specified delay, Burn Notice will destroy your recipient's copy of each message." = "Wenn Sie Burn Notice aktivieren, wird die Empfänger-Kopie jeder Nachricht mit Verzögerung zerstört.";
+
+
+"Back" = "Zurück";
+
+/* Burn Delay */
+"Burn Delay" = "Brennen verzögert sich";
+
+/* Burn Notice */
+"Burn Notice" = "Verbrannte Quelle";
+
+"Cancel" = " rückgängig machen l";
+
+/* Conversation Options */
+"Conversation Options" = " Gesprächsoptionen ";
+
+/* Delay */
+"Delay" = "Verzögerung";
+
+/* Enter Contact */
+"Enter Contact" = "Kontakt eingeben";
+
+/* For Your Eyes Only */
+"For Your Eyes Only" = "Privat";
+
+/* Send Location */
+"Include Location" = "Standort hinzufügen";
+
+/* Location not available. */
+"Location not available." = "Standort konnte nicht ermittelt werden.";
+
+/* Location tracking must be turned on before it can be utilized in a message. */
+"Location tracking must be turned on before it can be utilized in a message." = " Standortbestimmung muss aktiviert werden, bevor sie in einer Nachricht genutzt werden kann ";
+
+/* Reset Keys */
+"Reset Keys" = "Schlüssel zurücksetzen";
+
+/* Location Help */
+"“Reset the encryption keys." = " Verschlüsselungscode zurücksetzen.";
+
+/* Text Options Note */
+"These options apply only to this conversation." = "Diese Optionen gelten nur für dieses Gespräch.";
+
+/* Text Options Note */
+"These options apply to this conversation only" = "Diese Optionen gelten lediglich für dieses Gespräch.";
+
+/* Location Help */
+"Turn on to include your location with outgoing messages." = " Bitte Einschalten, um Ihre Standortinformation in die ausgehende Nachricht aufzunehmen.";
+
+/* Burn Help */
+"Turning on Burn Notice will, after a delay, destroy your recipient's copy of each message.  [Fix the shadow on this text!]" = "Wenn Sie Burn Notice aktivieren, wird die Empfänger-Kopie jeder Nachricht mit Verzögerung zerstört.";
+
+/* %@ does not have a silent text account */
+"%@ does not have a silent text account" = "%@ hat keine Silent Text Nutzerkonto";
+
+/* Accept Re-Key */
+"%@ wishes to rekey\nSAS: %@" = "%1$@ wünscht Neuverschlüsselung\nSAS: %2$@";
+
+/* Accept Re-Key */
+"Accept Re-Key" = "Akzeptiere Neuverschlüsselung";
+
+/* ACTIVATE */
+"ACTIVATE" = "Aktivieren";
+
+/* Add Contact Button */
+"Add Contact" = "Kontakt hinzufügen";
+
+/* After %d hours */
+"After %d hours" = "Nach %d Stunden";
+
+/* After %d minutes */
+"After %d minutes" = "Nach %d Minuten";
+
+/* After %d seconds */
+"After %d seconds" = "Nach %d Sekunden";
+
+/* After 1 hour */
+"After 1 hour" = "Nach 1 Stunde";
+
+/* After 1 minute */
+"After 1 minute" = "Nach 1 Minute";
+
+/* Authentication Failed */
+"Authentication Failed" = "Anmeldung fehlgeschlagen";
+
+/* Burn Notice */
+"Burn Notice" = "Verbrannte Quelle";
+
+/* Cancel an alert window */
+"Cancel" = "Abbrechen";
+
+/* Certificate match error -- please update to the latest version of Silent Text */
+"Certificate match error -- please update to the latest version of Silent Text" = "Zertifikat fehlerhaft – Bitte aktualisieren Sie auf die neueste Version von Silent Text";
+
+/* Contact Button */
+"Contact" = "Kontakt";
+
+/* Immediately */
+"Immediately" = "Sofort";
+
+/* Invalid User Name */
+"Invalid User Name" = "Ungültige Benutzer-Kennung";
+
+/* Logging In… */
+"Logging In…" = "Einloggen";
+
+/* Never */
+"Never" = "Niemals";
+
+/* New Contact */
+"New Contact" = "Neuer Kontakt";
+
+/* Accept the dialog */
+"OK" = "OK";
+
+/* Please contact Silent Circle customer support with error code: \"%@\". */
+"Please contact Silent Circle customer support with error code: \"%@\"." = "Bitte kontaktieren Sie unseren Kundenservice in Bezug auf folgende Fehlermeldung: \"%@\".";
+
+/* For sending a message */
+"Send" = "Senden";
+
+/* Settings view Title */
+"Settings" = "Einstellungen";
+
+/* Create a new account */
+"SIGN UP" = "Anmelden";
+
+/* Silent Phone Button */
+"Silent Phone" = "Silent Phone";
+
+/* Conversation view Title */
+"SILENT TEXT" = "SILENT TEXT";
+
+/* Unable to activate Silent Text */
+"Unable to activate Silent Text" = "Aktivieren von Silent Text nicht möglich";
+
+/* Unable to connect to server. */
+"Unable to connect to server." = "Verbindung zum Server konnte nicht hergestellt werden.";
+
+/* verifying a particular user */
+"Verifying %@…" = "Verifizierung %@…";
+
+/* Verifying... */
+"Verifying…" = "Verifizierung…";
+
+/* when displaying version numbers such as 1.0.0 */
+"Version" = "Version";
+

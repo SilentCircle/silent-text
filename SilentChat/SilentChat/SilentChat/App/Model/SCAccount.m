@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  SCAccount.m
+//  SilentChat
+//
 
 #if !__has_feature(objc_arc)
 #  error Please compile this class with ARC (-fobjc-arc).
@@ -39,7 +41,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SCPPServer.h"
 
 #import "ServiceCredential.h"
-#import "ServiceServer.h"
 #import "NSString+URLEncoding.h"
 
 #define CLASS_DEBUG 1
@@ -76,10 +77,10 @@ NSString *const kServerPort  = @"serverPort";
 @dynamic password;
 @dynamic passphraseMetaData;
 @dynamic serviceName;
-@dynamic serviceServer;
 @dynamic jid;
 @dynamic fullJID;
 @dynamic accountDomain;
+@dynamic credential;
 
 - (NSString *) debugDescription {
     
@@ -180,6 +181,7 @@ NSString *const kAccountPassphraseMetaDataFormat = @"%@.passphraseMetaData";
     
 } // -serviceName
 
+/*
 
 - (ServiceServer *) serviceServer {
     
@@ -193,7 +195,7 @@ NSString *const kAccountPassphraseMetaDataFormat = @"%@.passphraseMetaData";
     
 } // -serviceServer
 
-
+ */
 - (XMPPJID *) jid {
     
     return [XMPPJID jidWithString: self.username];

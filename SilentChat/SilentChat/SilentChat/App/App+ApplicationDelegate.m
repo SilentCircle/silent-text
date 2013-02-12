@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,15 +17,18 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
+//
+//  App+ApplicationDelegate.m
+//  SilentChat
+//
 
 #if !__has_feature(objc_arc)
 #  error Please compile this class with ARC (-fobjc-arc).
@@ -36,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "AppConstants.h"
 
 #import "App+ApplicationDelegate.h"
+#import "Preferences.h"
 
 #import "App+Model.h"
  
@@ -49,10 +52,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "Heartbeat.h"
 #import "SCPasscodeManager.h"
 #import "PasscodeViewController.h"
+#import "ImportViewController.h"
 
-#import "Reachability.h"
 #import "DDGQueue.h"
 #import "NSManagedObjectContext+DDGManagedObjectContext.h"
+
 
 #define CLASS_DEBUG 1
 #import "DDGMacros.h"
@@ -149,7 +153,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 } // -copyDBToURL
 
 
-- (void) makeDirectory: (NSString *) directory {
+- (NSString*) makeDirectory: (NSString *) directory {
 	
 	NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 	
@@ -165,6 +169,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		DDGDesc(error.userInfo);
 	}
 	
+    return path;
 } // -makeDirectory
 
 
@@ -232,6 +237,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 } // -checkAndUpdateDB
 
+- (void) flushScloudCache
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	path = [path stringByAppendingPathComponent: kDirectorySCloudCache];
+    [self cleanDirectoryAtPath: path];
+
+}
+
+
+-(void) clearInbox
+{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	path = [path stringByAppendingPathComponent: @"Inbox"];
+    [self cleanDirectoryAtPath: path];
+    
+}
 
 #pragma mark - UIApplicationDelegate methods.
 
@@ -270,6 +291,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
 } // -makeRootViewController
 
+//- (IBAction) threeFingerTap: (UITapGestureRecognizer *) gestureRecognizer {
+//	[self switchBackgrounds];
+//} // -threeFingerTap
+//
+
+- (void) switchBackgrounds {
+	static NSMutableArray *bgNameArray;
+	static short arrayIndex = 0;
+	
+	if (!bgNameArray) {
+		NSFileManager *filemanager = [NSFileManager defaultManager];
+		bgNameArray = [NSMutableArray arrayWithCapacity:15];
+		NSArray *allArray = [filemanager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:nil];
+		[allArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if (([[obj pathExtension] isEqualToString:@"jpg"] || [[obj pathExtension] isEqualToString:@"png"]) && [obj hasPrefix:@"background-"])
+				[bgNameArray addObject:obj];
+		}];
+		
+	}
+	if (arrayIndex == [bgNameArray count])
+		arrayIndex = 0;
+	[self setBackground:[bgNameArray objectAtIndex:arrayIndex++]];
+
+//	self.backgroundIV.image = [UIImage imageNamed:[bgNameArray objectAtIndex:arrayIndex++]];
+//	[self.window insertSubview:self.backgroundIV belowSubview:self.rootViewController.view];
+	
+}
+
+- (void)setBackground:(NSString *)backgroundName
+{
+	NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: backgroundName];
+	if ((self.backgroundIV.image = [UIImage imageWithContentsOfFile:path]) != nil) {
+		self.preferences.globalBackground = backgroundName;
+	}
+	else
+		self.backgroundIV.backgroundColor = [UIColor blackColor];
+
+}
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -280,7 +339,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     UIApplication *app = [UIApplication sharedApplication];
     
-    // Let the device know we want to receive push notifications
+     // Let the device know we want to receive push notifications
 	[app registerForRemoteNotificationTypes:  (UIRemoteNotificationTypeBadge
                                                | UIRemoteNotificationTypeSound
                                                | UIRemoteNotificationTypeAlert)];
@@ -290,11 +349,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     // Override point for customization after application launch.
     self.rootViewController = [self makeRootViewController];
     
-    self.window.rootViewController = self.rootViewController;
-    self.window.backgroundColor    = UIColor.blackColor;
-    
+	self.window.rootViewController = self.rootViewController;
+	
+	
+	self.backgroundIV = [[UIImageView alloc] initWithFrame:self.window.bounds];
+	[self.window insertSubview:self.backgroundIV belowSubview:self.rootViewController.view];
+	//self.preferences.globalBackground = @"bg05.jpg";
+	[self setBackground:self.preferences.globalBackground];
+	
+//	UITapGestureRecognizer *threeFingerRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(threeFingerTap:)];
+//	threeFingerRecognizer.numberOfTouchesRequired = 3;
+//    [self.backgroundIV addGestureRecognizer:threeFingerRecognizer];
+//	self.backgroundIV.userInteractionEnabled = YES;
+
+	
     [self.window makeKeyAndVisible];
-     
+    
+    NSURL *url = [launchOptions valueForKey:UIApplicationLaunchOptionsURLKey];
+    if (url != nil)
+    {
+        if ([[url scheme] isEqualToString:@"file"])
+                [self silentTextWasAskedtoOpenFile: url];
+        
+    }
+    
     return NO;
 
 } // -application:didFinishLaunchingWithOptions:
@@ -304,21 +382,40 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void) applicationWillResignActive: (UIApplication *) application {
     
-    DDGTrace();
-	
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+     
+    DDGTrace();
     
-} // -applicationWillResignActive:
-
+    
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];	
+	path = [path stringByAppendingPathComponent: kDirectorySCloudCache];
+    [self cleanDirectoryAtPath: path];
+	
+    [self.xmppServer disconnectAfterSending];
+    
+    [self.geoTracking stopUpdating];
+    
+    [self.xmppSilentCircle clearCaches];
+    
+    // Suspend launching new background threads.
+	self.suspended = YES;
+    [self.heartbeatQueue stopQueue];
+    
+    [self.moc save];
+ // -applicationWillResignActive:
+}
 
 - (void) applicationDidEnterBackground: (UIApplication *) application {
     
     DDGTrace();
 	
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
+ 
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	path = [path stringByAppendingPathComponent: kDirectorySCloudCache];
+    [self cleanDirectoryAtPath: path];
+ 
     [self.xmppServer disconnectAfterSending];
     
     [self.geoTracking stopUpdating];
@@ -342,6 +439,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void) applicationDidBecomeActive: (UIApplication *) application {
     
     DDGTrace();
+    
+    [self clearNotifications];
+    [self.scloudManager updateSrvCache];
     
     if( self.passcodeManager.isLocked)
     {
@@ -380,18 +480,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         }
         else
         {
-            BOOL hasNetwork = (NotReachable != [self.reachability currentReachabilityStatus]);
             
      // dont do this here if app is locked
-             if(!self.passcodeManager.isLocked && hasNetwork)
+             if(!self.passcodeManager.isLocked)
                 [self.xmppServer connect];
             
         }
 //    }];
+     [self clearNotifications];
 
 } // -applicationDidBecomeActive:
 
 
+ 
 - (void) applicationWillTerminate: (UIApplication *) application {
     
     DDGTrace();
@@ -410,9 +511,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
    
         taskName = [taskName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
  
+    }else  if ([[url scheme] isEqualToString:@"file"]) {
+        
+        [self silentTextWasAskedtoOpenFile: url];
     }
+    
+     [self clearNotifications];
+    
     return YES;
 }
+
+- (void) silentTextWasAskedtoOpenFile:(NSURL *)url
+{
+    
+  DDGDesc(url);
+    
+    ImportViewController *ivc = [ImportViewController.alloc
+                                 initWithNibNameAndURL:nil
+                                 bundle: nil
+                                 url:url];
+    
+    [self.rootViewController presentViewController:ivc animated: NO completion: NULL];
+
+     [self clearNotifications];
+}
+
 
 #pragma mark - SCPasscodeDelegate methods.
 
@@ -434,10 +557,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void) passcodeManagerDidUnlock: (SCPasscodeManager *) passcodeManager;
 {
     DDGTrace();
-    BOOL hasNetwork = (NotReachable != [self.reachability currentReachabilityStatus]);
-    
-     if(hasNetwork)
-         [self.xmppServer connect];
+
+    [self.xmppServer connect];
 
 }
 
@@ -464,7 +585,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     self.pushToken = newToken;
     
-	NSLog(@"My token is: %@", newToken);
+//	NSLog(@"My token is: %@", newToken);
     
 //	[dataModel setDeviceToken:newToken];
     //self.flipsideViewController.tokenField.text = newToken;
@@ -495,6 +616,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// is received. If the app was suspended in the background, it is woken up
 	// and this method is invoked as well.
 	[self addMessageFromRemoteNotification:userInfo updateUI:YES];
+    
+    [self clearNotifications];
 }
 
 - (void)addMessageFromRemoteNotification:(NSDictionary*)userInfo updateUI:(BOOL)updateUI
@@ -503,6 +626,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// We are interested in the contents of the alert message.
 	//NSString* alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
     
+}
+
+- (void) clearNotifications {
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 1];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
 }
 
 #pragma mark -

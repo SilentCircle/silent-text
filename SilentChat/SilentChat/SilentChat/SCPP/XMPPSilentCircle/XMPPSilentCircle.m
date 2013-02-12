@@ -1,6 +1,5 @@
 /*
-Copyright © 2012, Silent Circle
-All rights reserved.
+Copyright © 2012-2013, Silent Circle, LLC.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -18,27 +17,24 @@ modification, are permitted provided that the following conditions are met:
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DISCLAIMED. IN NO EVENT SHALL SILENT CIRCLE, LLC BE LIABLE FOR ANY
 DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+*/
 
 #import "XMPPSilentCircle.h"
 #import "XMPPLogging.h"
 #import "XMPPInternal.h"
 #import "XMPPFramework.h"
 #import "NSData+XMPP.h"
-
-#define CLASS_DEBUG 1
-#import "DDGMacros.h"
+#import "XMPPMessage+SilentCircle.h"
 
 #import <SCimp.h>
-#import <SCloud.h>
+#import <Siren.h>
 #include <cryptowrappers.h>
  #import <SCpubTypes.h>
 
@@ -345,26 +341,44 @@ NSMutableDictionary *scimpDict; // Key=remoteJid, Value=SCimpWrapper
 
 + (void) removeSecureContextForJid:(XMPPJID *)remoteJid
 {
-    SCimpWrapper *scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+    BOOL useBare = NO;
+    
+    SCimpWrapper *scimp = [scimpDict objectForKey:remoteJid];
+    
+    if(!scimp)
+    {
+        useBare = YES;
+        scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+    }
     
     if(scimp)
     {
-        [scimpDict removeObjectForKey: [remoteJid bareJID]];
+        SCimpFree(scimp->ctx);
+        scimp->ctx = NULL;
+
+        [scimpDict removeObjectForKey: useBare?[remoteJid bareJID]:remoteJid];
+        scimp = NULL;
+        
     }
+}
+
+
+-(void) clearCaches
+{
+    [scimpDict removeAllObjects];
+  
 }
 
 #pragma mark secure context control
 
+ 
 
 - (void)rekeySecureContextForJid:(XMPPJID *)remoteJid
 {
-     
-    SCimpWrapper *scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+    SCimpWrapper *scimp = [self scimpForJid:remoteJid isNew:nil];
     if(scimp)
     {
          SCimpStartDH(scimp->ctx);
-        
-        [self saveState:scimp];
         
     }
 
@@ -372,34 +386,28 @@ NSMutableDictionary *scimpDict; // Key=remoteJid, Value=SCimpWrapper
 
 - (void)acceptSharedSecretForJid:(XMPPJID *)remoteJid 
 {
-     
-    SCimpWrapper *scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+    SCimpWrapper *scimp = [scimpDict objectForKey:  remoteJid];
+    
+    if(!scimp)
+        scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+
     if(scimp)
     {
 
         SCimpAcceptSecret(scimp->ctx);
-
-        [self saveState:scimp];
     
     }
 }
 
 
-
-NSString *const kSCIMPInfoCipherSuite   = @"cipher_suite";
-NSString *const kSCIMPInfoVersion       = @"version";
-NSString *const kSCIMPInfoSASMethod     = @"SAS_method";
-NSString *const kSCIMPInfoSAS           = @"SAS";
-NSString *const kSCIMPInfoCSMatch       = @"secrets_match";
-NSString *const kSCIMPInfoHasCS         = @"has_secret";
-
-
 - (NSDictionary*)secureContextInfoForJid:(XMPPJID *)remoteJid
 {
     NSMutableDictionary* infoDict  = NULL;
-    
-    SCimpWrapper *scimp = [scimpDict objectForKey: [remoteJid bareJID]];
-    if(scimp)
+   
+    BOOL isNewSCimpContext = NO;
+    SCimpWrapper *scimp = [self scimpForJid:remoteJid isNew:&isNewSCimpContext];
+        
+    if(!isNewSCimpContext  && scimp)
     {
         SCLError     err  = kSCLError_NoErr;
         SCimpInfo    info;
@@ -408,23 +416,26 @@ NSString *const kSCIMPInfoHasCS         = @"has_secret";
         
         err = SCimpGetInfo(scimp->ctx, &info); CKERR;
         
-        err = SCimpGetAllocatedDataProperty(scimp->ctx, kSCimpProperty_SASstring, (void*) &SASstr, &length); CKERR;
-         
-         NSString *SAS = [NSString.alloc initWithBytesNoCopy: SASstr 
-                                                      length: length
-                                                    encoding: NSUTF8StringEncoding 
-                                                freeWhenDone: YES];
-         
-        infoDict = [NSMutableDictionary dictionaryWithCapacity: 6];
-         
-        [infoDict setValue:[NSNumber numberWithInteger:info.version] forKey:kSCIMPInfoVersion];
-        [infoDict setValue:[NSNumber numberWithInteger:info.cipherSuite] forKey:kSCIMPInfoCipherSuite];
-        [infoDict setValue:[NSNumber numberWithInteger:info.sasMethod] forKey:kSCIMPInfoSASMethod];
-        [infoDict setValue:[NSNumber numberWithBool: (info.csMatches?YES:NO)] forKey:kSCIMPInfoCSMatch];
-        [infoDict setValue:[NSNumber numberWithBool: (info.hasCs?YES:NO)] forKey:kSCIMPInfoHasCS];
-        [infoDict setValue:SAS forKey:kSCIMPInfoSAS];
+        if(info.isReady)
+        {
+            err = SCimpGetAllocatedDataProperty(scimp->ctx, kSCimpProperty_SASstring, (void*) &SASstr, &length); CKERR;
+            
+            NSString *SAS = [NSString.alloc initWithBytesNoCopy: SASstr
+                                                         length: length
+                                                       encoding: NSUTF8StringEncoding
+                                                   freeWhenDone: YES];
+            
+            infoDict = [NSMutableDictionary dictionaryWithCapacity: 6];
+            
+            [infoDict setValue:[NSNumber numberWithInteger:info.version] forKey:kSCIMPInfoVersion];
+            [infoDict setValue:[NSNumber numberWithInteger:info.cipherSuite] forKey:kSCIMPInfoCipherSuite];
+            [infoDict setValue:[NSNumber numberWithInteger:info.sasMethod] forKey:kSCIMPInfoSASMethod];
+            [infoDict setValue:[NSNumber numberWithBool: (info.csMatches?YES:NO)] forKey:kSCIMPInfoCSMatch];
+            [infoDict setValue:[NSNumber numberWithBool: (info.hasCs?YES:NO)] forKey:kSCIMPInfoHasCS];
+            [infoDict setValue:SAS forKey:kSCIMPInfoSAS];
+        }
     }
-
+    
     
 done:
     
@@ -519,7 +530,23 @@ done:
 - (SCimpWrapper *)scimpForJid:(XMPPJID *)remoteJid isNew:(BOOL *)isNewPtr
 {
 	BOOL isNew = NO;
-   SCimpWrapper *scimp = [scimpDict objectForKey: [remoteJid bareJID]];
+    
+    SCimpWrapper *scimp = [scimpDict objectForKey:remoteJid];
+    
+    // didnt find it, lets check for the bare JID
+    if(!scimp)
+    {
+        scimp = [scimpDict objectForKey:remoteJid.bareJID];
+        if(scimp)
+        {
+            // update the object to use full jid in that case.
+            scimp->remoteJid = [remoteJid copy];
+            
+            [scimpDict removeObjectForKey:remoteJid.bareJID];
+            [scimpDict setObject:scimp forKey: remoteJid ];
+        }
+    }
+    
 	
 	if (scimp == nil)
 	{
@@ -540,7 +567,17 @@ done:
 			
 			isNew = YES;
 		}
+        
+		scimp = [[SCimpWrapper alloc] initWithLocalJid:myJID remoteJID:remoteJid];
+		scimp->ctx = ctx;
+      
+        if (restored)
+			XMPPLogVerbose(@"%@: Restored SCimpWrapper: %@", THIS_FILE, scimp);
+		else
+			XMPPLogVerbose(@"%@: New SCimpWrapper: %@", THIS_FILE, scimp);
 		
+		[scimpDict setObject:scimp forKey: remoteJid ];
+
 		err = SCimpSetEventHandler(ctx, XMPPSCimpEventHandler, (__bridge void *)self);
 		if (err != kSCLError_NoErr)
 		{
@@ -561,23 +598,14 @@ done:
 			XMPPLogError(@"%@: SCimpSetNumericProperty(kSCimpProperty_SASMethod) error = %d", THIS_FILE, err);
 		}
             
-        
-		scimp = [[SCimpWrapper alloc] initWithLocalJid:myJID remoteJID:remoteJid];
-		scimp->ctx = ctx;
-		
-		if (restored)
-			XMPPLogVerbose(@"%@: Restored SCimpWrapper: %@", THIS_FILE, scimp);
-		else
-			XMPPLogVerbose(@"%@: New SCimpWrapper: %@", THIS_FILE, scimp);
-		
-		[scimpDict setObject:scimp forKey:[remoteJid bareJID]];
-	}
+  		
+    }
 	
 	if (isNewPtr) *isNewPtr = isNew;
 	return scimp;
 }
 
-- (void)stripSirenData:(XMPPMessage *)message
+- (void)stripSilentCircleData:(XMPPMessage *)message
 {
     NSUInteger index, count = [message childCount];
     
@@ -585,7 +613,8 @@ done:
     {
         NSXMLElement *element = (NSXMLElement *)[message childAtIndex:(index-1)];
         
-        if ([[element name] isEqualToString:kSCPPSiren])
+        if ([[element name] isEqualToString:kSCPPSiren]
+            ||  [[element name] isEqualToString:kSCPPTimestamp] )
         {
             [message removeChildAtIndex:(index-1)];
         }
@@ -600,15 +629,31 @@ done:
 	if ([sirenData length] > 0)
 	{
 		NSData *data = [sirenData dataUsingEncoding:NSUTF8StringEncoding];
-	
+        BOOL shouldPush = YES;
+        
         // strip out the siren before encrypting and sending.
-        [self stripSirenData: message];
-           
-		// How does this work?
+        [self stripSilentCircleData: message];
+        
+        Siren* siren = [Siren sirenWithJSON:sirenData ];
+        if(siren &&  (siren.requestResend != nil) ) shouldPush = NO;
+         
+        NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:kSCPPNameSpace];
+        
+        //
+        // mark any packets that dont really need push notifcations here as false.
+        //
+        
+        if(!shouldPush)
+        {
+            [x addAttributeWithName: kXMPPNotify stringValue: @"false"];
+        }
+        
+        [message addChild:x];
+        
+        // How does this work?
 		// We invoke SCimpSendMsg which process the message and synchrously
         // calls XMPPSCimpEventHandler and then assembleSCimpDataMessage
 		
- 		
 		SCLError err = SCimpSendMsg(scimp->ctx, (void *)[data bytes], (size_t)[data length], (__bridge void*) message );
 		if (err != kSCLError_NoErr)
 		{
@@ -622,7 +667,7 @@ done:
     BOOL hasContent = NO;
 	XMPPLogTrace();
 	
-	NSString *x = [[message elementForName:@"x" xmlns:@"http://silentcircle.com"] stringValue];
+	NSString *x = [[message elementForName:@"x" xmlns:kSCPPNameSpace] stringValue];
 	if ([x length] > 0)
 	{
 		// How does this work?
@@ -659,8 +704,8 @@ done:
     {
         NSData *stateKey = [storage stateKeyForLocalJid:myJID remoteJid:theirJid];
         
-        XMPPLogVerbose(@"%@: [%@, %@] state = %@", THIS_FILE, myJID, theirJid, state);
-        XMPPLogVerbose(@"%@: [%@, %@] stateKey = %@", THIS_FILE, myJID, theirJid, stateKey);
+//        XMPPLogVerbose(@"%@: [%@, %@] state = %@", THIS_FILE, myJID, theirJid, state);
+//        XMPPLogVerbose(@"%@: [%@, %@] stateKey = %@", THIS_FILE, myJID, theirJid, stateKey);
         
         err = SCimpRestoreState((uint8_t *)[stateKey bytes], // key
                                 (size_t)[stateKey length],   // key length
@@ -704,6 +749,7 @@ done:
     }
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark SCimp
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -726,7 +772,7 @@ done:
     [message addAttributeWithName:@"to" stringValue:[scimp->remoteJid full]];
     [message addAttributeWithName:@"type" stringValue:@"chat"];
     
-    NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:@"http://silentcircle.com"];
+    NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:kSCPPNameSpace];
 
     [x setStringValue:scimpOut];
     
@@ -748,11 +794,17 @@ done:
     //   <body></body>
     //   <x xmlns="http://silentcircle.com">scimp-encrypted-data</x>
     // </message>
+     
+    NSXMLElement *x = [message elementForName:@"x" xmlns:kSCPPNameSpace];
     
-    NSXMLElement *x = [NSXMLElement elementWithName:@"x" xmlns:@"http://silentcircle.com"];
+    if(!x)
+    {
+         x = [NSXMLElement elementWithName:@"x" xmlns:kSCPPNameSpace];
+        [message addChild:x];
+    }
+
     [x setStringValue:scimpOut];
-    
-    [message addChild:x];
+
 }
 
 #pragma mark
@@ -873,8 +925,6 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
             [scimp->pendingOutgoingMessages removeAllObjects];
             [scimp->pendingIncomingMessages removeAllObjects];
             
-            [self saveState:scimp];
-
             // Only notify the delegates after the scimp state is saved. (Precludes a state race condition.)
             [self->multicastDelegate xmppSilentCircle:self didEstablishSecureContext:scimp->remoteJid];
 
@@ -914,14 +964,24 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
                                                         length: event->data.sendData.length 
                                                       encoding: NSUTF8StringEncoding  ];
             
-            XMPPLogCVerbose(@"Outgoing encrypted data: %@", scimpOut);
+//            XMPPLogCVerbose(@"Outgoing encrypted data: %@", scimpOut);
 		 	
             // if the kSCimpEvent_SendPacket event has a userRef, it means that this was the result 
             //  of calling  SCimpSendMsg and not a scimp doing protocol keying stuff.
             
             if (event->userRef)
             {
-                // this is SCimp data message
+                
+                // Add the encrypted body.
+                // Result should look like this:
+                //
+                // <message to=remoteJid">
+                //   <body></body>
+                //   <x xmlns="http://silentcircle.com">scimp-encrypted-data</x>
+                // </message>
+
+                // add the scimp-encrypted-data to the message here.
+                
                 [self assembleSCimpDataMessage:scimpOut withScimp:scimp withMessage:(__bridge XMPPMessage*)event->userRef];
             }
             else
@@ -945,8 +1005,8 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
    
             NSXMLElement *sirenElement = [NSXMLElement elementWithName:kSCPPSiren xmlns:kSCPPNameSpace];
                
-            // strip out any existing siren to prevent counterfeiting 
-            [self stripSirenData: message];
+            // strip out any existing internal sielnt circle notayions to prevent counterfeiting 
+            [self stripSilentCircleData: message];
             
             [message addChild:sirenElement];
             [sirenElement setStringValue:decryptedBody];
@@ -971,6 +1031,14 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
             
         }
             break;
+            
+#pragma mark kSCimpEvent_AdviseSaveState
+        case kSCimpEvent_AdviseSaveState:
+        {
+            [self saveState:scimp];
+
+        }
+        break;
             
         default:
         {
@@ -1008,7 +1076,7 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 	//   <x xmlns="http://silentcircle.com">base64-encoded-encrypted-message</x>
 	// </message>
 	
-	NSXMLElement *x = [message elementForName:@"x" xmlns:@"http://silentcircle.com"];
+	NSXMLElement *x = [message elementForName:@"x" xmlns:kSCPPNameSpace];
 	if (x)
 	{
 		XMPPLogVerbose(@"%@: %@ - Ignoring. Already has encryption stuff", THIS_FILE, THIS_METHOD);
@@ -1076,7 +1144,6 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 			// Perform encryption.
 			
 			[self encryptOutgoingMessage:message withScimp:scimp];
-			[self saveState:scimp];
 			return message;
 		}
 	}
@@ -1100,7 +1167,7 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 	//   <x xmlns="http://silentcircle.com">base64-encoded-encrypted-message</x>
 	// </message>
 	
-	NSXMLElement *x = [message elementForName:@"x" xmlns:@"http://silentcircle.com"];
+	NSXMLElement *x = [message elementForName:@"x" xmlns:kSCPPNameSpace];
 	if (x == nil)
 	{
 		XMPPLogVerbose(@"%@: %@ - Nothing to decrypt", THIS_FILE, THIS_METHOD);
@@ -1112,7 +1179,9 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 	{
 		messageJid = [[sender myJID] domainJID];
 	}
-	
+
+    [message addTimestamp];
+    
 	BOOL isNewSCimpContext = NO;
 	SCimpWrapper *scimp = [self scimpForJid:messageJid isNew:&isNewSCimpContext];
 	
@@ -1159,7 +1228,6 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 		// Perform decryption.
 		
 		BOOL hasContent = [self decryptIncomingMessage:message withScimp:scimp];
-		[self saveState:scimp];
         
 		return hasContent ? message : nil;
 	}
@@ -1194,7 +1262,7 @@ SCLError XMPPSCimpEventHandler(SCimpContextRef ctx, SCimpEvent *event, void *use
 	//   further information about the software product, such as "http://psi-im.org" for the Psi client;
 	
 	NSXMLElement *feature = [NSXMLElement elementWithName:@"feature"];
-	[feature addAttributeWithName:@"var" stringValue:@"http://silentcircle.com"];
+	[feature addAttributeWithName:@"var" stringValue:kSCPPNameSpace];
 	
 	[query addChild:feature];
 }

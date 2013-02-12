@@ -12,6 +12,12 @@
       location = "container:"
       name = "operational tests">
       <FileRef
+         location = "group:S3 hacking/S3 hacking.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:optest/STBanner/STBanner.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:optest/STConversationView/STConversationView.xcodeproj">
       </FileRef>
       <FileRef
