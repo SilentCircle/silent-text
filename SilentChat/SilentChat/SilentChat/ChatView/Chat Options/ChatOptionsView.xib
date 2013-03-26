@@ -41,6 +41,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{8, 42}, {20, 16}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<float key="IBUIAlpha">0.5</float>
 						<int key="IBUIContentMode">5</int>
@@ -134,7 +135,7 @@
 							<object class="IBUIButton" id="557172726">
 								<reference key="NSNextResponder" ref="351805187"/>
 								<int key="NSvFlags">288</int>
-								<string key="NSFrame">{{127, 9}, {23, 27}}</string>
+								<string key="NSFrame">{{109.5, 6}, {30, 30}}</string>
 								<reference key="NSSuperview" ref="351805187"/>
 								<reference key="NSNextKeyView" ref="382593407"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -150,15 +151,15 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="857632076"/>
-								<object class="NSCustomResource" key="IBUIDisabledImage" id="979693760">
+								<object class="NSCustomResource" key="IBUIDisabledImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">phone_off.png</string>
 								</object>
-								<object class="NSCustomResource" key="IBUISelectedImage">
+								<object class="NSCustomResource" key="IBUISelectedImage" id="32531656">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">phone_on.png</string>
 								</object>
-								<reference key="IBUINormalImage" ref="979693760"/>
+								<reference key="IBUINormalImage" ref="32531656"/>
 								<reference key="IBUIFontDescription" ref="58930771"/>
 								<reference key="IBUIFont" ref="499334663"/>
 							</object>
@@ -466,10 +467,10 @@
 							<reference ref="1030293655"/>
 							<reference ref="144070241"/>
 							<reference ref="97735983"/>
-							<reference ref="557172726"/>
 							<reference ref="456884059"/>
 							<reference ref="382593407"/>
 							<reference ref="158407168"/>
+							<reference ref="557172726"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -518,7 +519,7 @@
 				<string key="1.CustomClassName">ChatOptionsView</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="3" key="29.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="29.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="3.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

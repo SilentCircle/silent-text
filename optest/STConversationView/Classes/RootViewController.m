@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 static NSString *const kReplyIcon = @"replyarrow_flat";
 //static NSString *const kAvatarIcon = @"defaultPerson";
-static NSString *const kAvatarIcon = @"silhouette";
+static NSString *const kAvatarIcon = @"avatar"; //@"silhouette";
 static NSString *const kPerson1 = @"bunbun1.gif";
 
 #pragma mark -

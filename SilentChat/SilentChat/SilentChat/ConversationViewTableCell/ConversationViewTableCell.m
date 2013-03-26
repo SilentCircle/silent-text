@@ -46,8 +46,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface ConversationView : UIView {
 	
-@private
-	ConversationViewTableCell *cell_;
+//@private
+//	ConversationViewTableCell *cell_;
 }
 
 @property (nonatomic, retain) ConversationViewTableCell *cell;
@@ -60,7 +60,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation ConversationView
 
-@synthesize cell = cell_;
+//@synthesize cell = cell_;
 
 #pragma mark -
 #pragma mark init
@@ -68,7 +68,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (id)initWithFrame:(CGRect)frame cell:(ConversationViewTableCell *)newCell {
 	
 	if ((self = [super initWithFrame:frame])) {
-		cell_ = newCell;
+		_cell = newCell;
 		
 		self.backgroundColor = [UIColor clearColor];
 		self.layer.masksToBounds = YES;
@@ -90,14 +90,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	UIColor *currentSubTitleColor = self.cell.subTitleColor? self.cell.subTitleColor:[UIColor whiteColor];
 	UIColor *currentDateColor =  silentTheme;
 	//   UIColor *currentDateColor = [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.];
-	UIColor *currentBadgeColor = self.cell.badgeColor?self.cell.badgeColor:[UIColor darkGrayColor];
+	UIColor *currentBadgeColor = self.cell.badgeColor?self.cell.badgeColor:[UIColor whiteColor];
 	
 	if (self.cell.isHighlighted || self.cell.isSelected) {
 		currentTitleColor       = [UIColor whiteColor];
 		currentDateColor        = [UIColor whiteColor];
-		currentBadgeColor       = [UIColor whiteColor];
+		currentBadgeColor       = [UIColor darkGrayColor];
 	}
-	
+#define left_border_for_text 70
+#define top_for_avatar 10
 	/*
 	 UIGraphicsBeginImageContext(rect.size);
 	 CGContextSetFillColorWithColor(context, [[UIColor blackColor] CGColor] );
@@ -105,25 +106,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 UIGraphicsEndImageContext();
 	 
 	 */
+//	self.cell.badgeString = @"105";
 	CGSize badgeTextSize    = [self.cell.badgeString sizeWithFont:[UIFont boldSystemFontOfSize:11.]];
+//	CGRect badgeViewFrame   = CGRectIntegral(CGRectMake(
+//														rect.size.width - 48,
+//														((rect.size.height - badgeTextSize.height - 4) / 2) + 10,
+//														badgeTextSize.width + 14,
+//														badgeTextSize.height + 4));
 	CGRect badgeViewFrame   = CGRectIntegral(CGRectMake(
-														rect.size.width - 40,
-														((rect.size.height - badgeTextSize.height - 4) / 2) + 5,
+//														60 - (badgeTextSize.width + 14),
+														2,
+														top_for_avatar - 5,
 														badgeTextSize.width + 14,
 														badgeTextSize.height + 4));
 	
-	
-	if(self.cell.avatar)
+	if(self.cell.avatar)		// make this a uiimageview later
 	{
-		UIImage * newImage =[self.cell.avatar scaledToWidth: 48.f];
-		[newImage drawInRect: CGRectMake( 2,  hasAddress?16:10 , 48, 48)];
-		
+		UIImage * newImage = self.cell.avatar;
+		//		UIImage * newImage =[self.cell.avatar scaledToWidth: 48.f];
+//		[newImage drawInRect: CGRectMake( 2,  hasAddress?16:10 , 48, 48)];
+		CGRect imageRect = CGRectMake( 2,  top_for_avatar , 60, 60);
+		CGContextRef ctx = UIGraphicsGetCurrentContext();
+		CGContextSaveGState(ctx);
+		CGPathRef clippath = [UIBezierPath bezierPathWithRoundedRect:imageRect cornerRadius:5.0].CGPath;
+		CGContextAddPath(ctx, clippath);
+		CGContextClip(ctx);
+
+//		CGContextSetShadow(ctx, CGSizeMake(5, 5), 10.0f);
+
+		[newImage drawInRect:imageRect];
+		CGContextRestoreGState(ctx);
+
 	}
 	
 	if (self.cell.isEditing)
 	{
-		CGRect subRect = CGRectIntegral(CGRectMake( 60,  hasAddress?40:23 , 200, 34));
-		CGRect addrRect = subRect; addrRect.origin.y = 23;
+		CGRect subRect = CGRectIntegral(CGRectMake( left_border_for_text,  54 , 200, 16));
+		CGRect addrRect = subRect;
+		addrRect.origin.y = 33;
 		[currentTitleColor set];
 		if(hasAddress)[self.cell.addressString drawInRect:addrRect
 												 withFont:[UIFont italicSystemFontOfSize:14]
@@ -149,9 +169,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				 lineBreakMode:NSLineBreakByTruncatingTail
 					 alignment:NSTextAlignmentRight];
 		
-		CGRect subRect = CGRectIntegral(CGRectMake( 60,  hasAddress?40:23 , rect.size.width - 100, 16));
+		CGRect subRect = CGRectIntegral(CGRectMake( left_border_for_text,  hasAddress?54:33 , rect.size.width - 100, 16));
 		
-		CGRect addrRect = subRect; addrRect.origin.y = 23;
+		CGRect addrRect = subRect;
+		addrRect.origin.y = 33;
 		[currentTitleColor set];
 		if(hasAddress)[self.cell.addressString drawInRect:addrRect
 												 withFont:[UIFont italicSystemFontOfSize:14]
@@ -166,7 +187,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		if(self.cell.leftBadgeImage)
 		{
-			CGRect badgeRect = CGRectIntegral(CGRectMake( rect.size.width - 40 ,  21 , 24, 24));
+			CGRect badgeRect = CGRectIntegral(CGRectMake( rect.size.width - 48 ,  28 , 24, 24));
 			[self.cell.leftBadgeImage drawInRect:badgeRect];
 		}
 		else if(self.cell.badgeString)
@@ -184,7 +205,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			CGContextSaveGState(context);
 			CGContextSetBlendMode(context, kCGBlendModeClear);
-			
+//			[[UIColor whiteColor] set];
+
 			[self.cell.badgeString drawInRect:CGRectInset(badgeViewFrame, 7, 2) withFont:[UIFont boldSystemFontOfSize:11.]];
 			CGContextRestoreGState(context);
 		}
@@ -216,7 +238,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	
 	[currentTitleColor set];
-	[self.cell.titleString drawAtPoint:CGPointMake(60, 1)
+	[self.cell.titleString drawAtPoint:CGPointMake(left_border_for_text, 10)
 							  forWidth: rect.size.width-150/*(rect.size.width - badgeViewFrame.size.width - 0) */
 							  withFont:[UIFont boldSystemFontOfSize:16] lineBreakMode:NSLineBreakByTruncatingTail];
 	
@@ -236,19 +258,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma mark ConversationViewTableCell implementation
 
 @implementation ConversationViewTableCell
-
-//@synthesize titleString = _titleString;
-//@synthesize subTitleString = _subTitleString;
-//@synthesize date = _date;
-//@synthesize conversationView = _conversationView;
-//@synthesize badgeString = _badgeTextString;
-//@synthesize badgeColor = _badgeColor;
-//@synthesize leftBadgeImage = _leftBadgeImage;
-//@synthesize subTitleColor = _subTitleColor;
-//@synthesize isStatus = _isStatus;
-//@synthesize addressString = _addressString;
-//
-
 
 #pragma mark -
 #pragma mark init & dealloc

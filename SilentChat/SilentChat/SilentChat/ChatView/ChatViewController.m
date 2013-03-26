@@ -98,6 +98,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @property (strong, nonatomic) XMPPJID *remoteJID;
 
+@property (strong, nonatomic) UIImage * authorImage;
+@property (strong, nonatomic) UIImage * remoteImage;
+@property (strong, nonatomic) UIImage * defaultImage;
+
 @property (strong, nonatomic) HPGrowingTextView *textView;
 @property (strong, nonatomic) NSMutableArray *rows;
 @property (strong, nonatomic) UIImage *         bubble;
@@ -135,6 +139,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 static NSString *const kBannerIcon = @"Icon-72";
+static NSString *const kDefaultAvatarIcon = @"silhouette.png";
 
 const NSTimeInterval kDefaultGapInterval = 160;
 
@@ -219,16 +224,19 @@ const NSTimeInterval kDefaultGapInterval = 160;
 }
 
 
-const CGFloat kBubbleInsetVertical   = 15.0f;
-const CGFloat kBubbleInsetHorizontalPoint = 17.0f;
-const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
+const CGFloat kBubbleInsetTop   = 15.0f;
+const CGFloat kBubbleInsetBottom   = 16.0f;
+const CGFloat kBubbleInsetHorizontalPoint = 19.0f;
+const CGFloat kBubbleInsetHorizontalFlat = 19.0f;
 
 - (UIImage *) bubble {
 	
 	if (_bubble) { return _bubble; }
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetVertical, kBubbleInsetHorizontalFlat,
-										   kBubbleInsetVertical, kBubbleInsetHorizontalPoint);
+	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetTop,
+										   kBubbleInsetHorizontalFlat,
+										   kBubbleInsetBottom,
+										   kBubbleInsetHorizontalPoint);
 	
 	UIImage *bubble = [[UIImage imageNamed: @"BubbleOrange.png"] resizableImageWithCapInsets: insets];
 	
@@ -243,8 +251,10 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	
 	if (_otherBubble) { return _otherBubble; }
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetVertical, kBubbleInsetHorizontalPoint,
-										   kBubbleInsetVertical, kBubbleInsetHorizontalFlat);
+	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetTop,
+										   kBubbleInsetHorizontalPoint,
+										   kBubbleInsetBottom,
+										   kBubbleInsetHorizontalFlat);
 	
 	UIImage *bubble = [[UIImage imageNamed: @"BubbleYellow.png"] resizableImageWithCapInsets: insets];
 	
@@ -276,8 +286,10 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	
 	if (_selectedBubble) { return _selectedBubble; }
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetVertical, kBubbleInsetHorizontalFlat,
-										   kBubbleInsetVertical, kBubbleInsetHorizontalPoint);
+	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetTop,
+										   kBubbleInsetHorizontalFlat,
+										   kBubbleInsetBottom,
+										   kBubbleInsetHorizontalPoint);
 	
 	UIImage *bubble = [[UIImage imageNamed: @"BubbleSelectedUser-1.png"] resizableImageWithCapInsets: insets];
 	
@@ -291,8 +303,10 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	
 	if (_otherSelectedBubble) { return _otherSelectedBubble; }
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetVertical, kBubbleInsetHorizontalPoint,
-										   kBubbleInsetVertical, kBubbleInsetHorizontalFlat);
+	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetTop,
+										   kBubbleInsetHorizontalPoint,
+										   kBubbleInsetBottom,
+										   kBubbleInsetHorizontalFlat);
 	
 	UIImage *bubble = [[UIImage imageNamed: @"BubbleSelectedOther-1.png"] resizableImageWithCapInsets: insets];
 	
@@ -308,8 +322,10 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 
 	if (_plainTextBubble) { return _plainTextBubble; }
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetVertical, kBubbleInsetHorizontalPoint,
-										   kBubbleInsetVertical, kBubbleInsetHorizontalPoint);
+	UIEdgeInsets insets = UIEdgeInsetsMake(kBubbleInsetTop,
+										   kBubbleInsetHorizontalPoint,
+										   kBubbleInsetBottom,
+										   kBubbleInsetHorizontalFlat);
 	
 	UIImage *bubble = [[UIImage imageNamed: @"BubblePlaintext.png"] resizableImageWithCapInsets: insets];
 	
@@ -395,6 +411,18 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 
 - (MissiveRow *) makeMissiveRowForMissive: (Missive *) missive {
 	
+    NSString*  bareToJidStr = missive.toJID;
+    NSString*  bareLocaJidStr = self.conversation.localJID;
+    
+    NSRange slashRange = [bareToJidStr rangeOfString:@"/"];
+    if (slashRange.location != NSNotFound)
+    {
+        bareToJidStr = [bareToJidStr substringToIndex:slashRange.location];
+     }
+    
+    AuthorType  authorType = ([bareLocaJidStr isEqualToString: bareToJidStr] ?
+                STBubbleTableViewCellAuthorTypeOther : STBubbleTableViewCellAuthorTypeUser);
+   
 	MissiveRow *missiveRow = MissiveRow.new;
 	
 	missiveRow.missive = missive;
@@ -404,6 +432,10 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	missiveRow.selectedBubble = self.selectedBubble;
 	missiveRow.otherSelectedBubble = self.otherSelectedBubble;
 	missiveRow.plainTextBubble = self.plainTextBubble;
+    missiveRow.authorImage = self.authorImage;
+    missiveRow.remoteImage = self.remoteImage;
+    missiveRow.authorType   = authorType;
+    
 	missiveRow.parentView = self.view;
 	return missiveRow;
 	
@@ -823,10 +855,14 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	DDGTrace();
 	
 	[super viewDidLoad];
+ 
+    self.defaultImage = [UIImage imageNamed: kDefaultAvatarIcon];
 
 // 	[self calculateBurnTimes];
 	[self removeOldLogEntries];
 	
+    [self updateAvatars];
+    
 	self.selectedMissive = NULL;
 	self.rows = [self makeRows];
 	DDGTrace();
@@ -838,7 +874,7 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	[self registerForNotifications];
 	
 	self.shouldScrollToBottom = YES;
-	
+    
 } // -viewDidLoad
 
 
@@ -881,13 +917,29 @@ const CGFloat kBubbleInsetHorizontalFlat = 10.0f;
 	[App.sharedApp.conversationViewController  setChatViewBackButtonCount: count];
 }
 
+-(void) updateAvatars
+{
+    
+    self.authorImage = [ XMPPJID userAvatarWithJIDString: self.conversation.localJID ];
+    if(!self.authorImage)  self.authorImage = self.defaultImage;
+    
+    self.remoteImage = [ XMPPJID userAvatarWithJIDString: self.conversation.remoteJID ];
+    if(!self.remoteImage)  self.remoteImage = self.defaultImage;
+   
+    
+}
 - (void) viewWillAppear: (BOOL) animated {
 	
 	App *app = App.sharedApp;
 	
 	if([app.addressBook needsReload])
+    {
 		[app.addressBook reload];
-	
+        [self updateAvatars];
+        self.rows = [self makeRows];
+
+    }
+    
 	[super viewWillAppear: animated];
 	
 	[self updateTrackingStatus];
@@ -2090,14 +2142,14 @@ static NSString *const kBurningCircle1 = @"BurningCircle_1";
 } // -swipeDown:
 
 - (IBAction) threeFingerTap: (UITapGestureRecognizer *) gestureRecognizer {
-	App *delegate = (App *) [[UIApplication sharedApplication] delegate];
-	//	[delegate switchBackgrounds];
-	
-		BackgroundPickerViewController *bpvc = [BackgroundPickerViewController.alloc initWithNibName: @"BackgroundPickerViewController" bundle: nil];
-		
-		[self.navigationController pushViewController: bpvc animated: YES];
-		
-
+//	App *delegate = (App *) [[UIApplication sharedApplication] delegate];
+//	//	[delegate switchBackgrounds];
+//	
+//		BackgroundPickerViewController *bpvc = [BackgroundPickerViewController.alloc initWithNibName: @"BackgroundPickerViewController" bundle: nil];
+//		
+//		[self.navigationController pushViewController: bpvc animated: YES];
+//		
+//
 } // -threeFingerTap:
 - (IBAction) singleFingerTap: (UITapGestureRecognizer *) gestureRecognizer {
 	[self unhideNavBar];

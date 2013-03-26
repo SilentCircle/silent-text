@@ -92,20 +92,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[_redLEDImageView setHidden:YES];
 	[_blueLEDImageView setHidden:YES];
 	
-	
-	UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:13];
+	UIEdgeInsets insets = UIEdgeInsetsMake(14, 13, 13, 13);
+
+//	UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:13];
+	UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] resizableImageWithCapInsets: insets];
 	[_sendButton setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
 	
-	UIEdgeInsets insets = UIEdgeInsetsMake(15, 19,
-										   15, 19);
-	
-	
+	insets = UIEdgeInsetsMake(16, 19, 16, 19);
 	UIImage *btnDisabledBackground = [[UIImage imageNamed:@"LighterButton"] resizableImageWithCapInsets: insets];
+
 	UIImage *activeBtnBackground = [[UIImage imageNamed:@"DarkerButton"] resizableImageWithCapInsets: insets];
 	[_sendButton setBackgroundImage:btnDisabledBackground forState:UIControlStateDisabled];
 	[_cancelButton setBackgroundImage:activeBtnBackground forState:UIControlStateNormal];
 	[_cancelButton setBackgroundImage:btnDisabledBackground forState:UIControlStateDisabled];
 	
+//	insets = UIEdgeInsetsMake(50, 168, 50, 150);
+//	
+//	UIImage *controlBarImage = [[UIImage imageNamed:@"controlbar"] resizableImageWithCapInsets: insets];
+//	_controlbarImageView.image = controlBarImage;
 	
 	NSMutableDictionary *settings = [[NSMutableDictionary alloc] initWithCapacity:0];
 	

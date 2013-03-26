@@ -10,7 +10,17 @@
    </Group>
    <Group
       location = "container:"
+      name = "plugIn">
+      <FileRef
+         location = "group:IMSilentCircle/IMSilentCircle.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
       name = "operational tests">
+      <FileRef
+         location = "group:optest/libsilenttext-optest.xcodeproj">
+      </FileRef>
       <FileRef
          location = "group:S3 hacking/S3 hacking.xcodeproj">
       </FileRef>
@@ -33,6 +43,9 @@
    <Group
       location = "container:"
       name = "libs">
+      <FileRef
+         location = "group:libs/libsilenttext/silenttext.xcodeproj">
+      </FileRef>
       <FileRef
          location = "group:libs/libscloud/scloud.xcodeproj">
       </FileRef>

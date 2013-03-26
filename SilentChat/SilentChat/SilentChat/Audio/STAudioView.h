@@ -61,6 +61,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, weak) IBOutlet UIImageView* redLEDImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *blueLEDImageView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIImageView *controlbarImageView;
 
 
 @property (assign) id<STAudioViewDelegate>       delegate;

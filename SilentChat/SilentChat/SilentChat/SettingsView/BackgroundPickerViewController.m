@@ -33,23 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "BackgroundPickerViewController.h"
 #import "App+ApplicationDelegate.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImage+Crop.h"
 
-@interface UIImage (Crop)
-- (UIImage *)crop:(CGRect)rect;
-@end
-@implementation UIImage (Crop)
-- (UIImage *)crop:(CGRect)rect {
-	// Create bitmap image from original image data,
-	// using rectangle to specify desired crop area
-	CGImageRef croppedImageRef = CGImageCreateWithImageInRect([self CGImage], CGRectMake(rect.origin.x, [self size].width - rect.origin.x - rect.size.width, rect.size.width, rect.size.height));
-	UIImage *croppedImage = [UIImage imageWithCGImage:croppedImageRef scale:self.scale orientation:[self imageOrientation]];
-	CGImageRelease(croppedImageRef);
-//	NSLog(@"Orientation was %d and is %d", [self imageOrientation], [croppedImage imageOrientation]);
-	//	croppedImage = [croppedImage makeUpOrientation];
-	//	NSLog(@"After makeUp it is %d ", [croppedImage imageOrientation]);
-	return croppedImage;
-}
-@end
 @interface BackgroundPickerViewController ()
 @property (nonatomic, strong) NSMutableArray *fileNames;
 @property BOOL						pageControlUsed;
@@ -89,7 +74,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}];
 //	_bpScrollView.layer.borderColor = [UIColor orangeColor].CGColor;
 //	_bpScrollView.layer.borderWidth = 1.0;
-
+	CGFloat multiplier = [UIScreen mainScreen].scale;
+	CGFloat width = multiplier * contentWidth;
+	CGFloat height = multiplier * contentHeight;
+	
 	for (NSString *fname in _fileNames) {
 		NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: fname];
 		anImage = [[UIImage alloc] initWithContentsOfFile:path];
@@ -105,10 +93,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			UIImageView *button = [[UIImageView alloc] initWithFrame:CGRectMake(totalWidth, 0, contentWidth, contentHeight)];
 			imageSize = anImage.size;
-			button.contentMode = UIViewContentModeCenter;
+			button.contentMode = UIViewContentModeScaleAspectFill;
 			button.clipsToBounds = YES;
 			//[button setImage: [anImage crop:CGRectMake(0, 0, contentWidth, contentHeight)]];
-			[button setImage: [anImage crop:CGRectMake((imageSize.width - contentWidth) * 0.5, (imageSize.height - contentHeight) * 0.5, contentWidth, contentHeight)]];
+			CGRect cropRect = CGRectMake((imageSize.width - width) * 0.5, (imageSize.height - height) * 0.5, width, height);
+			[button setImage: [anImage crop:cropRect]];
 			button.tag = numberOfStyles;
 //			[button addTarget:self action:@selector(bpPress:) forControlEvents:UIControlEventTouchUpInside];
 			button.layer.borderColor = [UIColor grayColor].CGColor;
@@ -129,7 +118,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	_bpScrollView.scrollsToTop = NO;
 	
 	_bpPageControl.numberOfPages = numberOfStyles;
-//	_bpPageControl.currentPage = [_fileNames indexOfObject:settings.sheetStyleName];
+	App *delegate = (App *) [[UIApplication sharedApplication] delegate];
+	_bpPageControl.currentPage = [_fileNames indexOfObject: [delegate getBackgroundName]];
 	[self changePageWithAnimation:NO];
 	_pageControlUsed = NO;	// last statement leaves this value as YES
 	
@@ -141,6 +131,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[_bpScrollView flashScrollIndicators];
 }
+
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//	CGFloat angle = 0;
+//		
+//	switch (toInterfaceOrientation) {
+//		case UIInterfaceOrientationLandscapeRight:
+//			angle = M_PI*1.5;
+//			break;
+//		case UIInterfaceOrientationLandscapeLeft:
+//			angle = M_PI/2;
+//			break;
+//		case UIInterfaceOrientationPortraitUpsideDown:
+//			angle = -M_PI;
+//			break;
+//		default:
+//			
+//			break;
+//	}
+//	_bpScrollView.transform = CGAffineTransformMakeRotation(angle);
+//}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

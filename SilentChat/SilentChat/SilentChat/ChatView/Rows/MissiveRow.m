@@ -57,12 +57,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NSString *const kBubbleCellIdentifier = @"BubbleCellIdentifier";
 NSString *const kMissive = @"missive";
-static NSString *const kAvatarIcon = @"silhouette";
+static NSString *const kAvatarIcon = @"avatar"; //@"silhouette";
 
 @interface MissiveRow ()
 
 @property (strong, nonatomic, readonly) STBubbleTableViewCell *scratchCell;
-@property (nonatomic, readonly) AuthorType authorType;
 
 @end
 
@@ -78,7 +77,6 @@ static NSString *const kAvatarIcon = @"silhouette";
 @synthesize indexRow = _indexRow;
 
 @dynamic scratchCell;
-@dynamic authorType;
 
 #pragma mark - Accessor methods.
 
@@ -96,11 +94,11 @@ static NSString *const kAvatarIcon = @"silhouette";
 	NSData *thumb = siren.thumbnail;
 	if (thumb)
 		return [STBubbleTableViewCell quickHeightForContentViewWithImage:[UIImage imageWithData: thumb]
-															  withAvatar:[self authorImage] ? YES : NO];
+															  withAvatar:YES];
 	else
 		return [STBubbleTableViewCell quickHeightForContentViewWithText:(siren.message ? siren.message : @"")//[NSString stringWithFormat:@"%ld: %@", self.indexRow, (siren.message ? siren.message : @"")]
 															   withFont:kBubbleCellFont
-															 withAvatar:[self authorImage] ? YES : NO
+															 withAvatar:YES
 														   withMaxWidth:self.parentView.bounds.size.width];
 	
 	//    STBubbleTableViewCell *btvc = self.scratchCell;
@@ -180,7 +178,7 @@ static NSString *const kAvatarIcon = @"silhouette";
 	if(thumbnail)
 	{
 		UIImage*  image = [UIImage imageWithData: thumbnail];
-		
+NSLog(@"thumbnail size is %@", NSStringFromCGSize(image.size));
 		if(siren.mediaType)
 		{
 			cell.bubbleView.mediaImage = image;
@@ -216,8 +214,8 @@ static NSString *const kAvatarIcon = @"silhouette";
 		bubbleCell.delegate    = self;
 		bubbleCell.authorType  = self.authorType;
 		
-		bubbleCell.imageView.image =  [self authorImage];
-		
+        bubbleCell.imageView.image = (self.authorType == STBubbleTableViewCellAuthorTypeUser)?self.authorImage:self.remoteImage;
+     	
 		bubbleCell.bubbleImage = (bubbleCell.authorType == STBubbleTableViewCellAuthorTypeUser) ? self.bubble : self.otherBubble;
 		
 		//       bubbleCell.badgeImage = (siren.shredAfter)?self.clockImage: NULL;
@@ -253,32 +251,7 @@ static dispatch_once_t        _scratchCellGuard = 0;
 	
 } // -scratchCell
 
-
-- (UIImage*) authorImage {
-	DDGTrace();
-	NSString *localJIDStr   = self.missive.conversation.localJID;
-	NSString* toJIDStr = [[XMPPJID jidWithString:self.missive.toJID]bare];
-	NSString* remoteJIDStr = [[XMPPJID jidWithString:self.missive.conversation.remoteJID]bare];
-	
-	UIImage* image = [ XMPPJID userAvatarWithJIDString:
-					  [toJIDStr isEqualToString: localJIDStr]
-					  ? remoteJIDStr
-													  : localJIDStr ];
-	if(!image) image = [UIImage imageNamed: kAvatarIcon];
-	DDGTrace();
-	return image;
-	
-}
-
-- (AuthorType) authorType {
-	
-	XMPPJID *localJID = [XMPPJID jidWithString: self.missive.conversation.localJID];
-	
-	return ([localJID.bare isEqualToString: [[XMPPJID jidWithString: self.missive.toJID] bare]] ?
-			STBubbleTableViewCellAuthorTypeOther : STBubbleTableViewCellAuthorTypeUser);
-	
-} // -authorType
-
+ 
 
 #pragma mark - STBubbleTableViewCellDelegate methods.
 - (void) unhideNavBar

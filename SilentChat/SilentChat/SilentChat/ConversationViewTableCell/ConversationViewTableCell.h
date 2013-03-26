@@ -38,17 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @private
 	ConversationView *	_conversationView;
-	
-//	NSString *		_title;
-//	NSString *		_subTitle;
-//    NSString *      _dateString;
-//	NSString *		_badgeText;
-//	UIColor *		_badgeColor;
-//	UIColor *		_badgeHighlightedColor;
-//    UIImage*        _leftBadgeImage;
-//    UIImage*        _avatar;
-//    UIColor*        _subTitleColor;
-//    BOOL            _isStatus;
 }
 
 @property (nonatomic, copy) NSString *      titleString;

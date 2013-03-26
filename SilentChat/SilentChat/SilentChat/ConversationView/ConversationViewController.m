@@ -80,7 +80,7 @@ static NSString *const kKey3Icon = @"key3";
 static NSString *const kKey4Icon = @"key4";
 static NSString *const kBannerIcon = @"Icon-72";
 
-static NSString *const kAvatarIcon = @"silhouette";
+static NSString *const kAvatarIcon = @"avatar"; //silhouette";
 
 @interface ConversationViewController ()
 
@@ -777,7 +777,7 @@ typedef enum
                             localizedStringFromNumber:[NSNumber numberWithInt:conversation.notRead]
                             numberStyle:NSNumberFormatterNoStyle];
         
-        cell.badgeColor = conversation.unseenBurnFlag ? [UIColor redColor]:[UIColor darkGrayColor];
+        cell.badgeColor = conversation.unseenBurnFlag ? [UIColor redColor]:[UIColor whiteColor];
         
         
  //        cell.badgeString = [NSString stringWithFormat:@"%d", conversation.notRead] ;

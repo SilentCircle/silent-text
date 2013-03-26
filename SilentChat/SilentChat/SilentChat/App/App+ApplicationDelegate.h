@@ -54,7 +54,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void) passcodeManagerWillLock: (SCPasscodeManager *) passcodeManager;
 - (void) passcodeManagerDidLock: (SCPasscodeManager *) passcodeManager;
 - (void) passcodeManagerDidUnlock: (SCPasscodeManager *) passcodeManager;
-- (void)setBackground:(NSString *)backgroundName;
+- (void) setBackground:(NSString *)backgroundName;
+- (NSString *) getBackgroundName;
 
 
 @end

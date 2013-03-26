@@ -56,6 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DDGQueue.h"
 #import "NSManagedObjectContext+DDGManagedObjectContext.h"
+#import "UIImage+Crop.h"
 
 
 #define CLASS_DEBUG 1
@@ -296,38 +297,52 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //} // -threeFingerTap
 //
 
-- (void) switchBackgrounds {
-	static NSMutableArray *bgNameArray;
-	static short arrayIndex = 0;
-	
-	if (!bgNameArray) {
-		NSFileManager *filemanager = [NSFileManager defaultManager];
-		bgNameArray = [NSMutableArray arrayWithCapacity:15];
-		NSArray *allArray = [filemanager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:nil];
-		[allArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-			if (([[obj pathExtension] isEqualToString:@"jpg"] || [[obj pathExtension] isEqualToString:@"png"]) && [obj hasPrefix:@"background-"])
-				[bgNameArray addObject:obj];
-		}];
-		
-	}
-	if (arrayIndex == [bgNameArray count])
-		arrayIndex = 0;
-	[self setBackground:[bgNameArray objectAtIndex:arrayIndex++]];
+//- (void) switchBackgrounds {
+//	static NSMutableArray *bgNameArray;
+//	static short arrayIndex = 0;
+//	
+//	if (!bgNameArray) {
+//		NSFileManager *filemanager = [NSFileManager defaultManager];
+//		bgNameArray = [NSMutableArray arrayWithCapacity:15];
+//		NSArray *allArray = [filemanager contentsOfDirectoryAtPath:[[NSBundle mainBundle] resourcePath] error:nil];
+//		[allArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//			if (([[obj pathExtension] isEqualToString:@"jpg"] || [[obj pathExtension] isEqualToString:@"png"]) && [obj hasPrefix:@"background-"])
+//				[bgNameArray addObject:obj];
+//		}];
+//		
+//	}
+//	if (arrayIndex == [bgNameArray count])
+//		arrayIndex = 0;
+//	[self setBackground:[bgNameArray objectAtIndex:arrayIndex++]];
+//
+////	self.backgroundIV.image = [UIImage imageNamed:[bgNameArray objectAtIndex:arrayIndex++]];
+////	[self.window insertSubview:self.backgroundIV belowSubview:self.rootViewController.view];
+//	
+//}
 
-//	self.backgroundIV.image = [UIImage imageNamed:[bgNameArray objectAtIndex:arrayIndex++]];
-//	[self.window insertSubview:self.backgroundIV belowSubview:self.rootViewController.view];
-	
+- (NSString *)getBackgroundName
+{
+	return self.preferences.globalBackground;
 }
 
 - (void)setBackground:(NSString *)backgroundName
 {
 	NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: backgroundName];
-	if ((self.backgroundIV.image = [UIImage imageWithContentsOfFile:path]) != nil) {
+	UIImage *rawImage = [UIImage imageWithContentsOfFile:path];
+	CGSize size = self.backgroundIV.bounds.size;
+	CGFloat multiplier = [UIScreen mainScreen].scale;
+	size.width *= multiplier;
+	size.height *= multiplier;
+	CGRect cropRect = CGRectMake((rawImage.size.width - size.width) * 0.5, (rawImage.size.height - size.height) * 0.5, size.width, size.height);
+	self.backgroundIV.image = [rawImage crop:cropRect];
+NSLog(@"bgiv frame %@, image size %@, croprect %@, rawimagescale %f, newimage scale %f", NSStringFromCGRect(self.backgroundIV.frame), NSStringFromCGSize(rawImage.size), NSStringFromCGRect(cropRect), rawImage.scale, self.backgroundIV.image.scale);
+	rawImage = nil;
+	if (self.backgroundIV.image != nil) {
 		self.preferences.globalBackground = backgroundName;
 	}
 	else
 		self.backgroundIV.backgroundColor = [UIColor blackColor];
-
+	
 }
 
 #pragma clang diagnostic push
@@ -354,14 +369,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	self.backgroundIV = [[UIImageView alloc] initWithFrame:self.window.bounds];
 	[self.window insertSubview:self.backgroundIV belowSubview:self.rootViewController.view];
-	//self.preferences.globalBackground = @"bg05.jpg";
 	[self setBackground:self.preferences.globalBackground];
-	
-//	UITapGestureRecognizer *threeFingerRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(threeFingerTap:)];
-//	threeFingerRecognizer.numberOfTouchesRequired = 3;
-//    [self.backgroundIV addGestureRecognizer:threeFingerRecognizer];
-//	self.backgroundIV.userInteractionEnabled = YES;
-
 	
     [self.window makeKeyAndVisible];
     

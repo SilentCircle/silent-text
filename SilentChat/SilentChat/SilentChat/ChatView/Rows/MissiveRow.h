@@ -49,6 +49,10 @@ extern NSString *const kMissive;
 @property (strong, nonatomic) UIImage * otherSelectedBubble;
 @property (strong, nonatomic) UIImage *plainTextBubble;
 
+@property (strong, nonatomic) UIImage *         authorImage;
+@property (strong, nonatomic) UIImage *         remoteImage;
+@property (nonatomic, assign) AuthorType        authorType;
+
 //@property (strong, nonatomic) UIImage *clockImage;
 @property (strong, nonatomic) UIView *parentView;
 

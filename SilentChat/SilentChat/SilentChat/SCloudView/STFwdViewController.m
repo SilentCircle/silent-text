@@ -62,7 +62,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @end;
 
-static NSString *const kAvatarIcon = @"silhouette";
+static NSString *const kAvatarIcon = @"avatar"; //@"silhouette";
 
 
 @interface STFwdViewController ()

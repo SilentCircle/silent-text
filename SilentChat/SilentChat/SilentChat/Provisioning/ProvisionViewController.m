@@ -156,8 +156,12 @@ replacementString:(NSString *)string {
 
     self.provisioning = [[SCProvisoning alloc] initWithDelegate: self];
     
-    [self.signupButton      setTitle: NSLS_COMMON_SIGN_UP forState:UIControlStateNormal];
-    [self.activateButton    setTitle: NSLS_COMMON_ACTIVATE forState:UIControlStateNormal];
+//    [self.signupButton      setTitle: NSLS_COMMON_SIGN_UP forState:UIControlStateNormal];
+ //   [self.activateButton    setTitle: NSLS_COMMON_ACTIVATE forState:UIControlStateNormal];
+  
+    
+    //make the app store happy
+    self.signupButton.hidden  = YES;
     
     self.activateButton.enabled     = NO;
     
