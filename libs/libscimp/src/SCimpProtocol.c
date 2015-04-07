@@ -415,7 +415,7 @@ static SCLError sComputeSessionID(SCimpContext* ctx)
     
     len += (initStr?strlen(initStr):0) +1;
     len +=(respStr?strlen(respStr):0) +1;
-    p = sIDStr = XMALLOC(len);
+    p = sIDStr = XMALLOC(len); CKNULL(p);
     
     *p++ = initStr?strlen(initStr):0 ;
     if(initStr)
