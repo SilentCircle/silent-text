@@ -92,6 +92,7 @@ SCLError CCM_Encrypt(uint8_t *key, size_t keyLen,
     
     buffLen = inLen + bytes2Pad;
     buffer = XMALLOC(buffLen);
+    CKNULL(buffer);
     
     memcpy(buffer, in, inLen);
     memset(buffer+inLen, bytes2Pad, bytes2Pad);
@@ -145,6 +146,7 @@ SCLError CCM_Decrypt(uint8_t *key,  size_t keyLen,
     unsigned long tagLen = sizeof(T);
     
     buffer = XMALLOC(buffLen);
+    CKNULL(buffer);
     
     status = ccm_memory(find_cipher("aes"), 
                         key, IVlen , 
