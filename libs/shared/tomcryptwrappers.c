@@ -914,6 +914,7 @@ SCLError MSG_Encrypt(uint8_t *key, size_t key_len,
     
     buffLen = in_len + bytes2Pad;
     buffer = XMALLOC(buffLen);
+    CKNULL(buffer);
     
     memcpy(buffer, in, in_len);
     memset(buffer+in_len, bytes2Pad, bytes2Pad);
@@ -975,6 +976,7 @@ SCLError MSG_Decrypt(uint8_t *key, size_t key_len,
     
     
     buffer = XMALLOC(buffLen);
+    CKNULL(buffer);
       
     err = CBC_Init(algorithm, key, iv,  &cbc);CKERR;
     
