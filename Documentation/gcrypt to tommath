@@ -1,0 +1,54 @@
+
+
+/* W = B ^ E mod M. */
+void gcry_mpi_powm (gcry_mpi_t w,
+                    const gcry_mpi_t b, const gcry_mpi_t e,
+                    const gcry_mpi_t m);
+
+
+/* d = a**b (mod c) */
+int mp_exptmod(mp_int *a, mp_int *b, mp_int *c, mp_int *d);
+
+-----------
+
+
+/* Allocate a new big integer object, initialize it with 0 and
+   initially allocate memory for a number of at least NBITS. */
+gcry_mpi_t gcry_mpi_new (unsigned int nbits);
+
+
+
+ Convert the external representation of an integer stored in BUFFER
+   with a length of BUFLEN into a newly create MPI returned in
+   RET_MPI.  If NSCANNED is not NULL, it will receive the number of
+   bytes actually scanned after a successful operation. */
+
+gcry_error_t gcry_mpi_scan (gcry_mpi_t *ret_mpi, enum gcry_mpi_format format,
+                            const void *buffer, size_t buflen,
+                            size_t *nscanned);
+
+
+ gcry_mpi_print(GCRYMPI_FMT_USG, NULL, 0, &gablen, gab);
+  
+  gcry_mpi_release(gab);
+
+
+gcry_mpi_cmp_ui
+
+gcry_mpi_cmp
+
+gcry_mpi_sub_ui
+
+gcry_mpi_copy
+
+
+
+/* Convert the big integer A into the external representation
+   described by FORMAT and store it in the provided BUFFER which has
+   been allocated by the user with a size of BUFLEN bytes.  NWRITTEN
+   receives the actual length of the external representation unless it
+   has been passed as NULL. */
+gcry_error_t gcry_mpi_print (enum gcry_mpi_format format,
+                             unsigned char *buffer, size_t buflen,
+                             size_t *nwritten,
+                             const gcry_mpi_t a);

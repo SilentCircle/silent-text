@@ -1,0 +1,8 @@
+/* Class = "IBUISegmentedControl"; 6Vu-oq-mj6.segmentTitles[0] = "First"; ObjectID = "6Vu-oq-mj6"; */
+"6Vu-oq-mj6.segmentTitles[0]" = "ファースト";
+/* Class = "IBUISegmentedControl"; 6Vu-oq-mj6.segmentTitles[1] = "Second"; ObjectID = "6Vu-oq-mj6"; */
+"6Vu-oq-mj6.segmentTitles[1]" = "セカンド";
+/* Class = "IBUILabel"; text = "From:"; ObjectID = "9Ju-1Z-DyV"; */
+"9Ju-1Z-DyV.text" = "送信者:";
+/* Class = "IBUIButton"; normalTitle = "Silent user name"; ObjectID = "IBs-YN-Pjs"; */
+"IBs-YN-Pjs.normalTitle" = "サイレントユーザー名";

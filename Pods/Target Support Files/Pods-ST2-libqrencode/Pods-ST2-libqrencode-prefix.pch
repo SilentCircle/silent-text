@@ -1,0 +1,6 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#import "Pods-ST2-environment.h"
+#define HAVE_CONFIG_H 1

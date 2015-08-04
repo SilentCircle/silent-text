@@ -1,0 +1,9 @@
+/* Class = "IBUILabel"; text = "Silent Circle"; ObjectID = "Tld-vK-5qN"; */
+"Tld-vK-5qN.text" = "Silent Circle";
+
+/* Class = "IBUIButton"; normalTitle = "Import to Address Book"; ObjectID = "aYa-uC-q0T"; */
+"aYa-uC-q0T.normalTitle" = "导入到地址册";
+/* Class = "IBUIButton"; normalTitle = "Import to Silent Contacts"; ObjectID = "cGb-zJ-Nqm"; */
+"cGb-zJ-Nqm.normalTitle" = "导入到Silent联系人";
+/* Class = "IBUIButton"; normalTitle = "Preview"; ObjectID = "jDm-MG-RCY"; */
+"jDm-MG-RCY.normalTitle" = "预览";

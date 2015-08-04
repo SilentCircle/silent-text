@@ -1,0 +1,246 @@
+/* Accept Re-Key */
+"%@ wishes to rekey\nSAS: %@" = "%1$@ wishes to rekey\nSAS: %2$@";
+
+/* %@ does not have a silent text account */
+"\"%@\" is not a valid Silent Circle user name" = "\"%@\" is not a valid Silent Circle user name";
+
+/* Accept Re-Key */
+"Accept Re-Key" = "Accept Re-Key";
+
+/* Activate */
+"Activate" = "Activate";
+
+/* ACTIVATE */
+"ACTIVATE" = "ACTIVATE";
+
+/* Activating… */
+"Activating…" = "Activating…";
+
+/* Add Contact */
+"Add Contact" = "Add Contact";
+
+/* After %d hours */
+"After %d hours" = "After %d hours";
+
+/* After %d minutes */
+"After %d minutes" = "After %d minutes";
+
+/* After %d seconds */
+"After %d seconds" = "After %d seconds";
+
+/* After 1 hour */
+"After 1 hour" = "After 1 hour";
+
+/* After 1 minute */
+"After 1 minute" = "After 1 minute";
+
+/* Audio */
+"Audio" = "Audio";
+
+/* Authentication Failed */
+"Authentication Failed" = "Authentication Failed";
+
+/* Burn Notice */
+"Burn Notice" = "Burn Notice";
+
+/* Cancel an alert window */
+"Cancel" = "Cancel";
+
+/* Certificate match error -- please update to the latest version of Silent Text */
+"Certificate match error -- please update to the latest version of Silent Text" = "Certificate match error -- please update to the latest version of Silent Text";
+
+/* Clear */
+"Clear" = "Clear";
+
+/* Clear Conversation */
+"Clear Conversation" = "Clear Conversation";
+
+/* Clear Message */
+"Clear Message" = "Clear Message";
+
+/* Completed */
+"Completed" = "Completed";
+
+/* Connect */
+"Connect" = "Connect";
+
+/* Contact */
+"Contact" = "Contact";
+
+/* Contacts */
+"Contacts" = "Contacts";
+
+/* Conversation Secured */
+"Conversation Secured" = "Conversation Secured";
+
+/* Deactivate */
+"Deactivate" = "Deactivate";
+
+/* Delete */
+"Delete" = "Delete";
+
+/* Delete User */
+"Delete User" = "Delete User";
+
+/* Document */
+"Document" = "Document";
+
+/* Erasing Media Cache */
+"Erasing Media Cache" = "Erasing Media Cache";
+
+/* Established Keys */
+"Established Keys" = "Established Keys";
+
+/* Establishing Keys */
+"Establishing Keys" = "Establishing Keys";
+
+/* Failed to Secure Conversation */
+"Failed to Secure Conversation" = "Failed to Secure Conversation";
+
+/* Feature not available */
+"Feature not available" = "Feature not available";
+
+/* iTunes */
+"From iTunes" = "From iTunes";
+
+/* Go Offline */
+"Go Offline" = "Go Offline";
+
+/* Ignore */
+"Ignore" = "Ignore";
+
+/* Image */
+"Image" = "Image";
+
+/* Immediately */
+"Immediately" = "Immediately";
+
+/* Import Contact */
+"Import Contact" = "Import Contact";
+
+/* Invalid User Name */
+"Invalid User Name" = "Invalid User Name";
+
+/* Logging In… */
+"Logging In…" = "Logging In…";
+
+/* Make New Keys  */
+"Make New Keys" = "Make New Keys";
+
+/* Message redacted */
+"Message redacted" = "Message redacted";
+
+/* Movie */
+"Movie" = "Movie";
+
+/* Never */
+"Never" = "Never";
+
+/* New Contact */
+"New Contact" = "New Contact";
+
+/* Off */
+"Off" = "Off";
+
+/* Accept the dialog */
+"OK" = "OK";
+
+/* On */
+"On" = "On";
+
+/* One of the recipients was not able to decrypt your message. Tap \"Try Again\" to rekey the conversation and resend this message. */
+"One of the recipients was not able to decrypt your message. Tap \"Try Again\" to rekey the conversation and resend this message." = "One of the recipients was not able to decrypt your message. Tap \"Try Again\" to rekey the conversation and resend this message.";
+
+/* Photo */
+"Photo Library" = "Photo Library";
+
+/* Please check your network connections. */
+"Please check your network connections." = "Please check your network connections.";
+
+/* Please contact Silent Circle customer support with error code: \"%@\". */
+"Please contact Silent Circle customer support with error code: \"%@\"." = "Please contact Silent Circle customer support with error code: \"%@\".";
+
+/* Preparing Movie, Image or Audio */
+"Preparing %@" = "Preparing %@";
+
+/* Record Message */
+"Record Message" = "Record Message";
+
+/* Refresh Keys  */
+"Refresh Keys" = "Refresh Keys";
+
+/* Reset the encryption keys  */
+"Reset the encryption keys" = "Reset the encryption keys";
+
+/* For sending a message */
+"Send" = "Send";
+
+/* Send File */
+"Send file from" = "Send file from";
+
+/* Send Receipts */
+"Send Receipts" = "Send Receipts";
+
+/* Settings view Title */
+"Settings" = "Settings";
+
+/* Show Contact */
+"Show Contact" = "Show Contact";
+
+/* Create a new account */
+"SIGN UP" = "SIGN UP";
+
+/* Conversation view Title */
+"SILENT TEXT" = "SILENT TEXT";
+
+/* Take Photo or Video */
+"Take Photo or Video" = "Take Photo or Video";
+
+/* Terms of Service */
+"Terms of Service" = "Terms of Service";
+
+/* The recipient was not able to decrypt your message. Tap \"Try Again\" to resend this message. */
+"The recipient was not able to decrypt your message. Tap \"Try Again\" to resend this message." = "The recipient was not able to decrypt your message. Tap \"Try Again\" to resend this message.";
+
+/* Feature not availableyet  */
+"This function is not available yet, stay tuned for a later version" = "This function is not available yet, stay tuned for a later version";
+
+/* Try Again */
+"Try Again" = "Try Again";
+
+/* Turn Off */
+"Turn Off" = "Turn Off";
+
+/* Turn Off for 1h */
+"Turn Off for 1h" = "Turn Off for 1h";
+
+/* Turn Off until 8am */
+"Turn Off until 8am" = "Turn Off until 8am";
+
+/* Turn On */
+"Turn On" = "Turn On";
+
+/* Unable to activate Silent Text */
+"Unable to activate Silent Text" = "Unable to activate Silent Text";
+
+/* Unable to connect to server. */
+"Unable to connect to server." = "Unable to connect to server.";
+
+/* verifying a particular user */
+"Verifying %@…" = "Verifying %@…";
+
+/* Verifying... */
+"Verifying…" = "Verifying…";
+
+/* when displaying version numbers such as 1.0.0 */
+"Version" = "Version";
+
+/* Waiting for recipient to complete the keying process */
+"Waiting for recipient to complete the keying process" = "Waiting for recipient to complete the keying process";
+
+/* You can not send a message to yourself */
+"You can not send a message to yourself" = "You can not send a message to yourself";
+
+/* ou can not send messages to more than one recipient */
+"You can not send messages to more than one recipient" = "You can not send messages to more than one recipient";
+

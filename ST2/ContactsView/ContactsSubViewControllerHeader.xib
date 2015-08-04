@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="db8-N8-TXh" customClass="ContactsSubViewControllerHeader">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ff8-qe-nbc" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="My Organization" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fyB-NA-3eW" userLabel="Title Label">
+                            <rect key="frame" x="118" y="13" width="119" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="contact-company_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tmr-AR-zBY" userLabel="Icon ImageView">
+                            <rect key="frame" x="84" y="12" width="22" height="22"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.78823529410000004" green="0.78823529410000004" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="fyB-NA-3eW" firstAttribute="leading" secondItem="Tmr-AR-zBY" secondAttribute="trailing" constant="12" id="3Wi-Ng-YAp"/>
+                        <constraint firstAttribute="centerX" secondItem="fyB-NA-3eW" secondAttribute="centerX" constant="-17.5" id="En4-iI-zsh"/>
+                        <constraint firstAttribute="centerY" secondItem="fyB-NA-3eW" secondAttribute="centerY" id="Z9K-1r-E4b"/>
+                        <constraint firstAttribute="centerY" secondItem="Tmr-AR-zBY" secondAttribute="centerY" id="bws-Z4-z2O"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="ff8-qe-nbc" secondAttribute="bottom" id="1rz-Xq-LLx"/>
+                <constraint firstItem="ff8-qe-nbc" firstAttribute="top" secondItem="db8-N8-TXh" secondAttribute="top" id="BQF-lm-nsl"/>
+                <constraint firstAttribute="centerX" secondItem="ff8-qe-nbc" secondAttribute="centerX" id="SaU-VX-Ux2"/>
+                <constraint firstItem="ff8-qe-nbc" firstAttribute="leading" secondItem="db8-N8-TXh" secondAttribute="leading" id="dtv-yb-4Y9"/>
+                <constraint firstAttribute="trailing" secondItem="ff8-qe-nbc" secondAttribute="trailing" id="kis-oT-CRC"/>
+                <constraint firstAttribute="centerY" secondItem="ff8-qe-nbc" secondAttribute="centerY" id="zLC-5k-uvg"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="contentHolderView" destination="ff8-qe-nbc" id="15U-I4-FFK"/>
+                <outlet property="iconImageView" destination="Tmr-AR-zBY" id="gDB-Nn-0jU"/>
+                <outlet property="titleLabel" destination="fyB-NA-3eW" id="VQy-1E-uf4"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="contact-company_icon.png" width="22" height="22"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

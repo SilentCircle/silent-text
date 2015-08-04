@@ -1,0 +1,101 @@
+PODS:
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - CocoaLumberjack (1.9.2):
+    - CocoaLumberjack/Extensions (= 1.9.2)
+  - CocoaLumberjack/Core (1.9.2)
+  - CocoaLumberjack/Extensions (1.9.2):
+    - CocoaLumberjack/Core
+  - DAKeyboardControl (2.4.0)
+  - ECPhoneNumberFormatter (0.1.1)
+  - libqrencode (3.4.2)
+  - MBProgressHUD (0.9.1)
+  - MSCMoreOptionTableViewCell (2.2)
+  - NSStringEmojize (0.2.0)
+  - OHAlertView (2.1.0)
+  - Reachability (3.2)
+  - SQLCipher/common (3.1.0)
+  - SQLCipher/fts (3.1.0):
+    - SQLCipher/common
+  - SWRevealViewController (2.3.0)
+  - TITokenField (0.9.5)
+  - YapDatabase/SQLCipher (2.6.4):
+    - CocoaLumberjack (~> 1)
+    - SQLCipher/fts
+  - YRDropdownView (0.0.1)
+  - zipzap (8.0.3):
+    - zipzap/c++ (= 8.0.3)
+    - zipzap/objc (= 8.0.3)
+    - zipzap/objc++ (= 8.0.3)
+  - zipzap/c++ (8.0.3)
+  - zipzap/objc (8.0.3)
+  - zipzap/objc++ (8.0.3)
+  - ZXCVBN (1.0.4)
+
+DEPENDENCIES:
+  - AFNetworking
+  - DAKeyboardControl (from `https://github.com/danielamitay/DAKeyboardControl.git`,
+    commit `bb137bb49c062d0fca4da354288275c8ba7837b3`)
+  - ECPhoneNumberFormatter
+  - libqrencode
+  - MBProgressHUD
+  - MSCMoreOptionTableViewCell
+  - NSStringEmojize
+  - OHAlertView
+  - Reachability (= 3.2)
+  - SWRevealViewController (~> 2.3)
+  - TITokenField (~> 0.9.5)
+  - YapDatabase/SQLCipher
+  - YRDropdownView
+  - zipzap (= 8.0.3)
+  - ZXCVBN (= 1.0.4)
+
+EXTERNAL SOURCES:
+  DAKeyboardControl:
+    :commit: bb137bb49c062d0fca4da354288275c8ba7837b3
+    :git: https://github.com/danielamitay/DAKeyboardControl.git
+
+CHECKOUT OPTIONS:
+  DAKeyboardControl:
+    :commit: bb137bb49c062d0fca4da354288275c8ba7837b3
+    :git: https://github.com/danielamitay/DAKeyboardControl.git
+
+SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  CocoaLumberjack: 628fca2e88ef06f7cf6817309aa405f325d9a6fa
+  DAKeyboardControl: 9d9bca22a5cc3c1d3cc61e24fbd208c3e84a3d2d
+  ECPhoneNumberFormatter: 061041e7715f8d3f2e8e2a069ddf28c52f7bd314
+  libqrencode: 43dc34b89af83ea4b07c409cd8e09c87aa3a1c9f
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  MSCMoreOptionTableViewCell: 507cd8fdf01392d89a17884b4f87008da36e87e3
+  NSStringEmojize: bd60199a25d745365b393fb95a2c6471bb9a2e99
+  OHAlertView: fd382b40f2c395bf50b9bc5ea29d2ff93b685e1f
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SQLCipher: c44fcca49c31483c2489cfb79aa7a69407f3794a
+  SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
+  TITokenField: 39da9ead760009440ffc38602070d2097901430c
+  YapDatabase: f9051e178a38f48d0f3a78562423a5bc969f1ca3
+  YRDropdownView: f1263e6c25736b58cdb2cebb50dd79819e3127e2
+  zipzap: 888667fa52eb1799a32fa3ef8e77001356e796e4
+  ZXCVBN: 6bf251a7274d6a91d00fd195939da9952f8dfc54
+
+COCOAPODS: 0.37.1

@@ -1,0 +1,9 @@
+/* Class = "IBUILabel"; text = "Linking allows Silent Text to import information such as name and photo from the system address book. The system address book is not modified."; ObjectID = "HDc-o3-x0M"; */
+"HDc-o3-x0M.text" = "Al realizar el enlace, Silent Text puede importar información como nombre y foto de la agenda del sistema sin modificar la misma.";
+/* Class = "IBUILabel"; text = "Silent Circle"; ObjectID = "jGr-mt-rcp"; */
+"jGr-mt-rcp.text" = "Silent Circle";
+
+/* Class = "IBUILabel"; text = "Notes"; ObjectID = "o2Y-bn-Tpr"; */
+"o2Y-bn-Tpr.text" = "Comentarios";
+/* Class = "IBUIButton"; normalTitle = "Link with Address Book"; ObjectID = "x0r-cU-tsv"; */
+"x0r-cU-tsv.normalTitle" = "Enlazar con Agenda";

@@ -1,0 +1,9 @@
+/* Class = "IBUILabel"; text = "Linking allows Silent Text to import information such as name and photo from the system address book. The system address book is not modified."; ObjectID = "HDc-o3-x0M"; */
+"HDc-o3-x0M.text" = "Linking允许Silent Text导入来自系统地址册的信息（如名称和照片）。未修改该系统地址册。";
+/* Class = "IBUILabel"; text = "Silent Circle"; ObjectID = "jGr-mt-rcp"; */
+"jGr-mt-rcp.text" = "Silent Circle";
+
+/* Class = "IBUILabel"; text = "Notes"; ObjectID = "o2Y-bn-Tpr"; */
+"o2Y-bn-Tpr.text" = "备注";
+/* Class = "IBUIButton"; normalTitle = "Link with Address Book"; ObjectID = "x0r-cU-tsv"; */
+"x0r-cU-tsv.normalTitle" = "连接地址册";

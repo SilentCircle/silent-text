@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioPlaybackView"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1" customClass="AudioPlaybackView">
+            <rect key="frame" x="0.0" y="0.0" width="257" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="61r-X4-RCn">
+                    <rect key="frame" x="0.0" y="0.0" width="198" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <items>
+                        <barButtonItem systemItem="rewind" id="C3R-S1-in4">
+                            <connections>
+                                <action selector="rewindAction:" destination="1" id="nTI-rl-s0J"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="luS-lZ-FH9"/>
+                        <barButtonItem title="-" id="egl-M1-XGq"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="uIh-9c-tsw"/>
+                        <barButtonItem systemItem="fastForward" id="Dk6-cP-B6T">
+                            <connections>
+                                <action selector="forwardAction:" destination="1" id="O4G-LE-6ye"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hLM-cV-ndZ"/>
+                    </items>
+                    <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </toolbar>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WwE-hf-l5G">
+                    <rect key="frame" x="197" y="7" width="55" height="25"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" id="PK2-o2-I3u">
+                    <rect key="frame" x="214" y="33" width="49" height="3"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="audioLabel" destination="WwE-hf-l5G" id="cfw-Od-Jgj"/>
+                <outlet property="levelBar" destination="PK2-o2-I3u" id="67X-ac-h8z"/>
+                <outlet property="toolBar" destination="61r-X4-RCn" id="ScM-SS-UgK"/>
+            </connections>
+        </view>
+    </objects>
+</document>

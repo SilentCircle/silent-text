@@ -1,0 +1,6 @@
+/* Class = "IBUILabel"; text = "Move and Scale"; ObjectID = "2oi-Cu-xpe"; */
+"2oi-Cu-xpe.text" = "移动和缩放";
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "gv9-e8-Hnp"; */
+"gv9-e8-Hnp.normalTitle" = "取消";
+/* Class = "IBUIButton"; normalTitle = "Choose"; ObjectID = "oJf-hk-hsg"; */
+"oJf-hk-hsg.normalTitle" = "选择";

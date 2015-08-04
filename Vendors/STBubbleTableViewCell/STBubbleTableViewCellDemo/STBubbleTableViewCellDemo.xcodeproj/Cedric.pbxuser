@@ -1,0 +1,317 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* STBubbleTableViewCellDemoAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1460, 832}}";
+			sepNavSelRange = "{262, 0}";
+			sepNavVisRange = "{0, 515}";
+		};
+	};
+	1D3623250D0F684500981E51 /* STBubbleTableViewCellDemoAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1965, 1066}}";
+			sepNavSelRange = "{345, 0}";
+			sepNavVisRange = "{0, 2618}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* STBubbleTableViewCellDemo */ = {
+		activeExec = 0;
+		executables = (
+			820BCA9E12D0B3E3003B330E /* STBubbleTableViewCellDemo */,
+		);
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 820BCA9E12D0B3E3003B330E /* STBubbleTableViewCellDemo */;
+		activeSDKPreference = iphonesimulator4.2;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* STBubbleTableViewCellDemo */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* STBubbleTableViewCellDemo */,
+		);
+		codeSenseManager = 820BCAAE12D0B3E4003B330E /* Code sense */;
+		executables = (
+			820BCA9E12D0B3E3003B330E /* STBubbleTableViewCellDemo */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1311,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 325440714;
+			PBXWorkspaceStateSaveDate = 325440714;
+		};
+		perUserProjectItems = {
+			823022C812D1DB1800785378 /* PlistBookmark */ = 823022C812D1DB1800785378 /* PlistBookmark */;
+			824D24FD131ECC6F00464A5C /* PBXTextBookmark */ = 824D24FD131ECC6F00464A5C /* PBXTextBookmark */;
+			824D24FE131ECC6F00464A5C /* PBXTextBookmark */ = 824D24FE131ECC6F00464A5C /* PBXTextBookmark */;
+			824D24FF131ECC6F00464A5C /* PBXTextBookmark */ = 824D24FF131ECC6F00464A5C /* PBXTextBookmark */;
+			824D2500131ECC6F00464A5C /* PBXTextBookmark */ = 824D2500131ECC6F00464A5C /* PBXTextBookmark */;
+			824D2501131ECC6F00464A5C /* PBXTextBookmark */ = 824D2501131ECC6F00464A5C /* PBXTextBookmark */;
+			82777D8312D0E7E300A90E8C /* PBXTextBookmark */ = 82777D8312D0E7E300A90E8C /* PBXTextBookmark */;
+			829437421365D4D600EEC0A0 /* PBXTextBookmark */ = 829437421365D4D600EEC0A0 /* PBXTextBookmark */;
+			829437551365D4F000EEC0A0 /* PBXTextBookmark */ = 829437551365D4F000EEC0A0 /* PBXTextBookmark */;
+			82BDE60312D8F90B00D8B23F /* PBXBookmark */ = 82BDE60312D8F90B00D8B23F /* PBXBookmark */;
+			82BDE61112D8F99300D8B23F /* PBXBookmark */ = 82BDE61112D8F99300D8B23F /* PBXBookmark */;
+			82D23DA912D0D310005170DF /* PBXBookmark */ = 82D23DA912D0D310005170DF /* PBXBookmark */;
+			82EE4E5D12D76CF200CE186C /* PBXTextBookmark */ = 82EE4E5D12D76CF200CE186C /* PBXTextBookmark */;
+			82F56ED912FC61760047DA96 /* PBXTextBookmark */ = 82F56ED912FC61760047DA96 /* PBXTextBookmark */;
+			82F56EDA12FC61760047DA96 /* PBXTextBookmark */ = 82F56EDA12FC61760047DA96 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 820BCAAD12D0B3E4003B330E /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	820BCA9E12D0B3E3003B330E /* STBubbleTableViewCellDemo */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = STBubbleTableViewCellDemo;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	820BCAAD12D0B3E4003B330E /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	820BCAAE12D0B3E4003B330E /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	820BCAC312D0B421003B330E /* STBubbleTableViewCell.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1460, 832}}";
+			sepNavSelRange = "{327, 0}";
+			sepNavVisRange = "{0, 2151}";
+		};
+	};
+	820BCAC412D0B421003B330E /* STBubbleTableViewCell.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1790, 2587}}";
+			sepNavSelRange = "{6902, 0}";
+			sepNavVisRange = "{2176, 3477}";
+		};
+	};
+	820BCAD012D0B526003B330E /* STBubbleTableViewCellDemoViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1460, 809}}";
+			sepNavSelRange = "{385, 0}";
+			sepNavVisRange = "{0, 558}";
+		};
+	};
+	820BCAD112D0B526003B330E /* STBubbleTableViewCellDemoViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1489, 2002}}";
+			sepNavSelRange = "{716, 0}";
+			sepNavVisRange = "{0, 2599}";
+		};
+	};
+	823022C812D1DB1800785378 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* STBubbleTableViewCellDemo-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/Cedric/Desktop/iPhone Development/Components/STBubbleTableViewCellDemo/STBubbleTableViewCellDemo-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	824D24FD131ECC6F00464A5C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 820BCAD012D0B526003B330E /* STBubbleTableViewCellDemoViewController.h */;
+		name = "STBubbleTableViewCellDemoViewController.h: 12";
+		rLen = 0;
+		rLoc = 385;
+		rType = 0;
+		vrLen = 558;
+		vrLoc = 0;
+	};
+	824D24FE131ECC6F00464A5C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 82BDE59512D8D39A00D8B23F /* Message.m */;
+		name = "Message.m: 28";
+		rLen = 0;
+		rLoc = 607;
+		rType = 0;
+		vrLen = 828;
+		vrLoc = 0;
+	};
+	824D24FF131ECC6F00464A5C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 82BDE59412D8D39A00D8B23F /* Message.h */;
+		name = "Message.h: 19";
+		rLen = 0;
+		rLoc = 373;
+		rType = 0;
+		vrLen = 572;
+		vrLoc = 0;
+	};
+	824D2500131ECC6F00464A5C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 820BCAC312D0B421003B330E /* STBubbleTableViewCell.h */;
+		name = "STBubbleTableViewCell.h: 13";
+		rLen = 0;
+		rLoc = 327;
+		rType = 0;
+		vrLen = 2151;
+		vrLoc = 0;
+	};
+	824D2501131ECC6F00464A5C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 820BCAD112D0B526003B330E /* STBubbleTableViewCellDemoViewController.m */;
+		name = "STBubbleTableViewCellDemoViewController.m: 23";
+		rLen = 0;
+		rLoc = 716;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 0;
+	};
+	82777D8312D0E7E300A90E8C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 82777D8412D0E7E300A90E8C /* UIMenuController.h */;
+		name = "UIMenuController.h: 40";
+		rLen = 17;
+		rLoc = 1265;
+		rType = 0;
+		vrLen = 1771;
+		vrLoc = 0;
+	};
+	82777D8412D0E7E300A90E8C /* UIMenuController.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = UIMenuController.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIMenuController.h;
+		sourceTree = "<absolute>";
+	};
+	829437421365D4D600EEC0A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 820BCAC412D0B421003B330E /* STBubbleTableViewCell.m */;
+		name = "STBubbleTableViewCell.m: 164";
+		rLen = 0;
+		rLoc = 6902;
+		rType = 0;
+		vrLen = 3477;
+		vrLoc = 2176;
+	};
+	829437551365D4F000EEC0A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 820BCAD112D0B526003B330E /* STBubbleTableViewCellDemoViewController.m */;
+		name = "STBubbleTableViewCellDemoViewController.m: 23";
+		rLen = 0;
+		rLoc = 716;
+		rType = 0;
+		vrLen = 2599;
+		vrLoc = 0;
+	};
+	82BDE59412D8D39A00D8B23F /* Message.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1460, 809}}";
+			sepNavSelRange = "{373, 0}";
+			sepNavVisRange = "{0, 572}";
+		};
+	};
+	82BDE59512D8D39A00D8B23F /* Message.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1460, 809}}";
+			sepNavSelRange = "{607, 0}";
+			sepNavVisRange = "{0, 828}";
+		};
+	};
+	82BDE60312D8F90B00D8B23F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 82BDE5AC12D8D3E100D8B23F /* jonnotie.jpg */;
+	};
+	82BDE61112D8F99300D8B23F /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 82BDE5FC12D8F8FE00D8B23F /* SkyTrix.jpg */;
+	};
+	82D23DA912D0D310005170DF /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 820BCAB812D0B404003B330E /* Bubble-8.png */;
+	};
+	82D5F97512D65A95005F18FE /* UITableView.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = UITableView.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UITableView.h;
+		sourceTree = "<absolute>";
+	};
+	82EE4E5D12D76CF200CE186C /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 82D5F97512D65A95005F18FE /* UITableView.h */;
+		name = "UITableView.h: 127";
+		rLen = 19;
+		rLoc = 6467;
+		rType = 0;
+		vrLen = 2451;
+		vrLoc = 0;
+	};
+	82F56ED912FC61760047DA96 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* STBubbleTableViewCellDemoAppDelegate.m */;
+		name = "STBubbleTableViewCellDemoAppDelegate.m: 13";
+		rLen = 0;
+		rLoc = 345;
+		rType = 0;
+		vrLen = 2618;
+		vrLoc = 0;
+	};
+	82F56EDA12FC61760047DA96 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* STBubbleTableViewCellDemoAppDelegate.h */;
+		name = "STBubbleTableViewCellDemoAppDelegate.h: 11";
+		rLen = 0;
+		rLoc = 262;
+		rType = 0;
+		vrLen = 515;
+		vrLoc = 0;
+	};
+}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationViewTableCell" id="ijI-il-S0v" customClass="ConversationViewTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ijI-il-S0v" id="ssX-gU-NUb">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UtZ-if-hg8" userLabel="avatarImgView">
+                        <rect key="frame" x="5" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="Kbi-Fs-FwZ"/>
+                            <constraint firstAttribute="width" constant="60" id="t7Q-w5-vNs"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="23" translatesAutoresizingMaskIntoConstraints="NO" id="O0O-04-4hO">
+                        <rect key="frame" x="6" y="6" width="23" height="23"/>
+                        <attributedString key="attributedText">
+                            <fragment content="99+">
+                                <attributes>
+                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="170" translatesAutoresizingMaskIntoConstraints="NO" id="CF2-4J-3Ap">
+                        <rect key="frame" x="64" y="1" width="170" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="8DW-3K-5JG"/>
+                            <constraint firstAttribute="width" priority="720" constant="170" id="ZnP-ce-VlB"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="Title">
+                                <attributes>
+                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <font key="NSFont" size="16" name="Helvetica-Bold"/>
+                                    <font key="NSOriginalFont" size="16" name="Helvetica-Bold"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="120" translatesAutoresizingMaskIntoConstraints="NO" id="j9m-qQ-L3d">
+                        <rect key="frame" x="242" y="4" width="68" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="900" constant="68" id="DpA-s0-WEH"/>
+                            <constraint firstAttribute="height" constant="18" id="sBJ-JY-0v4"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="Date">
+                                <attributes>
+                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                    <font key="NSOriginalFont" size="12" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="209" translatesAutoresizingMaskIntoConstraints="NO" id="JDo-jz-G3b">
+                        <rect key="frame" x="73" y="22" width="209" height="16.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="58" id="iu6-Ee-QI6"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="subTitle">
+                                <attributes>
+                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                    <font key="NSOriginalFont" size="14" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VcZ-er-p4T" userLabel="leftBadgeImgView">
+                        <rect key="frame" x="282" y="26" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="NMP-hk-H4C"/>
+                            <constraint firstAttribute="width" constant="28" id="ex4-LP-pGQ"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="VcZ-er-p4T" firstAttribute="leading" secondItem="JDo-jz-G3b" secondAttribute="trailing" id="2F3-Q4-4UF"/>
+                    <constraint firstItem="CF2-4J-3Ap" firstAttribute="top" secondItem="ssX-gU-NUb" secondAttribute="topMargin" constant="-7" id="JUv-HX-4jq"/>
+                    <constraint firstAttribute="centerY" secondItem="VcZ-er-p4T" secondAttribute="centerY" id="MWI-QZ-DWx"/>
+                    <constraint firstItem="JDo-jz-G3b" firstAttribute="leading" secondItem="ssX-gU-NUb" secondAttribute="leadingMargin" constant="65" id="OeQ-50-qQh"/>
+                    <constraint firstItem="j9m-qQ-L3d" firstAttribute="top" secondItem="ssX-gU-NUb" secondAttribute="topMargin" constant="-4" id="Qd1-nK-JUS"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="j9m-qQ-L3d" secondAttribute="trailing" constant="2" id="bsP-45-dqK"/>
+                    <constraint firstItem="JDo-jz-G3b" firstAttribute="top" secondItem="CF2-4J-3Ap" secondAttribute="bottom" id="dhn-Pb-Q50"/>
+                    <constraint firstItem="j9m-qQ-L3d" firstAttribute="leading" secondItem="CF2-4J-3Ap" secondAttribute="trailing" constant="8" id="iVH-Cs-09k"/>
+                    <constraint firstAttribute="centerY" secondItem="UtZ-if-hg8" secondAttribute="centerY" id="oCS-wf-9Fj"/>
+                    <constraint firstItem="UtZ-if-hg8" firstAttribute="leading" secondItem="ssX-gU-NUb" secondAttribute="leadingMargin" constant="-3" id="ubv-eL-msE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="VcZ-er-p4T" secondAttribute="trailing" constant="2" id="wNY-v7-bhv"/>
+                    <constraint firstItem="CF2-4J-3Ap" firstAttribute="leading" secondItem="ssX-gU-NUb" secondAttribute="leadingMargin" constant="56" id="zhI-oK-hSu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="avatarImgView" destination="UtZ-if-hg8" id="cLx-Ic-ruC"/>
+                <outlet property="lblBadge" destination="O0O-04-4hO" id="GjW-bo-LPU"/>
+                <outlet property="lblDate" destination="j9m-qQ-L3d" id="sl0-6L-q1T"/>
+                <outlet property="lblSubTitle" destination="JDo-jz-G3b" id="MfC-gC-0xu"/>
+                <outlet property="lblTitle" destination="CF2-4J-3Ap" id="YaU-mY-dr6"/>
+                <outlet property="leftBadgeImgView" destination="VcZ-er-p4T" id="trm-i9-XVs"/>
+            </connections>
+            <point key="canvasLocation" x="205" y="108"/>
+        </tableViewCell>
+    </objects>
+</document>

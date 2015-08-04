@@ -1,0 +1,36 @@
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "2HN-Wj-b5C"; */
+"2HN-Wj-b5C.text" = "Löschen";
+/* Class = "IBUILabel"; text = "SC Labs Features"; ObjectID = "4tl-hE-27p"; */
+"4tl-hE-27p.text" = "SC Labs Funktionen";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.normalTitle" = "Aus";
+/* Class = "IBUIButton"; selectedTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.selectedTitle" = "Aus";
+/* Class = "IBUILabel"; text = "Notifications"; ObjectID = "E95-YH-PVo"; */
+"E95-YH-PVo.text" = "Benachrichtigungen";
+/* Class = "IBUILabel"; text = "30 minutes"; ObjectID = "Hui-En-Hd3"; */
+"Hui-En-Hd3.text" = "30 Minuten";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "Vcd-j0-M53"; */
+"Vcd-j0-M53.normalTitle" = "Ein";
+/* Class = "IBUILabel"; text = "Cipher Suite"; ObjectID = "YpD-VO-LMs"; */
+"YpD-VO-LMs.text" = "Cipher Suite";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.normalTitle" = "Aus";
+/* Class = "IBUIButton"; selectedTitle = "On"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.selectedTitle" = "Ein";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "biR-9O-rle"; */
+"biR-9O-rle.normalTitle" = "Ein";
+/* Class = "IBUIButton"; normalTitle = "Suite Name"; ObjectID = "cab-dt-R7g"; */
+"cab-dt-R7g.normalTitle" = "Suite Name";
+/* Class = "IBUILabel"; text = "Cache Used"; ObjectID = "cvM-NT-vAy"; */
+"cvM-NT-vAy.text" = "Verbrauchter Zwischenspeicher";
+/* Class = "IBUILabel"; text = "1000 MB"; ObjectID = "evP-Al-3rL"; */
+"evP-Al-3rL.text" = "1000 MB";
+/* Class = "IBUIButton"; normalTitle = "Erase Download Cache"; ObjectID = "knZ-Mn-NcO"; */
+"knZ-Mn-NcO.normalTitle" = "Download-Zwischenspeicher leeren";
+/* Class = "IBUIButton"; normalTitle = "On - 30 Minutes"; ObjectID = "ksc-FC-iBd"; */
+"ksc-FC-iBd.normalTitle" = "Ein - 30 Minuten";
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "mMr-xD-1OU"; */
+"mMr-xD-1OU.text" = "Löschen";
+/* Class = "IBUILabel"; text = "Return Receipts"; ObjectID = "qSP-2p-2Qw"; */
+"qSP-2p-2Qw.text" = "Empfangsbestätigungen";

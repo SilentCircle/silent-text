@@ -1,0 +1,5 @@
+/* Class = "IBUILabel"; text = "10:00"; ObjectID = "gW9-tx-azr"; */
+"gW9-tx-azr.text" = "10:00";
+
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "uPk-dZ-Wlq"; */
+"uPk-dZ-Wlq.normalTitle" = "Abbrechen";

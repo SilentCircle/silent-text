@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="SCBrandTableHeaderFooterView" customClass="SCBrandTableHeaderFooterView">
+            <rect key="frame" x="0.0" y="0.0" width="260" height="129"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v5Z-SX-CyO" userLabel="contentView">
+                    <rect key="frame" x="0.0" y="0.0" width="260" height="129"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scbrand-inapp-small.png" translatesAutoresizingMaskIntoConstraints="NO" id="n8j-eb-Lkh">
+                            <rect key="frame" x="10" y="0.0" width="240" height="85"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="85" id="VZF-3H-VPr"/>
+                                <constraint firstAttribute="width" constant="240" id="quT-EW-XCR"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vj-27-xY6">
+                            <rect key="frame" x="8" y="85" width="244" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="244" id="4DG-4T-Fnx"/>
+                                <constraint firstAttribute="height" constant="36" id="JaF-t9-CP0"/>
+                            </constraints>
+                            <string key="text">Copyright © 2012-2015
+Silent Circle, All Rights Reserved.</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="n8j-eb-Lkh" firstAttribute="top" secondItem="v5Z-SX-CyO" secondAttribute="top" id="4xu-7S-FF2"/>
+                        <constraint firstAttribute="centerX" secondItem="n8j-eb-Lkh" secondAttribute="centerX" id="59y-Ss-OTW"/>
+                        <constraint firstItem="5vj-27-xY6" firstAttribute="top" relation="greaterThanOrEqual" secondItem="n8j-eb-Lkh" secondAttribute="bottom" id="J48-xb-nS6"/>
+                        <constraint firstAttribute="centerX" secondItem="5vj-27-xY6" secondAttribute="centerX" id="XkN-nU-KRz"/>
+                        <constraint firstAttribute="bottom" secondItem="5vj-27-xY6" secondAttribute="bottom" constant="8" id="nj6-FF-CmG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <constraints>
+                <constraint firstItem="v5Z-SX-CyO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0Ru-Gz-D9k"/>
+                <constraint firstAttribute="bottom" secondItem="v5Z-SX-CyO" secondAttribute="bottom" id="1NB-FT-vkD"/>
+                <constraint firstAttribute="trailing" secondItem="v5Z-SX-CyO" secondAttribute="trailing" id="73N-Mp-rAt"/>
+                <constraint firstItem="v5Z-SX-CyO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IVi-Vq-hzz"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="lblCopyright" destination="5vj-27-xY6" id="l7b-E9-e3L"/>
+                <outlet property="logoImageView" destination="n8j-eb-Lkh" id="5BQ-wH-nLr"/>
+            </connections>
+            <point key="canvasLocation" x="239" y="376.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="scbrand-inapp-small.png" width="240" height="85"/>
+    </resources>
+</document>

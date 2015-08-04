@@ -1,0 +1,10 @@
+build
+.DS_Store
+_Archived Items
+/sccrypto.xcodeproj/project.xcworkspace/xcuserdata/
+/sccrypto.xcodeproj/xcuserdata/
+/sccrypto.xcodeproj/project.xcworkspace/xcshareddata/sccrypto.xccheckout
+src/main/Scripts/git_version_hash.h
+xcuserdata
+*.xcuserstate
+*.xccheckout

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AppThemePickerPhoneViewController">
+            <connections>
+                <outlet property="pageControl" destination="xCN-R7-VXa" id="aeR-iP-PtA"/>
+                <outlet property="scrollView" destination="yjA-hN-Xa0" id="A2V-IJ-Dkb"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="217" alwaysBounceHorizontal="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjA-hN-Xa0">
+                    <rect key="frame" x="0.0" y="114" width="320" height="340"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="924" constant="340" id="Sa5-Q5-45t"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="DhJ-E4-omn"/>
+                    </connections>
+                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="xCN-R7-VXa">
+                    <rect key="frame" x="20" y="511" width="280" height="37"/>
+                    <connections>
+                        <action selector="changePage:" destination="-1" eventType="valueChanged" id="nN8-X5-Ye9"/>
+                    </connections>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="xCN-R7-VXa" secondAttribute="bottom" constant="20" symbolic="YES" id="1y9-qf-xJp"/>
+                <constraint firstItem="yjA-hN-Xa0" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="YNa-s4-Wp7"/>
+                <constraint firstAttribute="trailing" secondItem="yjA-hN-Xa0" secondAttribute="trailing" id="dRq-4e-l4B"/>
+                <constraint firstAttribute="centerY" secondItem="yjA-hN-Xa0" secondAttribute="centerY" id="l8b-nW-lfk"/>
+                <constraint firstItem="xCN-R7-VXa" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="sdc-FW-P16"/>
+                <constraint firstAttribute="trailing" secondItem="xCN-R7-VXa" secondAttribute="trailing" constant="20" symbolic="YES" id="yG3-Bc-lgz"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -1,0 +1,6 @@
+/* Class = "IBUILabel"; text = "New Message"; ObjectID = "E95-YH-PVo"; */
+"E95-YH-PVo.text" = "新信息";
+/* Class = "IBUILabel"; text = "Vibrate"; ObjectID = "qSP-2p-2Qw"; */
+"qSP-2p-2Qw.text" = "振动";
+/* Class = "IBUILabel"; text = "Sent Message"; ObjectID = "v4v-wY-ODs"; */
+"v4v-wY-ODs.text" = "已发送信息";

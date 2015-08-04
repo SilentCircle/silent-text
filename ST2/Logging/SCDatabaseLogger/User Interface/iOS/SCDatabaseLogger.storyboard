@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <scenes>
+        <!--Database LoggerVC-->
+        <scene sceneID="vj6-H7-sCL">
+            <objects>
+                <viewController storyboardIdentifier="SCDatabaseLoggerVC" id="dUF-ll-XlM" customClass="SCDatabaseLoggerVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uSf-7G-cCm"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fp8-OK-egb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Ei-W5-pYc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4S9-Uy-Bba">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am5-VR-tcG" userLabel="DoneBackgroundView">
+                                <rect key="frame" x="530" y="20" width="70" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Ffs-TV-tdx"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mf6-Nz-uzI">
+                                <rect key="frame" x="546" y="27" width="38" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneButtonTapped:" destination="dUF-ll-XlM" eventType="touchUpInside" id="JYD-HW-xqW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="am5-VR-tcG" firstAttribute="top" secondItem="uSf-7G-cCm" secondAttribute="bottom" id="ECK-zD-gRm"/>
+                            <constraint firstItem="Fp8-OK-egb" firstAttribute="top" secondItem="4S9-Uy-Bba" secondAttribute="bottom" id="IED-Op-7A8"/>
+                            <constraint firstItem="am5-VR-tcG" firstAttribute="trailing" secondItem="Mf6-Nz-uzI" secondAttribute="trailing" constant="16" id="Lcg-Gh-3c2"/>
+                            <constraint firstItem="am5-VR-tcG" firstAttribute="leading" secondItem="Mf6-Nz-uzI" secondAttribute="leading" constant="-16" id="Lxk-Fy-Eo4"/>
+                            <constraint firstAttribute="trailing" secondItem="4S9-Uy-Bba" secondAttribute="trailing" id="noE-L4-46j"/>
+                            <constraint firstItem="4S9-Uy-Bba" firstAttribute="leading" secondItem="7Ei-W5-pYc" secondAttribute="leading" id="rVY-Vj-zDh"/>
+                            <constraint firstItem="am5-VR-tcG" firstAttribute="centerY" secondItem="Mf6-Nz-uzI" secondAttribute="centerY" id="rvX-S5-DmE"/>
+                            <constraint firstAttribute="trailing" secondItem="am5-VR-tcG" secondAttribute="trailing" id="zAB-4t-WTM"/>
+                            <constraint firstItem="4S9-Uy-Bba" firstAttribute="top" secondItem="uSf-7G-cCm" secondAttribute="bottom" id="zZe-xw-fCb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="doneBackgroundView" destination="am5-VR-tcG" id="WZO-PS-2KL"/>
+                        <outlet property="textView" destination="4S9-Uy-Bba" id="nAM-VI-mxm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i96-bI-LbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="386" y="379"/>
+        </scene>
+    </scenes>
+</document>

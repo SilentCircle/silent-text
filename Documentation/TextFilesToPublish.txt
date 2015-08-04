@@ -1,0 +1,27 @@
+# The tooling/docs-automation.d/01-generate-docs.sh script is invoked post-
+# push. This tells it which text-format document files to publish to engdocs.
+PROJECT README
+.build-release/README-PreparingForPublishing.txt
+Pods/CocoaLumberjack/Lumberjack/Extensions/README.txt
+Vendors/STBubbleTableViewCell/Thanks.txt
+Libraries/openssl/README.md
+Pods/AFNetworking/README.md
+Pods/CocoaLumberjack/README.md
+Pods/DAKeyboardControl/README.md
+Pods/ECPhoneNumberFormatter/README.md
+Pods/MBProgressHUD/README.mdown
+Pods/MSCMoreOptionTableViewCell/README.md
+Pods/NSStringEmojize/README.md
+Pods/OHAlertView/README.md
+Pods/Reachability/README.md
+Pods/SQLCipher/README.md
+Pods/SWRevealViewController/README.md
+Pods/TITokenField/README.markdown
+Pods/YapDatabase/README.md
+Pods/YRDropdownView/README.md
+Pods/zipzap/README.markdown
+Pods/ZXCVBN/README.md
+ST2/Resources/licenses.md
+Vendors/OHActionSheet/README.md
+Vendors/QBImagePickerController/README.md
+Vendors/XMPPFramework/README.markdown

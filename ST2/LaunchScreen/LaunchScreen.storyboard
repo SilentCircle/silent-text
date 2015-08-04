@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="viV-Mn-6zN">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Launch ScreenVC-->
+        <scene sceneID="W6d-Ag-LrW">
+            <objects>
+                <viewController storyboardIdentifier="LaunchScreenVC" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="viV-Mn-6zN" customClass="LaunchScreenVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4cs-FO-x8G"/>
+                        <viewControllerLayoutGuide type="bottom" id="oyl-Ie-GqO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h9k-P5-tKs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SC_LaunchImage-BgGradient_2048x2048.png" translatesAutoresizingMaskIntoConstraints="NO" id="2wz-TU-XBK" userLabel="gradient bgImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SC_Brand-white_620x620.png" translatesAutoresizingMaskIntoConstraints="NO" id="qVn-Vr-Z5t" userLabel="logoImageView">
+                                <rect key="frame" x="60" y="60" width="480" height="480"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qVn-Vr-Z5t" secondAttribute="height" multiplier="1:1" id="gcH-hz-3Ae"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="width" secondItem="2wz-TU-XBK" secondAttribute="width" multiplier="0.8" id="0rv-Xd-WZ8"/>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="width" secondItem="2wz-TU-XBK" secondAttribute="width" multiplier="0.5" id="2F4-5S-8VV"/>
+                            <constraint firstItem="2wz-TU-XBK" firstAttribute="top" secondItem="h9k-P5-tKs" secondAttribute="top" id="2i5-Eh-S8P"/>
+                            <constraint firstItem="oyl-Ie-GqO" firstAttribute="top" secondItem="2wz-TU-XBK" secondAttribute="bottom" id="43q-Ie-UgL"/>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="centerX" secondItem="2wz-TU-XBK" secondAttribute="centerX" id="5Gb-Oz-TJp"/>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="centerY" secondItem="2wz-TU-XBK" secondAttribute="centerY" id="AUB-56-9mN"/>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="width" secondItem="2wz-TU-XBK" secondAttribute="width" multiplier="0.5" id="S1l-jm-TWI"/>
+                            <constraint firstItem="2wz-TU-XBK" firstAttribute="leading" secondItem="h9k-P5-tKs" secondAttribute="leading" id="VCH-kL-Key"/>
+                            <constraint firstAttribute="trailing" secondItem="2wz-TU-XBK" secondAttribute="trailing" id="Y2u-yC-jwD"/>
+                            <constraint firstItem="qVn-Vr-Z5t" firstAttribute="height" secondItem="2wz-TU-XBK" secondAttribute="height" multiplier="0.8" id="dAr-EC-RAU"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2F4-5S-8VV"/>
+                                <exclude reference="S1l-jm-TWI"/>
+                                <exclude reference="dAr-EC-RAU"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="0rv-Xd-WZ8"/>
+                                <include reference="S1l-jm-TWI"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="0rv-Xd-WZ8"/>
+                                <include reference="dAr-EC-RAU"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="0rv-Xd-WZ8"/>
+                                <include reference="2F4-5S-8VV"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S30-fd-Vqt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="374" y="260"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="SC_Brand-white_620x620.png" width="620" height="620"/>
+        <image name="SC_LaunchImage-BgGradient_2048x2048.png" width="2048" height="2048"/>
+    </resources>
+</document>

@@ -1,0 +1,2 @@
+PODS_ST__YAPDATABASE_OTHER_CFLAGS = $(inherited) -DSQLITE_HAS_CODEC
+PODS_ST__YAPDATABASE_OTHER_LDFLAGS = -weak_library /usr/lib/libc++.dylib

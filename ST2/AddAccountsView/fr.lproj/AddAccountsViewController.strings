@@ -1,0 +1,28 @@
+/* Class = "IBUITextField"; accessibilityLabel = "Username"; ObjectID = "12"; */
+"12.accessibilityLabel" = "Nom d'utilisateur";
+/* Class = "IBUITextField"; placeholder = "username"; ObjectID = "12"; */
+"12.placeholder" = "nom d'utilisateur";
+/* Class = "IBUIButton"; accessibilityHint = "Press to activate account"; ObjectID = "55"; */
+"55.accessibilityHint" = "Appuyer pour activer le compte";
+/* Class = "IBUIButton"; accessibilityLabel = "Activate"; ObjectID = "55"; */
+"55.accessibilityLabel" = "Activer";
+/* Class = "IBUIButton"; normalTitle = "ACTIVATE"; ObjectID = "55"; */
+"55.normalTitle" = "ACTIVER";
+/* Class = "IBUILabel"; text = "Username"; ObjectID = "75"; */
+"75.text" = "Nom d'utilisateur";
+/* Class = "IBUITextField"; accessibilityLabel = "Password"; ObjectID = "88"; */
+"88.accessibilityLabel" = "Mot de passe";
+/* Class = "IBUITextField"; placeholder = "password"; ObjectID = "88"; */
+"88.placeholder" = "mot de passe";
+/* Class = "IBUILabel"; text = "Password"; ObjectID = "89"; */
+"89.text" = "Mot de passe";
+/* Class = "IBUITextField"; accessibilityLabel = "Deviec name"; ObjectID = "133"; */
+"133.accessibilityLabel" = "Nom de l'appareil";
+/* Class = "IBUITextField"; text = "device"; ObjectID = "133"; */
+"133.text" = "appareil";
+/* Class = "IBUILabel"; text = "Device"; ObjectID = "134"; */
+"134.text" = "Appareil";
+/* Class = "IBUIButton"; normalTitle = "Network Name Here"; ObjectID = "ATR-aK-KHt"; */
+"ATR-aK-KHt.normalTitle" = "Nom du réseau ici";
+/* Class = "IBUILabel"; text = "Network"; ObjectID = "HVb-U2-VfT"; */
+"HVb-U2-VfT.text" = "Réseau";

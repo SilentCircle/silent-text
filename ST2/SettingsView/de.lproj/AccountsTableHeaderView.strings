@@ -1,0 +1,8 @@
+/* Class = "IBUILabel"; accessibilityLabel = "Accounts Heading"; ObjectID = "6"; */
+"6.accessibilityLabel" = "Kontenüberschrift";
+/* Class = "IBUILabel"; text = "ACCOUNTS"; ObjectID = "6"; */
+"6.text" = "KONTEN";
+/* Class = "IBUIView"; accessibilityLabel = "Accounts Heading"; ObjectID = "23"; */
+"23.accessibilityLabel" = "Kontenüberschrift";
+/* Class = "IBUIButton"; accessibilityLabel = "Add account"; ObjectID = "29"; */
+"29.accessibilityLabel" = "Konto hinzufügen";

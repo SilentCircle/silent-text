@@ -1,0 +1,197 @@
+
+/**
+ * ET 07/27/14
+ * This localization strings file originated with the need for localized Help content for Conversation Details. However,
+ * it immediately came to host localization strings for Conversation Details UI features as well, so it's not strictly 
+ * localized Help content. It is not known at this time of the first implementation of this file and the Conversation 
+ * Details Help feature if there is localization paradigm more appropriate than the current use of this file and the
+ * also new SCTHelpManager, which centralizes access to these strings for Conversation Details classes.
+ */
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                          Conversation Details
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Conversation Details Help View Controller Title */
+"ConversationDetailsVC.Help.title" = "Conversation Details Help";
+
+/* Conversation Security View Controller Help Content 
+ * NOTE: DO NOT TRANSLATE
+ * The key is set in IB for SCTHelpButton.contentKey. The value is the localized Help HTML filename
+ */
+"ConversationDetailsVC.Help.content" = "ConversationDetailsHelp";
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Send Read Receipts
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Read Receipts Help button contentKey */
+"readReceipts-HelpButton.contentKey" = "The Send Read Receipts feature enables others in the conversation to see when you have read their latest message. \n\nTap the Off/On switch to enable or disable this feature for this conversation.";
+
+/* Read Receipts Help button titleKey */
+"readReceipts-HelpButton.titleKey" = "Send Read Receipts";
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Share Location Feature
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Share Location ActionSheet title */
+"shareLocation-action.title" = "Share My Location";
+
+/* Share Location ActionSheet button titles */
+"shareLocation-actionTitle.stop" = "Stop Sharing My Location";
+"shareLocation-actionTitle.oneHour" = "Share for One Hour";
+"shareLocation-actionTitle.endOfDay" = "Share Until End of Day";
+"shareLocation-actionTitle.indefinitely" = "Share Indefinitely";
+
+/* Share Location Option label strings */
+"shareLocation-optionLabel.notSharing" = "Not sharing my location";
+"shareLocation-optionLabel.indefinitely" = "Share my location always";
+"shareLocation-optionLabel.shareUntil %@" = "Share my location until %1$@";
+
+
+/* Share Location Help button titleKey */
+"shareLocation-HelpButton.titleKey" = "Share Location";
+
+/* Share Location Help button contentKey */
+"shareLocation-HelpButton.contentKey" = "The Share Location feature enables others in the conversation to track your location. When turned on, each message you send includes your location.\n\nTo enable this feature, tap the \"On\" switch. Choose from among the options presented to set a length of time to share your location, from one hour to indefinitely. Stop sharing your location by tapping the \"Off\" switch.\n\nNote that you can send your location once in the Messages view, without turning on Share Location.\n\nTo send your location once, tap the Options button next to the text input to see the Options toolbar. Tap the Location icon, and a list of location options is presented. Choose \"Send My Current Location\".";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Do Not Disturb Feature
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Do Not Disturb ActionSheet title */
+"dnd-action.title" = "Do Not Disturb Options";
+
+/* Do Not Disturb ActionSheet button titles */
+"dnd-action.indefinitely" = "Indefinitely";
+"dnd-action.oneHour" = "For One Hour";
+"dnd-action.until8am" = "Until 8am";
+
+/* Share Location Option label strings */
+"dnd-optionLabel.off" = "Notifications sent without delay"; // "Off" option
+"dnd-optionLabel.indefinitely" = "Do not send notifications";
+// Delay Until example values: "Delay notifications until 3:44 PM", "Delay notifications until tomorrow"
+"dnd-optionLabel.untilTime %@" = "Delay notifications until %1$@"; 
+
+/* Do Not Disturb Help button titleKey */
+"doNotDisturb-HelpButton.titleKey" = "Do Not Disturb";
+
+/* Do Not Disturb Help button contentKey */
+"doNotDisturb-HelpButton.contentKey" = "The Do Not Disturb feature enables you to stop receiving notifications of new messages for a period of time.\n\nWhen the \"On\" switch is tapped, a list of options is presented. Choose from among the options to set a length of time to stop recieving notifications of new messages, from one hour to indefinitely.\n\nTurn off Do Not Disturb to start receiving new message notifications again by tapping the \"Off\" switch.\n\nNote that setting Do Not Disturb to \"Indefinitely\" means: \"Never notify me of new messages\".\n\n(Need Help clarification: DND is for this conversation? or globally?)";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Clear Conversation Feature Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Clear Conversation Help button titleKey */
+"clearConversation-HelpButton.titleKey" = "Clear Conversation";
+
+/* Clear Conversation Help button contentKey */
+"clearConversation-HelpButton.contentKey" = "The Clear Conversation feature deletes all messages in this conversation. This action cannot be undone.\n\nWhen the Clear Conversation button is tapped, a confirmation is presented to be sure you really want to delete all messages in the current conversation.\n\nConfirm delete all messages by tapping \"Clear Conversation\", or tap \"Cancel\" to dismiss the confirmation.";
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                  Conversation Security Details
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Conversation Security Help View Controller Title */
+"ConversationSecurityVC.Help.title" = "Conversation Security Help";
+
+/* Conversation Security View Controller Help Content 
+ * NOTE: DO NOT TRANSLATE
+ * The key is set in IB for SCTHelpButton.contentKey. The value is the localized Help HTML filename
+ */
+"ConversationSecurityVC.Help.content" = "ConversationSecurityHelp";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security SAS Verified Feature Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security SAS Verified Help button titleKey */
+"security.sasVerified-HelpButton.titleKey" = "SAS Verified?";
+
+/* Security SAS Verified Help button contentKey */
+"security.sasVerified-HelpButton.contentKey" = "SAS Verified means \"Have you verified the SAS phrase with the person you're chatting with?\"\n\nVerifiying the SAS phrase completes the highest level of three possible levels of security. The first two levels of security have to do with the encryption keys exchanged between your device and your conversation partner's device. This happens behind the scenes to keep your conversations secure.\n\nIn addition, you can verify the SAS phrase with your conversation partner in person. This can be done a number of ways. For example, you might phone them with the Silent Phone app or with a blackphone™. You can be certain by talking to them they are the person you expect. You can then compare the SAS phrase on your device with the SAS phrase they see on their device. They should be exactly the same.\n\nIf the SAS phrases are not identical, this could indicate a security compromise known as a Man-in-the-middle attack, where network communications are intercepted and someone \"in the middle\", is masquerading as someone you know.\n\nBy personally verifying that the SAS phrase is identical on each of your devices, you can be sure your conversation is secured at the highest level. \n\nWhen you tap \"No\" or \"Yes\" on the SAS Verified switch, you are confirming that you and your conversation partner have compared SAS phrases and found them identical.\n(See SAS phrase Help for more)\n\nSilent Phone https://itunes.apple.com/us/app/silent-phone/id554269204?mt=8\n\nblackPhone™ https://www.blackphone.ch\n\n";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security SAS Phrase Feature Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security SAS Phrase Help button titleKey */
+"security.sasPhrase-HelpButton.titleKey" = "SAS Phrase";
+
+/* Security SAS Phrase Help button contentKey */
+"security.sasPhrase-HelpButton.contentKey" = "A SAS phrase is a set of words which can be compared between the encrypted endpoints of a secure communication.\n\nWhen a conversation is \"keyed\", that is, when the endpoint devices have completed a series of encryption exchanges, a phrase is generated which is unique to that conversation.\n\nCommunication between endpoints of a keyed conversation means that the endpoint devices exchange encryption keys to be able to decrypt the messages sent between them. Further, this security is two levels deep for each conversation. Each individual message sent from one person to another uses unique encryption keys. This means that the conversation is secured, and each individual message in the conversation is addtionally secured.\n\nHowever, even with these two levels of security it is theoretically possible for an agent on the communications network to attempt to intercept transmissions to masquerade as one of the endpoints. This is known as a Man-in-the-middle attack. \n\nThe SAS phrase offers a third level of security: personal verification. The SAS phrase is never transmitted across the communications network; it can only be derived mathematically by the \"keyed\" endpoints.\n\nSo when conversations must be secure to the highest level, persons may personally verifiy that the SAS phrase on their devices is identical, whether comparing in the same physical space, or perhaps by a secure phone call.\n\nWhen the comparison of identical SAS phrases is confirmed, the SAS phrase has been \"verified\".\n(See SAS Verfied? Help)\n\nSecure phone options:\n\nSilent Phone https://itunes.apple.com/us/app/silent-phone/id554269204?mt=8\n\nblackPhone™ https://www.blackphone.ch\n\nMan-in-the-middle attack\nhttp://en.wikipedia.org/wiki/Man-in-the-middle_attack\n\n";
+
+
+/* Security Keyed Date Help button titleKey */
+"security.keyedDate-HelpButton.titleKey" = "Keyed Date";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security Keyed Date Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security Keyed Date Help button contentKey */
+"security.keyedDate-HelpButton.contentKey" = "[Keyed Date Help content]";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security Keyed By Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security Keyed By Help button titleKey */
+"security.keyedBy-HelpButton.titleKey" = "Keyed By";
+
+/* Security Keyed By Help button contentKey */
+"security.keyedBy-HelpButton.contentKey" = "[Keyed By Help content]";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security Scimp Method Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security Scimp Method Help button titleKey */
+"security.scimpMethod-HelpButton.titleKey" = "SCIMP Method";
+
+/* Security Scimp Method Help button contentKey */
+"security.scimpMethod-HelpButton.contentKey" = "[SCIMP Method Help content]";
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+// Security Reset Keys Help
+//--------------------------------------------------------------------------------------------------------------------//
+
+/* Security Reset Keys ActionSheet title */
+"resetKeys-action.title" = "Reset Encryption Keys";
+
+/* Security Reset Keys ActionSheet button titles */
+"resetKeys-action.createNewKeys" = "Create New Keys";
+"resetKeys-action.refreshKeys" = "Refresh Existing Keys";
+
+/* Security Reset Keys Help button titleKey */
+"security.resetKeys-HelpButton.titleKey" = "Reset Keys";
+
+/* Security Reset Keys Help button contentKey */
+"security.resetKeys-HelpButton.contentKey" = "[Reset Keys Help content]";
+
+
+//08/21/14
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                  User Info
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/* Edit User Info Help View Controller Title */
+"NewUserInfoVC.Help.title" = "User Info Help";
+
+/* Edit User Info View Controller Help Content 
+ * NOTE: DO NOT TRANSLATE
+ * The key is set in IB for SCTHelpButton.contentKey. The value is the localized Help HTML filename
+ */
+"NewUserInfoVC.Help.content" = "UserInfoHelp";

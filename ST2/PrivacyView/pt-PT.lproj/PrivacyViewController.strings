@@ -1,0 +1,36 @@
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "2HN-Wj-b5C"; */
+"2HN-Wj-b5C.text" = "Queimar";
+/* Class = "IBUILabel"; text = "SC Labs Features"; ObjectID = "4tl-hE-27p"; */
+"4tl-hE-27p.text" = "Recursos SC Labs";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.normalTitle" = "Off";
+/* Class = "IBUIButton"; selectedTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.selectedTitle" = "Off";
+/* Class = "IBUILabel"; text = "Notifications"; ObjectID = "E95-YH-PVo"; */
+"E95-YH-PVo.text" = "Notificações";
+/* Class = "IBUILabel"; text = "30 minutes"; ObjectID = "Hui-En-Hd3"; */
+"Hui-En-Hd3.text" = "30 minutos";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "Vcd-j0-M53"; */
+"Vcd-j0-M53.normalTitle" = "On";
+/* Class = "IBUILabel"; text = "Cipher Suite"; ObjectID = "YpD-VO-LMs"; */
+"YpD-VO-LMs.text" = "Cipher Suite";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.normalTitle" = "Off";
+/* Class = "IBUIButton"; selectedTitle = "On"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.selectedTitle" = "On";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "biR-9O-rle"; */
+"biR-9O-rle.normalTitle" = "On";
+/* Class = "IBUIButton"; normalTitle = "Suite Name"; ObjectID = "cab-dt-R7g"; */
+"cab-dt-R7g.normalTitle" = "Nome da Suite";
+/* Class = "IBUILabel"; text = "Cache Used"; ObjectID = "cvM-NT-vAy"; */
+"cvM-NT-vAy.text" = "Cache utilizado";
+/* Class = "IBUILabel"; text = "1000 MB"; ObjectID = "evP-Al-3rL"; */
+"evP-Al-3rL.text" = "1000 MB";
+/* Class = "IBUIButton"; normalTitle = "Erase Download Cache"; ObjectID = "knZ-Mn-NcO"; */
+"knZ-Mn-NcO.normalTitle" = "Apagar cache de downloads";
+/* Class = "IBUIButton"; normalTitle = "On - 30 Minutes"; ObjectID = "ksc-FC-iBd"; */
+"ksc-FC-iBd.normalTitle" = "Ligado - 30 Minutos";
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "mMr-xD-1OU"; */
+"mMr-xD-1OU.text" = "Queimar";
+/* Class = "IBUILabel"; text = "Return Receipts"; ObjectID = "qSP-2p-2Qw"; */
+"qSP-2p-2Qw.text" = "Recibos de devolução";

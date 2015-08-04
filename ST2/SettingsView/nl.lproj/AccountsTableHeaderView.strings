@@ -1,0 +1,8 @@
+/* Class = "IBUILabel"; accessibilityLabel = "Accounts Heading"; ObjectID = "6"; */
+"6.accessibilityLabel" = "Koptekst accounts";
+/* Class = "IBUILabel"; text = "ACCOUNTS"; ObjectID = "6"; */
+"6.text" = "ACCOUNTS";
+/* Class = "IBUIView"; accessibilityLabel = "Accounts Heading"; ObjectID = "23"; */
+"23.accessibilityLabel" = "Koptekst accounts";
+/* Class = "IBUIButton"; accessibilityLabel = "Add account"; ObjectID = "29"; */
+"29.accessibilityLabel" = "Account toevoegen";

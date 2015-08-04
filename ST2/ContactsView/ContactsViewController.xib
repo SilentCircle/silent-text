@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactsViewController">
+            <connections>
+                <outlet property="contactView" destination="XMy-KR-Aol" id="MNI-rN-ege"/>
+                <outlet property="contactViewTopConstraint" destination="8Mm-nT-6oP" id="hrj-VJ-un5"/>
+                <outlet property="exportButton" destination="u5I-2M-1tv" id="OYf-8V-C8o"/>
+                <outlet property="toolBar" destination="MAe-bP-KAh" id="9Sn-0l-gSg"/>
+                <outlet property="view" destination="1" id="dRI-oX-eM4"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XMy-KR-Aol" userLabel="contactView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAe-bP-KAh">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="VzK-tc-vzZ"/>
+                    </constraints>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="aWf-XK-x0z"/>
+                        <barButtonItem title="Export" id="u5I-2M-1tv">
+                            <connections>
+                                <action selector="exportContacts:" destination="-1" id="er0-X0-mZz"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="hXq-gO-bxs"/>
+                    </items>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="kU4-vd-zMj"/>
+                    </connections>
+                </toolbar>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="MAe-bP-KAh" firstAttribute="top" secondItem="XMy-KR-Aol" secondAttribute="bottom" id="53m-Zi-BZc"/>
+                <constraint firstItem="XMy-KR-Aol" firstAttribute="top" secondItem="1" secondAttribute="top" id="8Mm-nT-6oP"/>
+                <constraint firstAttribute="trailing" secondItem="XMy-KR-Aol" secondAttribute="trailing" id="L1Z-Vd-bVf"/>
+                <constraint firstAttribute="trailing" secondItem="MAe-bP-KAh" secondAttribute="trailing" id="LYn-qC-qcK"/>
+                <constraint firstItem="XMy-KR-Aol" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="TaU-QP-iVe"/>
+                <constraint firstItem="MAe-bP-KAh" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="f5b-Ry-1hy"/>
+                <constraint firstAttribute="bottom" secondItem="MAe-bP-KAh" secondAttribute="bottom" id="fVF-IL-yGt"/>
+            </constraints>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

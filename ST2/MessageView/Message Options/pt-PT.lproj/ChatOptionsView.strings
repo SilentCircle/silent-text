@@ -1,0 +1,52 @@
+/* Class = "IBUIButton"; accessibilityLabel = "Burn settings"; ObjectID = "3"; */
+"3.accessibilityLabel" = "Configurações da Queima";
+/* Class = "IBUIButton"; accessibilityLabel = "Geo Location settings"; ObjectID = "4"; */
+"4.accessibilityLabel" = "Configurações de localização";
+/* Class = "IBUIButton"; accessibilityHint = "Call this user in the SilentPhone app"; ObjectID = "29"; */
+"29.accessibilityHint" = "Ligar para este usuário com o SilentPhone";
+/* Class = "IBUIButton"; accessibilityLabel = "SilentPhone"; ObjectID = "29"; */
+"29.accessibilityLabel" = "SilentPhone";
+/* Class = "IBUIButton"; accessibilityLabel = "Contacts"; ObjectID = "30"; */
+"30.accessibilityLabel" = "Contatos";
+/* Class = "IBUIButton"; accessibilityLabel = "Add photo"; ObjectID = "37"; */
+"37.accessibilityLabel" = "Adicionar foto";
+/* Class = "IBUIButton"; accessibilityLabel = "Add sound"; ObjectID = "48"; */
+"48.accessibilityLabel" = "Adicionar som";
+/* Class = "IBUIButton"; accessibilityLabel = "For Your Eyes Only settings"; ObjectID = "52"; */
+"52.accessibilityLabel" = "Configurações Para os seus olhos apenas";
+/* Class = "IBUILabel"; accessibilityHint = "Number of minutes after which a message is burned."; ObjectID = "60"; */
+"60.accessibilityHint" = "Número de minutos até que uma mensagem seja queimada";
+/* Class = "IBUILabel"; text = "30 minutes"; ObjectID = "60"; */
+"60.text" = "30 minutos";
+/* Class = "IBUILabel"; text = "This device does have a camera"; ObjectID = "0H4-hf-cRW"; */
+"0H4-hf-cRW.text" = "Este dispositivo tem uma câmera";
+/* Class = "IBUILabel"; text = "30 minutes"; ObjectID = "8aN-oR-8QI"; */
+"8aN-oR-8QI.text" = "30 minutos";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "9ZW-w1-jyx"; */
+"9ZW-w1-jyx.normalTitle" = "Não";
+/* Class = "IBUIButton"; selectedTitle = "On"; ObjectID = "9ZW-w1-jyx"; */
+"9ZW-w1-jyx.selectedTitle" = "Sim";
+/* Class = "IBUIButton"; accessibilityLabel = "Add multimedia"; ObjectID = "IGw-da-Req"; */
+"IGw-da-Req.accessibilityLabel" = "Adicionar multimídia";
+/* Class = "IBUILabel"; accessibilityHint = "GPS information is being sent"; ObjectID = "QUW-sr-fvm"; */
+"QUW-sr-fvm.accessibilityHint" = "Informação de GPS está sendo enviada";
+/* Class = "IBUILabel"; accessibilityLabel = "Send my GPS coordinaets"; ObjectID = "QUW-sr-fvm"; */
+"QUW-sr-fvm.accessibilityLabel" = "Enviar minhas coordenadas de GPS";
+/* Class = "IBUILabel"; text = "Send my GPS coordinates"; ObjectID = "QUW-sr-fvm"; */
+"QUW-sr-fvm.text" = "Enviar minhas coordenadas de GPS";
+/* Class = "IBUILabel"; text = "Silent Phone is not installed"; ObjectID = "aSR-q2-sIE"; */
+"aSR-q2-sIE.text" = "Silent Phone não está instalado";
+/* Class = "IBUILabel"; accessibilityHint = "Forwarding, saving or copying of messages with this setting on are not permitted."; ObjectID = "mrb-Mh-R0q"; */
+"mrb-Mh-R0q.accessibilityHint" = "Não é permitido encaminhar, salvar ou copiar mensagens com esta configuração.";
+/* Class = "IBUILabel"; accessibilityLabel = "For your eyes only"; ObjectID = "mrb-Mh-R0q"; */
+"mrb-Mh-R0q.accessibilityLabel" = "Para os seus olhos apenas";
+/* Class = "IBUILabel"; text = "For your eyes only"; ObjectID = "mrb-Mh-R0q"; */
+"mrb-Mh-R0q.text" = "Para os seus olhos apenas";
+/* Class = "IBUIButton"; accessibilityHint = "Tap to turn burn on or off"; ObjectID = "xK0-ky-jcp"; */
+"xK0-ky-jcp.accessibilityHint" = "Toque para ligar ou desligar queimar";
+/* Class = "IBUIButton"; accessibilityLabel = "Burn On/Off"; ObjectID = "xK0-ky-jcp"; */
+"xK0-ky-jcp.accessibilityLabel" = "Ligar/Desligar Queimar";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "xK0-ky-jcp"; */
+"xK0-ky-jcp.normalTitle" = "Não";
+/* Class = "IBUIButton"; selectedTitle = "On"; ObjectID = "xK0-ky-jcp"; */
+"xK0-ky-jcp.selectedTitle" = "Sim";

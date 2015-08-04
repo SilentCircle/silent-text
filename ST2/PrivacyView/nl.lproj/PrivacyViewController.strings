@@ -1,0 +1,36 @@
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "2HN-Wj-b5C"; */
+"2HN-Wj-b5C.text" = "Wissen";
+/* Class = "IBUILabel"; text = "SC Labs Features"; ObjectID = "4tl-hE-27p"; */
+"4tl-hE-27p.text" = "Functies SC Labs";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.normalTitle" = "Uit";
+/* Class = "IBUIButton"; selectedTitle = "Off"; ObjectID = "7mZ-Tp-BQf"; */
+"7mZ-Tp-BQf.selectedTitle" = "Uit";
+/* Class = "IBUILabel"; text = "Notifications"; ObjectID = "E95-YH-PVo"; */
+"E95-YH-PVo.text" = "Meldingen";
+/* Class = "IBUILabel"; text = "30 minutes"; ObjectID = "Hui-En-Hd3"; */
+"Hui-En-Hd3.text" = "30 minuten";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "Vcd-j0-M53"; */
+"Vcd-j0-M53.normalTitle" = "Aan";
+/* Class = "IBUILabel"; text = "Cipher Suite"; ObjectID = "YpD-VO-LMs"; */
+"YpD-VO-LMs.text" = "Coderingssuite";
+/* Class = "IBUIButton"; normalTitle = "Off"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.normalTitle" = "Uit";
+/* Class = "IBUIButton"; selectedTitle = "On"; ObjectID = "bDp-0o-zgn"; */
+"bDp-0o-zgn.selectedTitle" = "Aan";
+/* Class = "IBUIButton"; normalTitle = "On"; ObjectID = "biR-9O-rle"; */
+"biR-9O-rle.normalTitle" = "Aan";
+/* Class = "IBUIButton"; normalTitle = "Suite Name"; ObjectID = "cab-dt-R7g"; */
+"cab-dt-R7g.normalTitle" = "Suite naam";
+/* Class = "IBUILabel"; text = "Cache Used"; ObjectID = "cvM-NT-vAy"; */
+"cvM-NT-vAy.text" = "Gebruikte cache";
+/* Class = "IBUILabel"; text = "1000 MB"; ObjectID = "evP-Al-3rL"; */
+"evP-Al-3rL.text" = "1000 MB";
+/* Class = "IBUIButton"; normalTitle = "Erase Download Cache"; ObjectID = "knZ-Mn-NcO"; */
+"knZ-Mn-NcO.normalTitle" = "Gedownloade cache wissen";
+/* Class = "IBUIButton"; normalTitle = "On - 30 Minutes"; ObjectID = "ksc-FC-iBd"; */
+"ksc-FC-iBd.normalTitle" = "Aan - 30 minuten";
+/* Class = "IBUILabel"; text = "Burn"; ObjectID = "mMr-xD-1OU"; */
+"mMr-xD-1OU.text" = "Wissen";
+/* Class = "IBUILabel"; text = "Return Receipts"; ObjectID = "qSP-2p-2Qw"; */
+"qSP-2p-2Qw.text" = "Retourontvangsten";

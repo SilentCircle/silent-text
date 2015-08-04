@@ -1,0 +1,17 @@
+/* Localized versions of Info.plist keys */
+
+"STRichText" = "Texto enriquecido";
+"STImage" = "Imagen";
+"STContact" = "Contacto";
+"STMovie" = "Película";
+"STText" = "Texto";
+"STUnknownFile" = "Archivo desconocido";
+"STAudio" = "Audio";
+"STAllDocuments" = "Todos los documentos";
+"STCalendarEvent" = "Evento de Calendario";
+"STNumbers" = "Documento de Numbers";
+/* documents made by the Numbers app */
+"STPagesDocument" = "Documento de Pages";
+/* documents made by the Pages app */
+"STKeynoteDocument" = "Documento de Keynote";
+/* documents made by the Keynote app */

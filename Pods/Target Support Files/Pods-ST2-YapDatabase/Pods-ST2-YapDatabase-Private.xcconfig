@@ -1,0 +1,7 @@
+#include "Pods-ST2-YapDatabase.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/YapDatabase" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/DAKeyboardControl" "${PODS_ROOT}/Headers/Public/ECPhoneNumberFormatter" "${PODS_ROOT}/Headers/Public/MBProgressHUD" "${PODS_ROOT}/Headers/Public/MSCMoreOptionTableViewCell" "${PODS_ROOT}/Headers/Public/NSStringEmojize" "${PODS_ROOT}/Headers/Public/OHAlertView" "${PODS_ROOT}/Headers/Public/Reachability" "${PODS_ROOT}/Headers/Public/SQLCipher" "${PODS_ROOT}/Headers/Public/SWRevealViewController" "${PODS_ROOT}/Headers/Public/TITokenField" "${PODS_ROOT}/Headers/Public/YRDropdownView" "${PODS_ROOT}/Headers/Public/YapDatabase" "${PODS_ROOT}/Headers/Public/ZXCVBN" "${PODS_ROOT}/Headers/Public/libqrencode" "${PODS_ROOT}/Headers/Public/zipzap"
+OTHER_CFLAGS = ${PODS_ST__YAPDATABASE_OTHER_CFLAGS}
+OTHER_LDFLAGS = ${PODS_ST__YAPDATABASE_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}
+SKIP_INSTALL = YES

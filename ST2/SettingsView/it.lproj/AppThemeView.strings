@@ -1,0 +1,9 @@
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "VCy-Ga-oc6"; */
+"VCy-Ga-oc6.text" = "Label";
+
+/* Class = "IBUILabel"; text = "This is the style of messages you send"; ObjectID = "eTw-4q-a6l"; */
+"eTw-4q-a6l.text" = "Questo è lo stile dei messaggi che invii";
+/* Class = "IBUILabel"; text = "Yesterday 12:41:53 PM"; ObjectID = "fBO-s5-Qax"; */
+"fBO-s5-Qax.text" = "Ieri 12:41:53 PM";
+/* Class = "IBUILabel"; text = "This is the style of messages you receive"; ObjectID = "qgX-jh-smd"; */
+"qgX-jh-smd.text" = "Questo è lo stile dei messaggi che ricevi";

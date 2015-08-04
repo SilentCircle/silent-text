@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactsSubViewController">
+            <connections>
+                <outlet property="searchBar" destination="hfj-1d-xhD" id="qrj-CT-Spt"/>
+                <outlet property="tableView" destination="Kie-vN-9dX" id="7bb-WT-Rzp"/>
+                <outlet property="view" destination="Tbd-Au-ylm" id="DBe-Dd-gQs"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Tbd-Au-ylm">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hfj-1d-xhD">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Y4q-Vn-0gP"/>
+                    </connections>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Kie-vN-9dX">
+                    <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="bPA-NI-UYs"/>
+                        <outlet property="delegate" destination="-1" id="a7a-fV-Jxu"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Kie-vN-9dX" firstAttribute="leading" secondItem="Tbd-Au-ylm" secondAttribute="leading" id="7pC-UG-fCq"/>
+                <constraint firstItem="hfj-1d-xhD" firstAttribute="leading" secondItem="Tbd-Au-ylm" secondAttribute="leading" id="8oA-Oc-jHS"/>
+                <constraint firstItem="Kie-vN-9dX" firstAttribute="top" secondItem="hfj-1d-xhD" secondAttribute="bottom" id="Czy-wl-vqu"/>
+                <constraint firstAttribute="bottom" secondItem="Kie-vN-9dX" secondAttribute="bottom" id="Flz-lB-r8Q"/>
+                <constraint firstAttribute="trailing" secondItem="hfj-1d-xhD" secondAttribute="trailing" id="UJX-LC-0J5"/>
+                <constraint firstItem="hfj-1d-xhD" firstAttribute="top" secondItem="Tbd-Au-ylm" secondAttribute="top" id="fNe-bk-7YS"/>
+                <constraint firstAttribute="trailing" secondItem="Kie-vN-9dX" secondAttribute="trailing" id="vhf-7u-G2b"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

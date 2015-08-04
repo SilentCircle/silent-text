@@ -1,0 +1,14 @@
+/* Class = "IBUIButton"; accessibilityLabel = "Send"; ObjectID = "203"; */
+"203.accessibilityLabel" = "إرسال";
+/* Class = "IBUIButton"; normalTitle = "Send"; ObjectID = "203"; */
+"203.normalTitle" = "إرسال";
+/* Class = "IBUIImageView"; accessibilityLabel = "Record"; ObjectID = "215"; */
+"215.accessibilityLabel" = "تسجيل";
+/* Class = "IBUIButton"; accessibilityLabel = "Cancel"; ObjectID = "219"; */
+"219.accessibilityLabel" = "إلغاء";
+/* Class = "IBUIButton"; normalTitle = "Cancel"; ObjectID = "219"; */
+"219.normalTitle" = "إلغاء";
+/* Class = "IBUIImageView"; accessibilityLabel = "Playback"; ObjectID = "235"; */
+"235.accessibilityLabel" = "تشغيل";
+/* Class = "IBUILabel"; text = "10:00"; ObjectID = "242"; */
+"242.text" = "10:00";

@@ -1,0 +1,28 @@
+/* Class = "IBUITextField"; accessibilityLabel = "Username"; ObjectID = "12"; */
+"12.accessibilityLabel" = "Gebruikersnaam";
+/* Class = "IBUITextField"; placeholder = "username"; ObjectID = "12"; */
+"12.placeholder" = "gebruikersnaam";
+/* Class = "IBUIButton"; accessibilityHint = "Press to activate account"; ObjectID = "55"; */
+"55.accessibilityHint" = "Drukken om account te activeren";
+/* Class = "IBUIButton"; accessibilityLabel = "Activate"; ObjectID = "55"; */
+"55.accessibilityLabel" = "Activeren";
+/* Class = "IBUIButton"; normalTitle = "ACTIVATE"; ObjectID = "55"; */
+"55.normalTitle" = "ACTIVEREN";
+/* Class = "IBUILabel"; text = "Username"; ObjectID = "75"; */
+"75.text" = "Gebruikersnaam";
+/* Class = "IBUITextField"; accessibilityLabel = "Password"; ObjectID = "88"; */
+"88.accessibilityLabel" = "Wachtwoord";
+/* Class = "IBUITextField"; placeholder = "password"; ObjectID = "88"; */
+"88.placeholder" = "wachtwoord";
+/* Class = "IBUILabel"; text = "Password"; ObjectID = "89"; */
+"89.text" = "Wachtwoord";
+/* Class = "IBUITextField"; accessibilityLabel = "Deviec name"; ObjectID = "133"; */
+"133.accessibilityLabel" = "Naam toestel";
+/* Class = "IBUITextField"; text = "device"; ObjectID = "133"; */
+"133.text" = "toestel";
+/* Class = "IBUILabel"; text = "Device"; ObjectID = "134"; */
+"134.text" = "Toestel";
+/* Class = "IBUIButton"; normalTitle = "Network Name Here"; ObjectID = "ATR-aK-KHt"; */
+"ATR-aK-KHt.normalTitle" = "Naam netwerk hier";
+/* Class = "IBUILabel"; text = "Network"; ObjectID = "HVb-U2-VfT"; */
+"HVb-U2-VfT.text" = "Netwerk";

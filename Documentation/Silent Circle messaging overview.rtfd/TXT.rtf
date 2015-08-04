@@ -1,0 +1,274 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1344\cocoasubrtf350
+\cocoascreenfonts1{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Italic;
+\f3\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green45\blue153;\red255\green0\blue0;\red0\green64\blue128;
+\red0\green0\blue255;\red217\green11\blue0;\red164\green8\blue0;}
+\margl1440\margr1440\vieww18660\viewh25160\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b\fs36 \cf0 Silent Circle Messaging Overview.
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs22 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f2\i \cf0 Shrek: Example... uh... ogres are like onions! \
+Donkey: They stink? \
+Shrek: Yes... No! \
+Donkey: Oh, they make you cry? \
+Shrek: No! \
+Donkey: Oh, you leave 'em out in the sun, they get all brown, start sproutin' little white hairs... \
+Shrek: NO! Layers. Onions have layers. Ogres have layers. Onions have layers. You get it? We both have layers. \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0  
+\f1\i0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri-4100
+\cf0 This document is a high level overview of how the various protocols layers used by Silent Circle all link together. At best there are a few components that are at work:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b \cf0 TCP/TLS
+\f1\b0  - this is the lowest layer that we are concerned with, this transports the\
+actual packets across the internet from the user to the silent circle messaging server.\
+\
+
+\f0\b XMPP - Extensible Messaging and Presence Protocol
+\f1\b0  \
+XMPP is layered on top of XMPP and describes the communication in terms  of messages. In an non secure environment, XMPP (also know as Jabber) encapsulates the messages from user to user. typically the user runs a client program\
+such as iChat or Adium to communicates to an XMPP server (such as ejabberd or OpenFire). The server is responsible for storing and forwarding the messages from the sender to the recipient. The XMMP messages are represented as XML data, for example:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf2 <message from='vinnie@silentcircle.com' to='daphne@silentcircle.com' xml:lang='en'> \
+<body>\cf3 Hello. My name is Inigo Montoya. You killed my father. Prepare to die.\cf2 </body>\
+</message>\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b \cf0 SCIMP - Silent Circle Instant Message Protocol
+\f1\b0 \
+SCIMP is responsible for encrypting and securing the message content. SCIMP will negotiate the shared secret keys and encrypt the messages. The version of SCIMP we use encodes the protocol as JSON packets wrapped in a Rad64. SCIMP uses 4 kinds of packets to establish the secret keys: commit, dh1, dh2 and confirm.  \
+\
+Commit is the start of the keying process, where the initiator creates an ECC key pair but only sends a hash of the public key, along with some HMAC information that might indicate if they have had a shared secret in the past.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \{\
+    "commit": \{\
+        "version": 1,\
+        "cipherSuite": 1,\
+        "sasMethod": 1,\
+        "Hpki": "s18C+pKU2b81vysPfnRsviMieziZ5i0YrbQXpkdzgSo=",\
+        "Hcs": "bx/ScjJQU1s="\
+    \}\
+\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 When the recipient receives a Commit, it checks the packet for valid options and then creates it's own ECC key and responds by sending the public key back to the initiator with a DH1 packet. It also includes a HMAC of a previously shared secret.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \
+\{\
+    "dh1": \{\
+        "PKr": "MGwDAgcAAgEwAjEAsI23okNBcGV1qy0RsliSKBpQNf3095weuQXsfcur4s0r9+hpA3jlg75RIcTYiPByAjAtokuW22OFhAb63ZiDmdE3an06aGJaCT4Ywmy3ywYWDJrkIrkIVcHAdxfupjoN/A0=",\
+        "Hcs": "Sgd9nFcLvYs="\
+    \}\
+\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 At this point the Initiator has enough information to complete the ECC - Diffie Hellman process, and derives both the sending and receiving communication keys. The initiator then replies with a DH2 packet which contains a copy of the public key it previously sent a hash of and a HMAC of the current shared secret.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \
+\
+\{\
+    "dh2": \{\
+        "PKi": "MG0DAgcAAgEwAjEAmS2t3VvYXkSYLWuZ4vDQfJpL2VrCxOrkj2E4v/6EOxfk9USrdLnVUIhHbSmVpD5vAjEA93WVAfM9STK3zPV2M4NuJlcrGlvCD/CVhClxtpua6lEBHi5E5bPOTrFszlmrF7qd",\
+        "maci": "KeO29YxeB80="\
+    \}\
+\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 The recipient uses the DH2 information to complete it's ECC - Diffie Hellman process and derives a copy of the communications keys also. To ensure that both sides are on the same page, the recipient replies with a CONFIRM packet which contains a HMAC of the new shared secret.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \
+\{\
+    "confirm": \{\
+        "macr": "/jo+3Bz8dPw="\
+    \}\
+\}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 \
+Once a the keys are established, SCIMP can then send the user message using a DATA packet.  The actual message is encrypted using AES in the Counter with CBC-MAC (CCM) mode. This provides us a message authentication code of both the message and the sequence number. \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \{\
+    "data": \{\
+        "seq": 51323,\
+        "mac": "ykRzxqvCR4lPj2/yL38C+Q==",\
+        "msg": "s8o4Ad8qn45uXauVAPAWFQ16Ns2jeV0D3ADYGreCNXW6STs6IW/dx8Om6VAUgpuKVRg4WPBGUHvbqqv91AQ/Sw=="\
+    \}\
+\}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 We want to be sure that the messages arrive intact over XMPP and so all of the above JSON packets are encoded in rad64  with a header or "?SCIMP:" and terminated with a period. For example when the last data packet goes over the XMPP, it actually looks like.\
+ \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf5 \
+<message from='vinnie@silentcircle.com' to='daphne@silentcircle.com' xml:lang='en'> \
+<body>\cf3 ?SCIMP:ewogICAgImRhdGEiOiB7CiAgICAgICAgInNlcSI6IDUxMzIzLAogICAgICAgICJtYWMiOiAieWtSenhxdkNSNGxQajIveUwzOEMrUT09IiwKICAgICAgICAibXNnIjogInM4bzRBZDhxbjQ1dVhhdVZBUEFXRlExNk5zMmplVjBEM0FEWUdyZUNOWFc2U1RzNklXL2R4OE9tNlZBVWdwdUtWUmc0V1BCR1VIdmJxcXY5MUFRL1N3PT0iCiAgICB9Cn0K.\cf5 </body>\
+ </message>\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b \cf0 SIREN - further encapsulation. 
+\f1\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri-4100\sl360
+\cf0 In Greek mythology, the Sirens were dangerous and devious creatures. In our case it adds further functionality to the protocol.  We need a way to distinguish between actual message content and data we might have uploaded to the cloud (a photo for example). We also need the ability to do some additional signaling between the two folks having a conversation.  We using Siren to wrap the message before sending it to SCIMP. So for example, the sender wishes to send a message that has beed designated for the recipients eyes only and will expire in 2 hours. The JSON would look like:\
+\
+
+\fs20 \cf5 \{\
+ \'93msg\'94 : \'93\cf3 Hello. My name is Inigo Montoya. You killed my father. Prepare to die.\cf5 \'94,\
+ \'93fyeo\'94 : true,\
+ \'93shred_after\'94 : 120,\
+\}\
+
+\fs24 \cf0 \
+This message is encoded and then sent as the encrypted msg portion of the  SCIMP data packet.\
+ 
+\fs20 \cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf4 \{
+\fs20 \
+    "data": \{\
+        "seq": 50235,\
+        "mac": "QOFDXnLdfPQVYxbAiZSlIw==",\
+        "msg": "QNwyeMlUpTizrD0cdwcHGOyGWa5o+h9860vGgApytxPhl3k4DG8aM82T51OEV4PlfB/aLqii27up5BehUwbT6+3aT5rr4bSq2crOjR5jQIwgTRIAAhfDIWwLTHYVL+FJ"\
+    \}\
+\}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 \
+\
+Another use of the Siren packet is to transport information about media data such as pictures, movies or sound.  For example, one user wishes to send a picture to the other. He will first encode the JPEG using the Scloud process.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b \cf0 SCloud - Silent Circle Secure Cloud Storage
+\f1\b0 \
+\
+SCloud is the method we use for securing content on our servers.  It is based on Convergent Encryption, where you take your original file,  calculate a hash from it. Then using this hash as the key, you encrypt the rest of the file.  We'll call this hash the 
+\f2\i decryption key
+\f1\i0 .  \
+\
+We then hash the decryption key and produce what we will call the 
+\f2\i locator key
+\f1\i0 .  We upload the encrypted file to the cloud storage system and tag it with storage key so we can look it up later. \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f3 \cf0 {{\NeXTGraphic pastedGraphic.pdf \width9360 \height3840
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f1 \cf0 \
+\
+The folks who run the cloud are not able to reverse the hash and thus decrypt the file.  The sender then securely transmits the decryption key to the recipient, as a Siren Message:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\ri-4100\sl360
+
+\fs20 \cf5 \{\
+   \'93cloud_url\'94:  \'93cloud.silentcircle.com/6473649\'94,\
+   \'93cloud_key\'94:  \'938IDCiIM1oR7pwhElTLyjs62oeLvEtIfhv75PPeK-JHE\'93\
+\}\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0  \
+Of course this Siren JSON packet is encrypted with SCimp and then wrapped in a XMPP message.\
+  \
+Once the recipient decodes the packet, it can then hash the decryption key and produce a locator key, and combine it with with sCloud URL to look up the contents from the cloud.  \
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f3 \cf0 {{\NeXTGraphic 1__#$!@%!#__pastedGraphic.pdf \width9360 \height3740
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f1 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\f0\b \cf0 \
+Additional uses of Siren.
+\f1\b0 \
+\
+\
+There are a few other cases, where we might want to signal provide some signaling information to the other side of the conversation.  There are some cases where the XMPP packets might get lost in transmission or the keys might not matchup. For example, the app crashes or the user reinstalls and loses state. Usually rekeying will suffice, but it would be helpful to indicate to the sender that some of his messages did not get through.\
+\
+One proposed method is for the sender to tag each XMPP message with a UUID\
+ \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 <message from='vinnie@silentcircle.com' to='daphne@silentcircle.com' xml:lang='en' \
+ id="\cf6 0b\cf3 fb71a4-d8fd-4410-b119-199c3596f296\cf4 "> \
+<body>?SCIMP:ewogICAgImRhdGE\'85..gICB9Cn0K.</body>\
+ </message>\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 \
+\
+The recipient discovers that she can not decode this message, a possible alternative is for the messaging app reply with a SCIMP encoded Siren resend-request message.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4  \
+\{\
+ "resend-request":  "\cf7 0bfb71a4-d8fd-4410-b119-199c3596f296\cf4 "\
+\}\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs24 \cf0 The senders app will then mark the bubble on the message log  as requiring a resend.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f3 \cf0 {{\NeXTGraphic Pasted Graphic.tiff \width5000 \height1240
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural
+
+\f1 \cf0 \
+\
+\
+We need to discuss this more\'85\
+\
+\
+\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-4100\pardirnatural
+
+\fs20 \cf4 \
+\
+\
+}

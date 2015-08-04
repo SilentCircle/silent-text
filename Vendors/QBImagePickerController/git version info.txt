@@ -1,0 +1,4 @@
+
+Repo: https://github.com/cureatr/QBImagePickerController.git
+Branch: cureatr/master
+Commit: b120fa11f4155de12f0256e67c90618453f0a301

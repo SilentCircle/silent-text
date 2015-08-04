@@ -1,0 +1,1 @@
+../../../zipzap/zipzap/ZZNewArchiveEntry.h

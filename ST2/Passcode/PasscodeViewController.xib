@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PasscodeViewController">
+            <connections>
+                <outlet property="biometricButton" destination="1ag-MD-y4l" id="J41-tr-9kO"/>
+                <outlet property="containerView" destination="VRH-aU-ZT2" id="Gjc-ua-U2e"/>
+                <outlet property="failPrompt" destination="30" id="31"/>
+                <outlet property="prompt" destination="4" id="8"/>
+                <outlet property="recoveryButton" destination="G3H-G3-HV7" id="kZq-iY-YZ4"/>
+                <outlet property="textfield" destination="5" id="ZiP-VJ-Zga"/>
+                <outlet property="view" destination="1" id="6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <navigationItem title="Title" id="13">
+            <barButtonItem key="leftBarButtonItem" title="back" id="17"/>
+        </navigationItem>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VRH-aU-ZT2" userLabel="containerView">
+                    <rect key="frame" x="150" y="63" width="300" height="225"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="prompt" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                            <rect key="frame" x="8" y="102" width="284" height="27"/>
+                            <accessibility key="accessibilityConfiguration" hint="Enter a passcode" label="Passcode Entry"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="27" id="6dN-lQ-gdh"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ag-MD-y4l">
+                            <rect key="frame" x="102" y="178" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="rSX-Z6-asX"/>
+                                <constraint firstAttribute="height" constant="30" id="uxm-Mm-ptT"/>
+                            </constraints>
+                            <state key="normal" image="biometric.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="biometricHit:" destination="-1" eventType="touchUpInside" id="GtF-6b-HR7"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G3H-G3-HV7">
+                            <rect key="frame" x="173" y="178" width="30" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="e0E-qA-kwP"/>
+                                <constraint firstAttribute="width" constant="30" id="xrQ-tg-vHr"/>
+                            </constraints>
+                            <state key="normal" title="Scan Recovery Key" image="qrcode.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="recoveryHit:" destination="-1" eventType="touchUpInside" id="dKA-fh-LYP"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ObscureScreen-60px.png" translatesAutoresizingMaskIntoConstraints="NO" id="TPd-uI-xsa">
+                            <rect key="frame" x="110" y="14" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="B5Y-Tn-ouo"/>
+                                <constraint firstAttribute="width" constant="80" id="tlj-MA-ahF"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="225" id="BtR-Lh-vqO"/>
+                        <constraint firstAttribute="centerX" secondItem="TPd-uI-xsa" secondAttribute="centerX" id="FYC-b9-05p"/>
+                        <constraint firstItem="TPd-uI-xsa" firstAttribute="top" secondItem="VRH-aU-ZT2" secondAttribute="top" constant="14" id="OrC-tw-OOL"/>
+                        <constraint firstItem="4" firstAttribute="leading" secondItem="VRH-aU-ZT2" secondAttribute="leading" constant="8" id="Srv-aA-D3n"/>
+                        <constraint firstAttribute="centerX" secondItem="1ag-MD-y4l" secondAttribute="centerX" constant="33" id="TFh-Va-QwH"/>
+                        <constraint firstItem="G3H-G3-HV7" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="49" id="UfW-6f-kqr"/>
+                        <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" constant="8" id="dpk-Kb-9Vt"/>
+                        <constraint firstAttribute="width" constant="300" id="hWl-IT-lNG"/>
+                        <constraint firstItem="4" firstAttribute="top" secondItem="TPd-uI-xsa" secondAttribute="bottom" constant="8" id="qyN-sQ-Ctc"/>
+                        <constraint firstAttribute="centerX" secondItem="G3H-G3-HV7" secondAttribute="centerX" constant="-38" id="ueq-PE-sAh"/>
+                        <constraint firstItem="1ag-MD-y4l" firstAttribute="top" secondItem="4" secondAttribute="bottom" constant="49" id="yj8-FI-iRc"/>
+                    </constraints>
+                </view>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0000000000000000000000" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5" customClass="SCTPasswordTextfield">
+                    <rect key="frame" x="173.5" y="200" width="253" height="30"/>
+                    <accessibility key="accessibilityConfiguration" hint="Enter a passcode to unlock SilentText" label="Passcode"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="3er-xX-TGx"/>
+                        <constraint firstAttribute="width" constant="253" id="nmz-rH-Hom"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
+                    <connections>
+                        <action selector="userDoneEnteringText:" destination="-2" eventType="editingDidEndOnExit" id="26"/>
+                    </connections>
+                </textField>
+                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="30">
+                    <rect key="frame" x="150" y="296" width="300" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="31" id="N11-hF-8BJ"/>
+                        <constraint firstAttribute="width" constant="300" id="XxA-fD-0Ca"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
+                    <inset key="titleEdgeInsets" minX="1" minY="0.0" maxX="1" maxY="0.0"/>
+                    <state key="normal" title="Passcode Incorrect" backgroundImage="button_passcode.png">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="30" secondAttribute="centerX" id="NTa-n0-Zne"/>
+                <constraint firstAttribute="centerX" secondItem="VRH-aU-ZT2" secondAttribute="centerX" id="Uyb-wo-5aZ"/>
+                <constraint firstItem="VRH-aU-ZT2" firstAttribute="top" secondItem="1" secondAttribute="top" constant="63" id="Xlz-tg-jnM"/>
+                <constraint firstItem="5" firstAttribute="top" secondItem="VRH-aU-ZT2" secondAttribute="bottom" constant="-88" id="ewZ-DO-Rdg"/>
+                <constraint firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="nEp-e2-BKi"/>
+                <constraint firstItem="30" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="66" id="vIe-fa-gax"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="20" appends="YES" id="21"/>
+            </connections>
+        </view>
+        <swipeGestureRecognizer direction="down" id="20">
+            <connections>
+                <action selector="swipeDown:" destination="-1" id="25"/>
+                <outlet property="delegate" destination="-1" id="23"/>
+            </connections>
+        </swipeGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="ObscureScreen-60px.png" width="60" height="60"/>
+        <image name="biometric.png" width="30" height="30"/>
+        <image name="button_passcode.png" width="240" height="25"/>
+        <image name="qrcode.png" width="257" height="289"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

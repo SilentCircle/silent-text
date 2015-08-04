@@ -1,0 +1,8 @@
+/* Class = "IBUISegmentedControl"; 6Vu-oq-mj6.segmentTitles[0] = "First"; ObjectID = "6Vu-oq-mj6"; */
+"6Vu-oq-mj6.segmentTitles[0]" = "الأول";
+/* Class = "IBUISegmentedControl"; 6Vu-oq-mj6.segmentTitles[1] = "Second"; ObjectID = "6Vu-oq-mj6"; */
+"6Vu-oq-mj6.segmentTitles[1]" = "الثاني";
+/* Class = "IBUILabel"; text = "From:"; ObjectID = "9Ju-1Z-DyV"; */
+"9Ju-1Z-DyV.text" = "من:";
+/* Class = "IBUIButton"; normalTitle = "Silent user name"; ObjectID = "IBs-YN-Pjs"; */
+"IBs-YN-Pjs.normalTitle" = "اسم المستخدم الصامت";

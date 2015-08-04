@@ -1,0 +1,33 @@
+
+/* Class = "IBUITextField"; placeholder = "Organization"; ObjectID = "3aI-9A-2t2"; */
+"3aI-9A-2t2.placeholder" = "Organization";
+
+/* Class = "IBUILabel"; text = "Linking allows Silent Text to import information such as name and photo from the system address book. The system address book is not modified."; ObjectID = "9Qc-nw-9Av"; */
+"9Qc-nw-9Av.text" = "Linking allows Silent Text to import information such as name and photo from the system address book. The system address book is not modified.";
+
+/* Class = "IBUIButton"; normalTitle = "edit"; ObjectID = "Q2l-nL-U2n"; */
+"Q2l-nL-U2n.normalTitle" = "edit";
+
+/* Class = "IBUILabel"; text = "Silent Circle"; ObjectID = "bot-pe-DBT"; */
+"bot-pe-DBT.text" = "Silent Circle";
+
+/* Class = "IBUIButton"; normalTitle = "Link with Address Book"; ObjectID = "gNH-Sg-dyL"; */
+"gNH-Sg-dyL.normalTitle" = "Link with Address Book";
+
+/* Class = "IBUILabel"; text = "Notes"; ObjectID = "jGL-dI-Xpg"; */
+"jGL-dI-Xpg.text" = "Notes";
+
+/* Class = "IBUITextField"; placeholder = "First Name"; ObjectID = "lGf-SM-30j"; */
+"lGf-SM-30j.placeholder" = "First Name";
+
+/* Class = "IBUILabel"; text = "Deletes contact and all associated conversations."; ObjectID = "lbv-bz-Ria"; */
+"lbv-bz-Ria.text" = "Deletes contact and all associated conversations.";
+
+/* Class = "IBUIButton"; normalTitle = "Delete Contact"; ObjectID = "rCn-8C-SZv"; */
+"rCn-8C-SZv.normalTitle" = "Delete Contact";
+
+/* Class = "IBUITextField"; placeholder = "username (required)"; ObjectID = "y8H-cX-8DE"; */
+"y8H-cX-8DE.placeholder" = "username (required)";
+
+/* Class = "IBUITextField"; placeholder = "Last Name"; ObjectID = "z9i-3y-6GR"; */
+"z9i-3y-6GR.placeholder" = "Last Name";

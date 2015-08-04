@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SoundsViewController">
+            <connections>
+                <outlet property="containerView" destination="NCx-lm-ED6" id="lUg-Ra-ZGr"/>
+                <outlet property="incomingMessageSwitch" destination="E3T-Aw-PWa" id="xAV-Ts-jww"/>
+                <outlet property="lineView1" destination="qn6-qe-EJo" id="wKF-48-BCU"/>
+                <outlet property="lineView2" destination="y2Q-Lz-thh" id="pYi-9z-e64"/>
+                <outlet property="lineView3" destination="pA9-7Q-TCK" id="eO7-KP-bec"/>
+                <outlet property="sentMessageSwitch" destination="9VK-UN-w6d" id="vmW-Fn-ndz"/>
+                <outlet property="vibrateSwitch" destination="zjY-KJ-jvR" id="Xf9-vO-ZrX"/>
+                <outlet property="view" destination="2" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="213"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCx-lm-ED6" userLabel="ContainerView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="213"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="New Message" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E95-YH-PVo">
+                            <rect key="frame" x="76" y="26" width="115" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E3T-Aw-PWa" userLabel="Switch - New Message">
+                            <rect key="frame" x="199" y="21" width="51" height="31"/>
+                            <connections>
+                                <action selector="incomingMessageSwitchAction:" destination="-1" eventType="valueChanged" id="qBe-D0-Uht"/>
+                            </connections>
+                        </switch>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qn6-qe-EJo" userLabel="SeparatorView1">
+                            <rect key="frame" x="10" y="73" width="300" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="Scm-HF-YT7"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Sent Message" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v4v-wY-ODs">
+                            <rect key="frame" x="75" y="99" width="116" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9VK-UN-w6d" userLabel="Switch - Sent Message">
+                            <rect key="frame" x="199" y="94" width="51" height="31"/>
+                            <connections>
+                                <action selector="sentMessageSwitchAction:" destination="-1" eventType="valueChanged" id="agc-Dq-I0S"/>
+                            </connections>
+                        </switch>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y2Q-Lz-thh" userLabel="SeparatorView2">
+                            <rect key="frame" x="10" y="143" width="300" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="a2b-Rc-zh1"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Vibrate" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qSP-2p-2Qw">
+                            <rect key="frame" x="134" y="170" width="57" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zjY-KJ-jvR" userLabel="Switch - Vibrate">
+                            <rect key="frame" x="199" y="165" width="51" height="31"/>
+                            <connections>
+                                <action selector="vibrateSwitchAction:" destination="-1" eventType="valueChanged" id="kYx-Ti-YiY"/>
+                            </connections>
+                        </switch>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pA9-7Q-TCK" userLabel="SeparatorView3">
+                            <rect key="frame" x="10" y="212" width="300" height="1"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="t1Y-gz-xQJ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="qn6-qe-EJo" secondAttribute="trailing" constant="10" id="1qP-gG-wt2"/>
+                        <constraint firstItem="y2Q-Lz-thh" firstAttribute="top" secondItem="9VK-UN-w6d" secondAttribute="bottom" constant="18" id="3iu-Jq-d5N"/>
+                        <constraint firstItem="9VK-UN-w6d" firstAttribute="centerX" secondItem="E3T-Aw-PWa" secondAttribute="centerX" id="4eW-IM-htu"/>
+                        <constraint firstAttribute="centerX" secondItem="E3T-Aw-PWa" secondAttribute="centerX" constant="-63" id="5Pk-eE-BRb"/>
+                        <constraint firstItem="9VK-UN-w6d" firstAttribute="leading" secondItem="v4v-wY-ODs" secondAttribute="trailing" constant="8" id="GuK-x6-lXD"/>
+                        <constraint firstItem="zjY-KJ-jvR" firstAttribute="leading" secondItem="qSP-2p-2Qw" secondAttribute="trailing" constant="8" id="L5k-So-1f5"/>
+                        <constraint firstItem="qn6-qe-EJo" firstAttribute="top" secondItem="E3T-Aw-PWa" secondAttribute="bottom" constant="21" id="NXf-Nn-reS"/>
+                        <constraint firstItem="E3T-Aw-PWa" firstAttribute="top" secondItem="NCx-lm-ED6" secondAttribute="top" constant="21" id="VIr-2h-t8H"/>
+                        <constraint firstItem="pA9-7Q-TCK" firstAttribute="leading" secondItem="NCx-lm-ED6" secondAttribute="leading" constant="10" id="XUo-fV-SOv"/>
+                        <constraint firstItem="qSP-2p-2Qw" firstAttribute="centerY" secondItem="zjY-KJ-jvR" secondAttribute="centerY" constant="0.5" id="YPE-XL-pzl"/>
+                        <constraint firstItem="9VK-UN-w6d" firstAttribute="centerX" secondItem="zjY-KJ-jvR" secondAttribute="centerX" id="cLR-y6-EXb"/>
+                        <constraint firstItem="9VK-UN-w6d" firstAttribute="top" secondItem="E3T-Aw-PWa" secondAttribute="bottom" constant="42" id="dKb-eH-FCY"/>
+                        <constraint firstAttribute="trailing" secondItem="pA9-7Q-TCK" secondAttribute="trailing" constant="10" id="eI3-xV-nCr"/>
+                        <constraint firstAttribute="trailing" secondItem="y2Q-Lz-thh" secondAttribute="trailing" constant="10" id="hev-dU-LBA"/>
+                        <constraint firstItem="qn6-qe-EJo" firstAttribute="leading" secondItem="NCx-lm-ED6" secondAttribute="leading" constant="10" id="kMz-TK-XIh"/>
+                        <constraint firstItem="E3T-Aw-PWa" firstAttribute="leading" secondItem="E95-YH-PVo" secondAttribute="trailing" constant="8" id="lwH-QU-Hq0"/>
+                        <constraint firstItem="y2Q-Lz-thh" firstAttribute="leading" secondItem="NCx-lm-ED6" secondAttribute="leading" constant="10" id="mdh-Em-Gin"/>
+                        <constraint firstItem="v4v-wY-ODs" firstAttribute="centerY" secondItem="9VK-UN-w6d" secondAttribute="centerY" constant="0.5" id="nzd-xo-GWr"/>
+                        <constraint firstItem="zjY-KJ-jvR" firstAttribute="top" secondItem="9VK-UN-w6d" secondAttribute="bottom" constant="40" id="qoG-of-bzW"/>
+                        <constraint firstItem="E95-YH-PVo" firstAttribute="centerY" secondItem="E3T-Aw-PWa" secondAttribute="centerY" constant="0.5" id="vlH-CR-dIf"/>
+                        <constraint firstItem="pA9-7Q-TCK" firstAttribute="top" secondItem="zjY-KJ-jvR" secondAttribute="bottom" constant="16" id="zQw-tK-jV3"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="NCx-lm-ED6" firstAttribute="top" secondItem="2" secondAttribute="top" id="0rh-fM-KXb"/>
+                <constraint firstItem="NCx-lm-ED6" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="Kkq-zX-IRQ"/>
+                <constraint firstAttribute="trailing" secondItem="NCx-lm-ED6" secondAttribute="trailing" id="SXi-w0-tsH"/>
+                <constraint firstAttribute="bottom" secondItem="NCx-lm-ED6" secondAttribute="bottom" id="tGS-Sh-uaN"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

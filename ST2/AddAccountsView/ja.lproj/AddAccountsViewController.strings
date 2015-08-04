@@ -1,0 +1,28 @@
+/* Class = "IBUITextField"; accessibilityLabel = "Username"; ObjectID = "12"; */
+"12.accessibilityLabel" = "ユーザー名";
+/* Class = "IBUITextField"; placeholder = "username"; ObjectID = "12"; */
+"12.placeholder" = "ユーザー名";
+/* Class = "IBUIButton"; accessibilityHint = "Press to activate account"; ObjectID = "55"; */
+"55.accessibilityHint" = "押してアカウントを有効にする";
+/* Class = "IBUIButton"; accessibilityLabel = "Activate"; ObjectID = "55"; */
+"55.accessibilityLabel" = "有効にする";
+/* Class = "IBUIButton"; normalTitle = "ACTIVATE"; ObjectID = "55"; */
+"55.normalTitle" = "有効にする";
+/* Class = "IBUILabel"; text = "Username"; ObjectID = "75"; */
+"75.text" = "ユーザー名";
+/* Class = "IBUITextField"; accessibilityLabel = "Password"; ObjectID = "88"; */
+"88.accessibilityLabel" = "パスワード";
+/* Class = "IBUITextField"; placeholder = "password"; ObjectID = "88"; */
+"88.placeholder" = "パスワード";
+/* Class = "IBUILabel"; text = "Password"; ObjectID = "89"; */
+"89.text" = "パスワード";
+/* Class = "IBUITextField"; accessibilityLabel = "Deviec name"; ObjectID = "133"; */
+"133.accessibilityLabel" = "デバイス名";
+/* Class = "IBUITextField"; text = "device"; ObjectID = "133"; */
+"133.text" = "デバイス";
+/* Class = "IBUILabel"; text = "Device"; ObjectID = "134"; */
+"134.text" = "デバイス";
+/* Class = "IBUIButton"; normalTitle = "Network Name Here"; ObjectID = "ATR-aK-KHt"; */
+"ATR-aK-KHt.normalTitle" = "こちらにネットワーク名入力";
+/* Class = "IBUILabel"; text = "Network"; ObjectID = "HVb-U2-VfT"; */
+"HVb-U2-VfT.text" = "ネットワーク";

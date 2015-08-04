@@ -1,0 +1,6 @@
+bin
+*.gz
+OpenSSL-for-iOS.xcodeproj/xcuserdata
+src
+build
+OpenSSL-for-iOS.xcodeproj/project.xcworkspace/xcuserdata

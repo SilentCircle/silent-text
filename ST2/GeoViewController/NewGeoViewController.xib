@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewGeoViewController">
+            <connections>
+                <outlet property="btnMapViewPageCurl" destination="3yx-wi-LRj" id="qGp-0P-pFa"/>
+                <outlet property="mapView" destination="1pi-Mb-MbI" id="Bli-js-oda"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1pi-Mb-MbI">
+                    <rect key="frame" x="0.0" y="0.0" width="608" height="608"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="svi-ly-QKo"/>
+                    </connections>
+                </mapView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yx-wi-LRj" userLabel="btnMapViewPageCurl">
+                    <rect key="frame" x="566" y="544" width="42" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Wwb-RI-FMi"/>
+                        <constraint firstAttribute="width" constant="42" id="p2Z-pR-IvC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" backgroundImage="PageCurl.png">
+                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="showMapOptions:" destination="-1" eventType="touchUpInside" id="JuM-VO-xtI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="3yx-wi-LRj" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" constant="16" id="Ebz-IU-kxI"/>
+                <constraint firstItem="3yx-wi-LRj" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottomMargin" constant="16" id="LhP-X3-xtt"/>
+                <constraint firstAttribute="trailing" secondItem="1pi-Mb-MbI" secondAttribute="trailing" constant="-8" id="QAV-om-mQi"/>
+                <constraint firstItem="1pi-Mb-MbI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TJw-c4-kuH"/>
+                <constraint firstItem="1pi-Mb-MbI" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eLv-1m-cxd"/>
+                <constraint firstAttribute="bottom" secondItem="1pi-Mb-MbI" secondAttribute="bottom" constant="-8" id="j2f-9j-ij5"/>
+            </constraints>
+            <point key="canvasLocation" x="249" y="175"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="PageCurl.png" width="83" height="128"/>
+    </resources>
+</document>

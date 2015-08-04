@@ -1,0 +1,5 @@
+This Class is for easily converting between CLLocation objects and NSDictionary objects.  I also include convenience methods for converting between CLLocation objects and JSON strings using JSONKit.
+
+In the future I also want to include a PHP Class that will handle the JSON string and convert and easily go between MySQL.
+
+The biggest purpose for this is to save time, and pass around all the properties that CLLocation provides.  If we only handle Latitudes and Longitudes, then we are clueless on the horizontal and vertical accuracy when those coordinates are recorded.

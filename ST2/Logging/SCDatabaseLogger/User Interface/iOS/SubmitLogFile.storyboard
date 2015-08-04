@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZjW-vR-UjS">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Submit Log FileVC-->
+        <scene sceneID="Jum-Jn-erc">
+            <objects>
+                <viewController storyboardIdentifier="SubmitLogFileVC" id="j1c-fQ-QJE" customClass="SubmitLogFileVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y7S-yj-NPt"/>
+                        <viewControllerLayoutGuide type="bottom" id="fgP-SC-WSo"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oef-6Q-Zcg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlS-Kd-2Hq">
+                                <rect key="frame" x="221" y="526" width="159" height="30"/>
+                                <state key="normal" title="Send Report &amp; Log File">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="submitReport" destination="j1c-fQ-QJE" eventType="touchUpInside" id="q38-xY-q8V"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9MI-ks-MX9">
+                                <rect key="frame" x="251" y="564" width="98" height="28"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="What gets sent?">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1kh-8c-nRL" kind="show" id="ZHQ-c0-REf"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Kit-fB-lkA">
+                                <rect key="frame" x="193" y="531" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQL-7H-pbK">
+                                <rect key="frame" x="16" y="263" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Include system information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ks-BM-jng">
+                                <rect key="frame" x="73" y="268" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" keyboardDismissMode="interactive" text="Enter description of problem" translatesAutoresizingMaskIntoConstraints="NO" id="QTk-cK-1ZZ">
+                                <rect key="frame" x="0.0" y="64" width="600" height="454"/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ylv-RC-odN" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="518" width="600" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="sQh-bj-ECy"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QTk-cK-1ZZ" secondAttribute="trailing" id="3y7-vE-wdC"/>
+                            <constraint firstItem="Ylv-RC-odN" firstAttribute="leading" secondItem="oef-6Q-Zcg" secondAttribute="leading" id="6zD-xv-9l0"/>
+                            <constraint firstItem="Kit-fB-lkA" firstAttribute="centerY" secondItem="mlS-Kd-2Hq" secondAttribute="centerY" id="EAI-Dy-qUi"/>
+                            <constraint firstItem="QTk-cK-1ZZ" firstAttribute="leading" secondItem="oef-6Q-Zcg" secondAttribute="leading" id="Hgr-U7-jca"/>
+                            <constraint firstAttribute="centerX" secondItem="mlS-Kd-2Hq" secondAttribute="centerX" id="JM4-fZ-uBq"/>
+                            <constraint firstItem="9MI-ks-MX9" firstAttribute="top" secondItem="mlS-Kd-2Hq" secondAttribute="bottom" constant="8" id="L1g-8z-3fB"/>
+                            <constraint firstItem="QTk-cK-1ZZ" firstAttribute="trailing" secondItem="oef-6Q-Zcg" secondAttribute="trailingMargin" id="TQZ-W8-kCc"/>
+                            <constraint firstItem="QTk-cK-1ZZ" firstAttribute="top" secondItem="y7S-yj-NPt" secondAttribute="bottom" id="TnA-Ch-38S"/>
+                            <constraint firstItem="mlS-Kd-2Hq" firstAttribute="leading" secondItem="Kit-fB-lkA" secondAttribute="trailing" constant="8" id="We3-7c-iXm"/>
+                            <constraint firstItem="QTk-cK-1ZZ" firstAttribute="leading" secondItem="oef-6Q-Zcg" secondAttribute="leadingMargin" id="ZJB-fc-hzq"/>
+                            <constraint firstAttribute="centerX" secondItem="9MI-ks-MX9" secondAttribute="centerX" id="aU5-Gy-I33"/>
+                            <constraint firstItem="mlS-Kd-2Hq" firstAttribute="top" secondItem="QTk-cK-1ZZ" secondAttribute="bottom" constant="8" id="s1K-aj-fcc"/>
+                            <constraint firstItem="fgP-SC-WSo" firstAttribute="top" secondItem="9MI-ks-MX9" secondAttribute="bottom" constant="8" id="uf6-eY-5a5"/>
+                            <constraint firstAttribute="trailing" secondItem="Ylv-RC-odN" secondAttribute="trailing" id="wlW-SB-lyb"/>
+                            <constraint firstItem="Ylv-RC-odN" firstAttribute="top" secondItem="QTk-cK-1ZZ" secondAttribute="bottom" id="xKt-An-QES"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="eQL-7H-pbK"/>
+                                <exclude reference="5ks-BM-jng"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="TQZ-W8-kCc"/>
+                                <exclude reference="ZJB-fc-hzq"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="5Mz-Cv-wfm"/>
+                    <connections>
+                        <outlet property="spinner" destination="Kit-fB-lkA" id="bSH-I3-qwo"/>
+                        <outlet property="submitButton" destination="mlS-Kd-2Hq" id="xP7-Kc-ysw"/>
+                        <outlet property="textView" destination="QTk-cK-1ZZ" id="WUD-Em-qOl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="46G-0u-xK6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1357" y="469"/>
+        </scene>
+        <!--Submit Log File InfoVC-->
+        <scene sceneID="hqf-W5-Ur8">
+            <objects>
+                <viewController id="1kh-8c-nRL" customClass="SubmitLogFileInfoVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="efs-x7-rlY"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yfw-CH-b5L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ADX-Xv-VCA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our goal is always to ensure your privacy." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jeU-r2-SWW">
+                                <rect key="frame" x="16" y="72" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3c0-Db-nEd">
+                                <rect key="frame" x="16" y="109" width="568" height="184"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">When you send a report, we receive:
+
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">- The description you entered
+- Your username </string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="(so we can respond, if needed)">
+                                        <attributes>
+                                            <color key="NSColor" red="0.31372549019607843" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+- Basic system information </string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="(such as the app version and iOS version)">
+                                        <attributes>
+                                            <color key="NSColor" red="0.31372549019607843" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+- Recent log entries </string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="(if debug logging is enabled)">
+                                        <attributes>
+                                            <color key="NSColor" red="0.31372549019607843" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="12"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+We never send anything that would allow us to see or decrypt any of your messages. And we even try to mask usernames in the log so that we won't be able to see who you're communicating with.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="widthClass=compact">
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                </variation>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooa-jp-OyL">
+                                <rect key="frame" x="16" y="301" width="198" height="30"/>
+                                <state key="normal" title="See exactly what will be sent">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="gWS-2P-qvn" kind="show" id="5rI-zI-fR7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jeU-r2-SWW" firstAttribute="leading" secondItem="ADX-Xv-VCA" secondAttribute="leadingMargin" id="DE5-bz-0sc"/>
+                            <constraint firstItem="ooa-jp-OyL" firstAttribute="top" secondItem="3c0-Db-nEd" secondAttribute="bottom" constant="8" id="FzU-st-Q0x"/>
+                            <constraint firstItem="3c0-Db-nEd" firstAttribute="trailing" secondItem="ADX-Xv-VCA" secondAttribute="trailingMargin" id="HS9-TE-R48"/>
+                            <constraint firstItem="jeU-r2-SWW" firstAttribute="top" secondItem="efs-x7-rlY" secondAttribute="bottom" constant="8" id="TDz-KY-mD0"/>
+                            <constraint firstItem="3c0-Db-nEd" firstAttribute="leading" secondItem="ADX-Xv-VCA" secondAttribute="leadingMargin" id="Y9i-sm-Kz4"/>
+                            <constraint firstItem="jeU-r2-SWW" firstAttribute="trailing" secondItem="ADX-Xv-VCA" secondAttribute="trailingMargin" id="c0u-nh-1WH"/>
+                            <constraint firstItem="ooa-jp-OyL" firstAttribute="leading" secondItem="ADX-Xv-VCA" secondAttribute="leadingMargin" id="e34-2b-VKb"/>
+                            <constraint firstItem="3c0-Db-nEd" firstAttribute="top" secondItem="jeU-r2-SWW" secondAttribute="bottom" constant="16" id="jeH-Ob-jrA"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GZ3-Gr-pSx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2060" y="469"/>
+        </scene>
+        <!--Submit Log File DetailsVC-->
+        <scene sceneID="agF-xp-26T">
+            <objects>
+                <viewController id="gWS-2P-qvn" customClass="SubmitLogFileDetailsVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QJs-XD-Ypa"/>
+                        <viewControllerLayoutGuide type="bottom" id="YcR-qd-Oaf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Kz-IH-3lz">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tW5-KO-7HR">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <attributes>
+                                            <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tW5-KO-7HR" secondAttribute="trailing" id="UXN-iF-dB8"/>
+                            <constraint firstItem="tW5-KO-7HR" firstAttribute="top" secondItem="9Kz-IH-3lz" secondAttribute="top" id="ajR-f3-Tzp"/>
+                            <constraint firstItem="YcR-qd-Oaf" firstAttribute="top" secondItem="tW5-KO-7HR" secondAttribute="bottom" id="eNd-FZ-Saa"/>
+                            <constraint firstItem="tW5-KO-7HR" firstAttribute="leading" secondItem="9Kz-IH-3lz" secondAttribute="leading" id="zvm-ze-jl4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="tW5-KO-7HR" id="8hS-DX-Usq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mdC-ag-MIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2742" y="469"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jV6-hS-HP8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZjW-vR-UjS" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yEj-ei-bbb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="j1c-fQ-QJE" kind="relationship" relationship="rootViewController" id="7cs-cQ-PYb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a4o-Tk-elK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="667" y="469"/>
+        </scene>
+    </scenes>
+</document>

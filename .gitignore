@@ -3,3 +3,9 @@ build
 _Archived Items
 xcuserdata
 *.xcuserstate
+*.xccheckout
+SilentChat/SilentChat/SilentChat/Resources/en.lproj/Localizable.strings
+
+ST2/Logging/LumberjackUser.h
+ST2/Logging/LumberjackUser.temp.h
+git_version_hash.h

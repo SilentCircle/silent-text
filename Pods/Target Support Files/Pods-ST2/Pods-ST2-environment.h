@@ -1,0 +1,182 @@
+
+// To check if a library is compiled with CocoaPods you
+// can use the `COCOAPODS` macro definition which is
+// defined in the xcconfigs so it is available in
+// headers also when they are imported in the client
+// project.
+
+
+// AFNetworking
+#define COCOAPODS_POD_AVAILABLE_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_AFNetworking 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking 4
+
+// AFNetworking/NSURLConnection
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLConnection
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLConnection 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection 4
+
+// AFNetworking/NSURLSession
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_NSURLSession
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_NSURLSession 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession 4
+
+// AFNetworking/Reachability
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Reachability
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Reachability 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Reachability 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Reachability 4
+
+// AFNetworking/Security
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Security
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Security 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Security 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Security 4
+
+// AFNetworking/Serialization
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_Serialization
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_Serialization 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_Serialization 4
+
+// AFNetworking/UIKit
+#define COCOAPODS_POD_AVAILABLE_AFNetworking_UIKit
+#define COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit 2
+#define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 5
+#define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 4
+
+// CocoaLumberjack
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack 2
+
+// CocoaLumberjack/Core
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Core
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Core 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Core 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Core 2
+
+// CocoaLumberjack/Extensions
+#define COCOAPODS_POD_AVAILABLE_CocoaLumberjack_Extensions
+#define COCOAPODS_VERSION_MAJOR_CocoaLumberjack_Extensions 1
+#define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 9
+#define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 2
+
+// DAKeyboardControl
+#define COCOAPODS_POD_AVAILABLE_DAKeyboardControl
+#define COCOAPODS_VERSION_MAJOR_DAKeyboardControl 2
+#define COCOAPODS_VERSION_MINOR_DAKeyboardControl 4
+#define COCOAPODS_VERSION_PATCH_DAKeyboardControl 0
+
+// ECPhoneNumberFormatter
+#define COCOAPODS_POD_AVAILABLE_ECPhoneNumberFormatter
+#define COCOAPODS_VERSION_MAJOR_ECPhoneNumberFormatter 0
+#define COCOAPODS_VERSION_MINOR_ECPhoneNumberFormatter 1
+#define COCOAPODS_VERSION_PATCH_ECPhoneNumberFormatter 1
+
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
+
+// MSCMoreOptionTableViewCell
+#define COCOAPODS_POD_AVAILABLE_MSCMoreOptionTableViewCell
+#define COCOAPODS_VERSION_MAJOR_MSCMoreOptionTableViewCell 2
+#define COCOAPODS_VERSION_MINOR_MSCMoreOptionTableViewCell 2
+#define COCOAPODS_VERSION_PATCH_MSCMoreOptionTableViewCell 0
+
+// NSStringEmojize
+#define COCOAPODS_POD_AVAILABLE_NSStringEmojize
+#define COCOAPODS_VERSION_MAJOR_NSStringEmojize 0
+#define COCOAPODS_VERSION_MINOR_NSStringEmojize 2
+#define COCOAPODS_VERSION_PATCH_NSStringEmojize 0
+
+// OHAlertView
+#define COCOAPODS_POD_AVAILABLE_OHAlertView
+#define COCOAPODS_VERSION_MAJOR_OHAlertView 2
+#define COCOAPODS_VERSION_MINOR_OHAlertView 1
+#define COCOAPODS_VERSION_PATCH_OHAlertView 0
+
+// Reachability
+#define COCOAPODS_POD_AVAILABLE_Reachability
+#define COCOAPODS_VERSION_MAJOR_Reachability 3
+#define COCOAPODS_VERSION_MINOR_Reachability 2
+#define COCOAPODS_VERSION_PATCH_Reachability 0
+
+// SQLCipher/common
+#define COCOAPODS_POD_AVAILABLE_SQLCipher_common
+#define COCOAPODS_VERSION_MAJOR_SQLCipher_common 3
+#define COCOAPODS_VERSION_MINOR_SQLCipher_common 1
+#define COCOAPODS_VERSION_PATCH_SQLCipher_common 0
+
+// SQLCipher/fts
+#define COCOAPODS_POD_AVAILABLE_SQLCipher_fts
+#define COCOAPODS_VERSION_MAJOR_SQLCipher_fts 3
+#define COCOAPODS_VERSION_MINOR_SQLCipher_fts 1
+#define COCOAPODS_VERSION_PATCH_SQLCipher_fts 0
+
+// SWRevealViewController
+#define COCOAPODS_POD_AVAILABLE_SWRevealViewController
+#define COCOAPODS_VERSION_MAJOR_SWRevealViewController 2
+#define COCOAPODS_VERSION_MINOR_SWRevealViewController 3
+#define COCOAPODS_VERSION_PATCH_SWRevealViewController 0
+
+// TITokenField
+#define COCOAPODS_POD_AVAILABLE_TITokenField
+#define COCOAPODS_VERSION_MAJOR_TITokenField 0
+#define COCOAPODS_VERSION_MINOR_TITokenField 9
+#define COCOAPODS_VERSION_PATCH_TITokenField 5
+
+// YRDropdownView
+#define COCOAPODS_POD_AVAILABLE_YRDropdownView
+#define COCOAPODS_VERSION_MAJOR_YRDropdownView 0
+#define COCOAPODS_VERSION_MINOR_YRDropdownView 0
+#define COCOAPODS_VERSION_PATCH_YRDropdownView 1
+
+// YapDatabase/SQLCipher
+#define COCOAPODS_POD_AVAILABLE_YapDatabase_SQLCipher
+#define COCOAPODS_VERSION_MAJOR_YapDatabase_SQLCipher 2
+#define COCOAPODS_VERSION_MINOR_YapDatabase_SQLCipher 6
+#define COCOAPODS_VERSION_PATCH_YapDatabase_SQLCipher 4
+
+// ZXCVBN
+#define COCOAPODS_POD_AVAILABLE_ZXCVBN
+#define COCOAPODS_VERSION_MAJOR_ZXCVBN 1
+#define COCOAPODS_VERSION_MINOR_ZXCVBN 0
+#define COCOAPODS_VERSION_PATCH_ZXCVBN 4
+
+// libqrencode
+#define COCOAPODS_POD_AVAILABLE_libqrencode
+#define COCOAPODS_VERSION_MAJOR_libqrencode 3
+#define COCOAPODS_VERSION_MINOR_libqrencode 4
+#define COCOAPODS_VERSION_PATCH_libqrencode 2
+
+// zipzap
+#define COCOAPODS_POD_AVAILABLE_zipzap
+#define COCOAPODS_VERSION_MAJOR_zipzap 8
+#define COCOAPODS_VERSION_MINOR_zipzap 0
+#define COCOAPODS_VERSION_PATCH_zipzap 3
+
+// zipzap/c++
+#define COCOAPODS_POD_AVAILABLE_zipzap_c__
+#define COCOAPODS_VERSION_MAJOR_zipzap_c__ 8
+#define COCOAPODS_VERSION_MINOR_zipzap_c__ 0
+#define COCOAPODS_VERSION_PATCH_zipzap_c__ 3
+
+// zipzap/objc
+#define COCOAPODS_POD_AVAILABLE_zipzap_objc
+#define COCOAPODS_VERSION_MAJOR_zipzap_objc 8
+#define COCOAPODS_VERSION_MINOR_zipzap_objc 0
+#define COCOAPODS_VERSION_PATCH_zipzap_objc 3
+
+// zipzap/objc++
+#define COCOAPODS_POD_AVAILABLE_zipzap_objc__
+#define COCOAPODS_VERSION_MAJOR_zipzap_objc__ 8
+#define COCOAPODS_VERSION_MINOR_zipzap_objc__ 0
+#define COCOAPODS_VERSION_PATCH_zipzap_objc__ 3
+

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="aAE-fm-bFR" customClass="ContactsSubViewControllerCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aAE-fm-bFR" id="aPo-1D-sBK">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="silhouette.png" translatesAutoresizingMaskIntoConstraints="NO" id="8sh-85-oEU" userLabel="ImageView - avatarImageView">
+                        <rect key="frame" x="10" y="0.0" width="46" height="46"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="46" id="3xg-J3-qZH"/>
+                            <constraint firstAttribute="width" constant="46" id="sWX-hP-Xsy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Robbie Hanson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fyB-NA-3eW" userLabel="Label - nameLabel">
+                        <rect key="frame" x="64" y="13" width="113" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="me" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiA-Bl-470" userLabel="Label - meLabel">
+                        <rect key="frame" x="282" y="13" width="23" height="20"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contact-company_icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tmr-AR-zBY">
+                        <rect key="frame" x="282" y="12" width="22" height="22"/>
+                    </imageView>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Wh-VL-oqJ" userLabel="Chat Button">
+                        <rect key="frame" x="70" y="29" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="30F-6G-CBc"/>
+                            <constraint firstAttribute="height" constant="40" id="i0u-sj-KiM"/>
+                        </constraints>
+                        <state key="normal" image="contact-message_btn.png">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="chatTapped:" destination="aAE-fm-bFR" eventType="touchUpInside" id="W3s-Gp-OFh"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4zG-kj-Stz" userLabel="Phone Button">
+                        <rect key="frame" x="140" y="29" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="hLJ-KV-P5f"/>
+                            <constraint firstAttribute="width" constant="40" id="zDI-jR-Aap"/>
+                        </constraints>
+                        <state key="normal" image="contact-phone_btn.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="phoneTapped:" destination="aAE-fm-bFR" eventType="touchUpInside" id="Oc5-hc-htM"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fup-Pp-sZs" userLabel="Add Contact Button">
+                        <rect key="frame" x="210" y="29" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="07F-Bc-aCm"/>
+                            <constraint firstAttribute="width" constant="40" id="fqZ-Yg-0Ka"/>
+                        </constraints>
+                        <state key="normal" image="contact-add-contact_btn.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addContactTapped:" destination="aAE-fm-bFR" eventType="touchUpInside" id="ady-lN-nsv"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j3c-OB-ciD" userLabel="Info Button">
+                        <rect key="frame" x="210" y="29" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="1Nv-W8-Dkg"/>
+                            <constraint firstAttribute="width" constant="40" id="L7l-JF-efr"/>
+                        </constraints>
+                        <state key="normal" image="contact-info_btn.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="infoTapped:" destination="aAE-fm-bFR" eventType="touchUpInside" id="Xje-ho-lym"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="yiA-Bl-470" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fyB-NA-3eW" secondAttribute="trailing" constant="5" id="1Zh-U6-r41"/>
+                    <constraint firstItem="fyB-NA-3eW" firstAttribute="leading" secondItem="8sh-85-oEU" secondAttribute="trailing" priority="750" constant="8" id="4Ms-tD-RHc"/>
+                    <constraint firstItem="4zG-kj-Stz" firstAttribute="top" secondItem="aPo-1D-sBK" secondAttribute="top" constant="29" id="8hq-RQ-Nyo"/>
+                    <constraint firstItem="j3c-OB-ciD" firstAttribute="top" secondItem="Fup-Pp-sZs" secondAttribute="top" id="9kM-p8-Koc"/>
+                    <constraint firstItem="3Wh-VL-oqJ" firstAttribute="top" secondItem="aPo-1D-sBK" secondAttribute="top" constant="29" id="MZ7-kG-nJa"/>
+                    <constraint firstAttribute="trailing" secondItem="yiA-Bl-470" secondAttribute="trailing" constant="15" id="NmM-g7-lmr"/>
+                    <constraint firstItem="j3c-OB-ciD" firstAttribute="leading" secondItem="Fup-Pp-sZs" secondAttribute="leading" id="O6H-ku-dta"/>
+                    <constraint firstItem="8sh-85-oEU" firstAttribute="leading" secondItem="aPo-1D-sBK" secondAttribute="leading" constant="10" id="Oal-vn-X8i"/>
+                    <constraint firstItem="4zG-kj-Stz" firstAttribute="leading" secondItem="3Wh-VL-oqJ" secondAttribute="trailing" constant="30" id="QD9-Gn-oLE"/>
+                    <constraint firstItem="Fup-Pp-sZs" firstAttribute="leading" secondItem="4zG-kj-Stz" secondAttribute="trailing" constant="30" id="UX2-4A-1dR"/>
+                    <constraint firstItem="Tmr-AR-zBY" firstAttribute="centerY" secondItem="yiA-Bl-470" secondAttribute="centerY" id="aZw-ba-HLr"/>
+                    <constraint firstItem="Fup-Pp-sZs" firstAttribute="top" secondItem="aPo-1D-sBK" secondAttribute="top" constant="29" id="eZi-tn-y6Q"/>
+                    <constraint firstItem="8sh-85-oEU" firstAttribute="top" secondItem="aPo-1D-sBK" secondAttribute="top" id="fTb-yZ-gqA"/>
+                    <constraint firstItem="Tmr-AR-zBY" firstAttribute="leading" secondItem="yiA-Bl-470" secondAttribute="leading" id="jbr-2g-Dhv"/>
+                    <constraint firstItem="fyB-NA-3eW" firstAttribute="baseline" secondItem="yiA-Bl-470" secondAttribute="baseline" id="m6i-hM-SGc"/>
+                    <constraint firstItem="fyB-NA-3eW" firstAttribute="top" secondItem="aPo-1D-sBK" secondAttribute="top" constant="13" id="rgq-HK-I2M"/>
+                    <constraint firstAttribute="centerX" secondItem="4zG-kj-Stz" secondAttribute="centerX" id="u1s-Ur-mmG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addContactButton" destination="Fup-Pp-sZs" id="hnk-vb-qGp"/>
+                <outlet property="avatarImageView" destination="8sh-85-oEU" id="ovk-Ll-2oe"/>
+                <outlet property="chatButton" destination="3Wh-VL-oqJ" id="fJI-l0-ATm"/>
+                <outlet property="companyIconImageView" destination="Tmr-AR-zBY" id="EWB-4U-CQD"/>
+                <outlet property="infoButton" destination="j3c-OB-ciD" id="dmm-wR-2lb"/>
+                <outlet property="meLabel" destination="yiA-Bl-470" id="sfq-nr-XOL"/>
+                <outlet property="nameLabel" destination="fyB-NA-3eW" id="Z8i-7C-Hyl"/>
+                <outlet property="phoneButton" destination="4zG-kj-Stz" id="2Qq-Jw-VuM"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="contact-add-contact_btn.png" width="22" height="22"/>
+        <image name="contact-company_icon.png" width="22" height="22"/>
+        <image name="contact-info_btn.png" width="22" height="22"/>
+        <image name="contact-message_btn.png" width="22" height="22"/>
+        <image name="contact-phone_btn.png" width="22" height="22"/>
+        <image name="silhouette.png" width="42" height="42"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

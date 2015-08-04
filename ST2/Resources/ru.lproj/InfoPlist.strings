@@ -1,0 +1,17 @@
+/* Localized versions of Info.plist keys */
+
+"STRichText" = "Формат RTF";
+"STImage" = "Изображение";
+"STContact" = "Контакт";
+"STMovie" = "Фильм";
+"STText" = "Текст";
+"STUnknownFile" = "Неизвестный файл";
+"STAudio" = "Аудио";
+"STAllDocuments" = "Все документы";
+"STCalendarEvent" = "Событие календаря";
+"STNumbers" = "Документ Numbers";
+/* documents made by the Numbers app */
+"STPagesDocument" = "Документ Pages";
+/* documents made by the Pages app */
+"STKeynoteDocument" = "Документ Keynote";
+/* documents made by the Keynote app */

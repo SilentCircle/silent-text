@@ -1,0 +1,5 @@
+/* Generic "Help" title for Help content views */
+"Help.helpTitle" = "Help";
+
+/* Generic "Help" title with context string, e.g. "Conversation Details Help" */
+"Help.helpTitle-with-context %@" = "%1$@ Help";

@@ -1,0 +1,1 @@
+../../../libqrencode/rscode.h

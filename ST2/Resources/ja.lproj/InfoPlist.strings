@@ -1,0 +1,17 @@
+/* Localized versions of Info.plist keys */
+
+"STRichText" = "リッチテキスト";
+"STImage" = "画像";
+"STContact" = "連絡先";
+"STMovie" = "動画";
+"STText" = "テキスト";
+"STUnknownFile" = "不明なファイル";
+"STAudio" = "オーディオ";
+"STAllDocuments" = "全てのドキュメント";
+"STCalendarEvent" = "カレンダーイベント";
+"STNumbers" = "ナンバードキュメント";
+/* documents made by the Numbers app */
+"STPagesDocument" = "ページドキュメント";
+/* documents made by the Pages app */
+"STKeynoteDocument" = "キーノートドキュメント";
+/* documents made by the Keynote app */
